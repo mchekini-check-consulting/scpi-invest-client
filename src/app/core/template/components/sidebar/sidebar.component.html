@@ -1,4 +1,4 @@
-<div class="sidebar" data-color="orange" data-image="../assets/img/sidebar-5.jpg">
+<div class="sidebar" data-color="red" data-image="img/sidebar-4.jpg">
   <div class="sidebar-wrapper">
     <div class="logo">
       <a href="http://www.creative-tim.com" class="simple-text logo-mini">
@@ -44,7 +44,7 @@
     </div>
     <ul class="nav">
       <li *ngFor="let menuItem of menuItems" class="nav-item">
-        <a class="nav-link" href="{{menuItem.path}}">
+        <a class="nav-link" [routerLink]="menuItem.path">
           <i class="{{menuItem.icon}}"></i>
           <p>{{menuItem.key | translate }}</p>
         </a>

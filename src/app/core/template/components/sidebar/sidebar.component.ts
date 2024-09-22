@@ -3,6 +3,7 @@ import {NgForOf} from "@angular/common";
 import {
   TranslateModule,
 } from "@ngx-translate/core";
+import {RouterLink} from "@angular/router";
 
 declare interface RouteInfo {
   path: string;
@@ -25,7 +26,8 @@ export const ROUTES: RouteInfo[] = [
   standalone: true,
   imports: [
     NgForOf,
-    TranslateModule
+    TranslateModule,
+    RouterLink
   ],
   styleUrls: ['./sidebar.component.scss'],
 
