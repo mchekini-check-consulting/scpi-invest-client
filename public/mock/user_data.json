@@ -1,0 +1,34 @@
+[
+  {
+    "scpiName" : "Activimmo",
+    "transactionDate" : "04-10-2024",
+    "amount" : 2000,
+    "status" : "En cours",
+    "price": 3000,
+    "distributionRate" : 8.16
+  },
+  {
+    "scpiName" : "Activimmo",
+    "transactionDate" : "04-10-2024",
+    "amount" : 2000,
+    "status" : "En cours",
+    "price": 3000,
+    "distributionRate" : 8.16
+  },
+  {
+    "scpiName" : "Activimmo",
+    "transactionDate" : "04-10-2024",
+    "amount" : 2000,
+    "status" : "En cours",
+    "price": 3000,
+    "distributionRate" : 8.16
+  },
+  {
+    "scpiName" : "Activimmo",
+    "transactionDate" : "04-10-2024",
+    "amount" : 2000,
+    "status" : "En cours",
+    "price": 3000,
+    "distributionRate" : 8.16
+  }
+]

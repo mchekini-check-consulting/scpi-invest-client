@@ -1,1 +1,63 @@
-<p>invest works!</p>
+<h1>Mon portefeuille</h1>
+
+<p-tabView>
+  <p-tabPanel header="Mes SCPI">
+    <div class="container">
+
+      <div class="section">
+        <div class="section-header">
+          <i class="pi pi-globe"></i>
+          <h2>Demandes en cours</h2>
+        </div>
+
+        <p-table [columns]="currentRequest" [value]="userScpiList">
+          <ng-template pTemplate="header" let-columns>
+            <tr>
+              <th *ngFor="let col of columns">
+                {{ col.header }}
+              </th>
+            </tr>
+          </ng-template>
+          <ng-template pTemplate="body" let-rowData let-columns="columns">
+            <tr>
+              <td *ngFor="let col of columns">
+                {{ rowData[col.field] }}
+              </td>
+            </tr>
+          </ng-template>
+        </p-table>
+      </div>
+
+
+      <div class="section">
+        <div class="section-header">
+          <i class="pi pi-check"></i>
+          <h2>Souscrit</h2>
+        </div>
+
+        <p-table [columns]="userScpi" [value]="userScpiList">
+          <ng-template pTemplate="header" let-columns>
+            <tr>
+              <th *ngFor="let col of columns">
+                {{ col.header }}
+              </th>
+            </tr>
+          </ng-template>
+
+          <ng-template pTemplate="body" let-rowData let-columns="columns">
+            <tr>
+              <td *ngFor="let col of columns">
+                {{ rowData[col.field] }}
+              </td>
+            </tr>
+          </ng-template>
+        </p-table>
+      </div>
+    </div>
+  </p-tabPanel>
+  <p-tabPanel header="Détail de vos SCPI">
+    <p>
+      Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium...
+    </p>
+  </p-tabPanel>
+</p-tabView>
