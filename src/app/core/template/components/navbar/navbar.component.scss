@@ -1,3 +1,21 @@
+.dropdown-toggle {
+  display: flex;
+  align-items: end;
+  justify-content: center;
+
+}
+
+img{
+  height: 10px;
+  margin-right: 5px;
+}
+
+.nc-icon {
+  display: flex;
+  align-items: center;
+  line-height: 16px;
+}
+
 .navbar {
   display: flex;
   justify-content: space-between;
@@ -57,28 +75,6 @@ input.form-control::placeholder {
 .nc-zoom-split{
   margin-bottom: -15px;
 }
-
-.dropdown-menu {
-  right: 0;
-  left: auto;
-}
-
-.navbar .nav-item .dropdown-menu {
-  position: absolute;
-  top: 100%;
-  left: -50px;
-}
-
-//.notification {
-//  background-color: red;
-//  color: white;
-//  border-radius: 50%;
-//  padding: 2px 6px;
-//  font-size: 12px;
-//  position: absolute;
-//  top: 10px;
-//  right: 0;
-//}
 .navbar .navbar-nav .notification {
   position: absolute;
   background-color: #FB404B;
@@ -94,5 +90,47 @@ input.form-control::placeholder {
   top: 7px;
   left: 28px;
 }
+
+.profile {
+  display: flex;
+  align-items: center;
+}
+
+.photo img {
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
+  object-fit: cover;
+  margin-right: 10px;
+}
+
+.username-text{
+  display: flex;
+}
+p {
+  font-size: 16px;
+  position: relative;
+  transform: translate(0,50%);
+
+}
+
+.navbar .nav-item {
+  position: relative;
+}
+
+.navbar .nav-item .dropdown-menu {
+  position: absolute;
+  top: 100%;
+  left: 0;
+}
+
+.dropdown-menu {
+  right: auto;
+  left: 0;
+}
+
+
+
+
 
 
