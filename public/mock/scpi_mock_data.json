@@ -1,0 +1,66 @@
+[
+  {
+    "id": 1,
+    "name": "SCPI Alpha",
+    "sector": "Résidentiel",
+    "localization": "France",
+    "minimumSubscription": 5000,
+    "lastYearDistributionRate": "4.5"
+  },
+  {
+    "id": 2,
+    "name": "SCPI Beta",
+    "sector": "Commerce",
+    "localization": "Espagne",
+    "minimumSubscription": 10000,
+    "lastYearDistributionRate": "5.1"
+  },
+  {
+    "id": 3,
+    "name": "SCPI Gamma",
+    "sector": "Santé",
+    "localization": "Belgique",
+    "minimumSubscription": 3000,
+    "lastYearDistributionRate": "4.2"
+  },
+  {
+    "id": 4,
+    "name": "SCPI Delta",
+    "sector": "Bureau",
+    "localization": "Allemagne",
+    "minimumSubscription": 6000,
+    "lastYearDistributionRate": "4.7"
+  },
+  {
+    "id": 5,
+    "name": "SCPI Epsilon",
+    "sector": "Logistique",
+    "localization": "Italie",
+    "minimumSubscription": 8000,
+    "lastYearDistributionRate": "5.4"
+  },
+  {
+    "id": 6,
+    "name": "SCPI Zeta",
+    "sector": "Résidentiel",
+    "localization": "Portugal",
+    "minimumSubscription": 4000,
+    "lastYearDistributionRate": "6.0"
+  },
+  {
+    "id": 7,
+    "name": "SCPI Eta",
+    "sector": "Industriel",
+    "localization": "Pays-Bas",
+    "minimumSubscription": 7000,
+    "lastYearDistributionRate": "4.9"
+  },
+  {
+    "id": 8,
+    "name": "SCPI Theta",
+    "sector": "Diversifié",
+    "localization": "Luxembourg",
+    "minimumSubscription": 9000,
+    "lastYearDistributionRate": "5.2"
+  }
+]

@@ -4,6 +4,11 @@ import {DropdownModule} from "primeng/dropdown";
 import {FormsModule} from "@angular/forms";
 import {CommonModule} from "@angular/common";
 import {OAuthService} from "angular-oauth2-oidc";
+import {ScpiService} from "../../core/service/scpi.service";
+import {ScpiModel} from "../../core/model/scpi.model";
+import {BehaviorSubject, Observable} from "rxjs";
+import {Scpi_itemComponent} from "./components/scpi_item/scpi_item.component";
+import {PaysService} from "../../core/service/pays.service";
 
 
 @Component({
@@ -12,7 +17,9 @@ import {OAuthService} from "angular-oauth2-oidc";
   imports: [
     CommonModule,
     DropdownModule,
-    FormsModule
+    FormsModule,
+    Scpi_itemComponent,
+
 
   ],
   providers: [MessageService, OAuthService],
@@ -20,18 +27,13 @@ import {OAuthService} from "angular-oauth2-oidc";
   styleUrl: './scpi.component.css'
 })
 export class ScpiComponent implements OnInit{
-  username: string = "";
+  scpiListData : BehaviorSubject<ScpiModel[]> = new BehaviorSubject<ScpiModel[]>([]);
 
-  constructor(private oauthService: OAuthService) {
-  }
-
+  constructor(private scpiService:ScpiService, private countryService: PaysService) {}
 
   ngOnInit() {
-
-    let claims = this.oauthService.getIdentityClaims();
-    if (claims) {
-      this.username = claims['preferred_username'];
-    }
-
+    this.scpiService.fetchScpiList().subscribe(data =>{
+      this.scpiListData.next(data);
+    });
   }
 }
