@@ -3,6 +3,7 @@ import {SidebarComponent} from "../components/sidebar/sidebar.component";
 import {NavbarComponent} from "../components/navbar/navbar.component";
 import {FooterComponent} from "../components/footer/footer.component";
 import {RouterOutlet} from "@angular/router";
+import {ScpiComponent} from "../../../features/scpi/scpi.component";
 
 @Component({
   selector: 'app-template',
@@ -12,7 +13,8 @@ import {RouterOutlet} from "@angular/router";
     SidebarComponent,
     NavbarComponent,
     FooterComponent,
-    RouterOutlet
+    RouterOutlet,
+    ScpiComponent
   ],
   styleUrls: ['./template.component.scss']
 })

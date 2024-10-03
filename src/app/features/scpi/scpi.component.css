@@ -1,0 +1,24 @@
+.scpi-container {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  width: 100%;
+}
+
+.scpi-item-container {
+  flex: 1 1 23%;
+  margin: 10px;
+  box-sizing: border-box;
+}
+
+@media screen and (max-width: 1200px) {
+  .scpi-item-container {
+    flex: 1 1 48%;
+  }
+}
+
+@media screen and (max-width: 768px) {
+  .scpi-item-container {
+    flex: 1 1 100%;
+  }
+}
