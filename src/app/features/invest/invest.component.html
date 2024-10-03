@@ -1,63 +1,87 @@
-<h1>Mon portefeuille</h1>
+<!--<h1 class="p-10">Mon portefeuille</h1>-->
 
-<p-tabView>
-  <p-tabPanel header="Mes SCPI">
-    <div class="container">
-
-      <div class="section">
-        <div class="section-header">
-          <i class="pi pi-globe"></i>
-          <h2>Demandes en cours</h2>
-        </div>
-
-        <p-table [columns]="currentRequest" [value]="userScpiList">
-          <ng-template pTemplate="header" let-columns>
-            <tr>
-              <th *ngFor="let col of columns">
-                {{ col.header }}
-              </th>
-            </tr>
-          </ng-template>
-          <ng-template pTemplate="body" let-rowData let-columns="columns">
-            <tr>
-              <td *ngFor="let col of columns">
-                {{ rowData[col.field] }}
-              </td>
-            </tr>
-          </ng-template>
-        </p-table>
+<p-tabView styleClass="tabview-custom">
+  <p-tabPanel>
+    <ng-template pTemplate="header">
+      <div class="flex align-items-center gap-2">
+        <p-avatar
+          image="https://www.shutterstock.com/image-illustration/stack-gold-coins-steps-graduate-600nw-1831550728.jpg"
+          shape="circle" />
+        <span class="font-bold white-space-nowrap" style="color: black">
+                    Mes SCPI
+                </span>
       </div>
+    </ng-template>
+    <p-tabView>
+
+        <div class="container">
+          <div class="section">
+            <div class="section-header">
+              <i class="pi pi-globe"></i>
+              <h2>Demandes en cours</h2>
+            </div>
+
+            <p-table [columns]="currentRequest" [value]="userScpiList">
+              <ng-template pTemplate="header" let-columns>
+                <tr>
+                  <th *ngFor="let col of columns">
+                    {{ col.header }}
+                  </th>
+                </tr>
+              </ng-template>
+              <ng-template pTemplate="body" let-rowData let-columns="columns">
+                <tr>
+                  <td *ngFor="let col of columns">
+                    {{ rowData[col.field] }}
+                  </td>
+                </tr>
+              </ng-template>
+            </p-table>
+          </div>
 
 
-      <div class="section">
-        <div class="section-header">
-          <i class="pi pi-check"></i>
-          <h2>Souscrit</h2>
+          <div class="section">
+            <div class="section-header">
+              <i class="pi pi-check"></i>
+              <h2>Souscrit</h2>
+            </div>
+
+            <p-table [columns]="userScpi" [value]="userScpiList">
+              <ng-template pTemplate="header" let-columns>
+                <tr>
+                  <th *ngFor="let col of columns">
+                    {{ col.header }}
+                  </th>
+                </tr>
+              </ng-template>
+
+              <ng-template pTemplate="body" let-rowData let-columns="columns">
+                <tr>
+                  <td *ngFor="let col of columns">
+                    {{ rowData[col.field] }}
+                  </td>
+                </tr>
+              </ng-template>
+            </p-table>
+          </div>
         </div>
+    </p-tabView>
 
-        <p-table [columns]="userScpi" [value]="userScpiList">
-          <ng-template pTemplate="header" let-columns>
-            <tr>
-              <th *ngFor="let col of columns">
-                {{ col.header }}
-              </th>
-            </tr>
-          </ng-template>
-
-          <ng-template pTemplate="body" let-rowData let-columns="columns">
-            <tr>
-              <td *ngFor="let col of columns">
-                {{ rowData[col.field] }}
-              </td>
-            </tr>
-          </ng-template>
-        </p-table>
-      </div>
-    </div>
   </p-tabPanel>
-  <p-tabPanel header="Détail de vos SCPI">
+  <p-tabPanel header="Header II">
+    <ng-template pTemplate="header">
+      <div class="flex align-items-center gap-2">
+        <p-avatar
+          image="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRJd8Cy7QCWVZ18gL2RPYcv1AjWTMQvK74Myg&s"
+          shape="circle" />
+        <span class="font-bold white-space-nowrap m-0" style="color: black">
+                    Détails de mes SCPI
+                </span>
+      </div>
+    </ng-template>
     <p>
       Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium...
     </p>
   </p-tabPanel>
 </p-tabView>
+

@@ -4,6 +4,8 @@ import {CurrencyPipe, DatePipe, NgForOf} from "@angular/common";
 import {UserScpiModel} from "../../core/model/user-scpi.model";
 import {ScpiService} from "../../core/service/scpi.service";
 import {TabViewModule} from "primeng/tabview";
+import {BadgeModule} from "primeng/badge";
+import {AvatarModule} from "primeng/avatar";
 
 @Component({
   selector: 'app-invest',
@@ -13,7 +15,9 @@ import {TabViewModule} from "primeng/tabview";
     DatePipe,
     CurrencyPipe,
     NgForOf,
-    TabViewModule
+    TabViewModule,
+    BadgeModule,
+    AvatarModule
   ],
   templateUrl: './invest.component.html',
   styleUrl: './invest.component.css'
