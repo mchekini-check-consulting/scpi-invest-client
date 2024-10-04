@@ -1,0 +1,297 @@
+.scpi-header {
+  padding: 1.5rem;
+  background-color: #f4f6fb;
+  border-radius: 8px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.scpi-header-title {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 1rem;
+}
+
+.scpi-header-title h2 {
+  margin: 0;
+  font-size: 1.5rem;
+}
+
+.scpi-rating {
+  display: flex;
+  align-items: center;
+  font-size: 1rem;
+}
+
+.scpi-rating i {
+  color: orange;
+  margin-right: 0.25rem;
+}
+
+.scpi-rating span {
+  margin-left: 0.5rem;
+  color: #888;
+}
+
+.scpi-tags {
+  display: flex;
+  gap: 0.5rem;
+  margin-bottom: 1.5rem;
+}
+
+.scpi-tags .p-tag {
+  font-size: 0.875rem;
+}
+
+.scpi-info-boxes {
+  display: flex;
+  justify-content: space-between;
+}
+
+.info-box {
+  background-color: #fff;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  padding: 1rem;
+  text-align: center;
+  flex-grow: 1;
+  margin: 0 0.5rem;
+}
+
+.info-box h3 {
+  margin: 0;
+  font-size: 1.75rem;
+  color: #2e70fa;
+}
+
+.info-box p {
+  margin-top: 0.5rem;
+  font-size: 0.875rem;
+  color: #888;
+}
+
+.info-box:first-child {
+  margin-left: 0;
+}
+
+.info-box:last-child {
+  margin-right: 0;
+}
+
+.info-box i {
+  font-size: 0.875rem;
+  color: #888;
+}
+
+
+.scpi-details-tabs {
+  padding: 1.5rem;
+  background-color: #f4f6fb;
+  border-radius: 8px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.p-tabview-nav {
+  border-bottom: 2px solid #2e70fa;
+}
+
+.p-tabview .p-tabview-nav li {
+  font-size: 1.1rem;
+  color: #555;
+}
+
+.p-tabview .p-tabview-nav li.p-highlight {
+  font-weight: bold;
+  color: #2e70fa;
+}
+
+.scpi-overview h3 {
+  margin-top: 0;
+  font-size: 1.2rem;
+  color: #2e70fa;
+  margin-bottom: 0.75rem;
+}
+
+.scpi-overview p, .scpi-overview ul {
+  font-size: 1rem;
+  color: #555;
+  line-height: 1.6;
+}
+
+.scpi-overview ul {
+  list-style: disc;
+  padding-left: 1.5rem;
+}
+
+.scpi-overview ul li {
+  margin-bottom: 0.5rem;
+}
+
+.see-less {
+  display: inline-block;
+  margin-top: 1rem;
+  font-size: 1rem;
+  color: #2e70fa;
+  text-decoration: none;
+  cursor: pointer;
+}
+
+.see-less i {
+  margin-left: 0.5rem;
+  font-size: 1rem;
+}
+
+.scpi-fees-section {
+  margin-top: 2rem;
+}
+
+.scpi-fees-section h3 {
+  font-size: 1.25rem;
+  color: #2e70fa;
+  margin-bottom: 1rem;
+}
+
+.scpi-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);  /* 2 éléments par ligne */
+  gap: 1.5rem;  /* Espace entre les éléments */
+  margin-bottom: 2rem;
+}
+
+.scpi-item {
+  background-color: #f4f6fb;
+  padding: 1.5rem;
+  border-radius: 8px;
+  text-align: center;
+  border: 1px solid #ddd;
+}
+
+.scpi-item h4 {
+  margin: 0;
+  font-size: 1.75rem;
+  color: #333;
+}
+
+.scpi-item p {
+  margin-top: 0.5rem;
+  font-size: 0.875rem;
+  color: #888;
+}
+
+.scpi-item i {
+  font-size: 0.875rem;
+  color: #888;
+}
+
+.general-info-section {
+  margin-top: 2rem;
+}
+
+.general-info-section h3 {
+  font-size: 1.25rem;
+  color: #333;
+  margin-bottom: 1.5rem;
+  font-weight: bold;
+}
+
+.general-info-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);  /* 2 colonnes par ligne */
+  gap: 1.5rem;  /* Espace entre les éléments */
+}
+
+.info-box {
+  background-color: #f4f6fb;
+  padding: 1.5rem;
+  border-radius: 8px;
+  text-align: center;
+  border: 1px solid #ddd;
+}
+
+.info-box h4 {
+  margin: 0;
+  font-size: 1.75rem;
+  color: #333;
+}
+
+.info-box p {
+  margin-top: 0.5rem;
+  font-size: 0.875rem;
+  color: #888;
+}
+
+
+.distribution-section {
+  margin-top: 2rem;
+  background-color: #f4f6fb;
+  padding: 1.5rem;
+  border-radius: 8px;
+  border: 1px solid #ddd;
+}
+
+.distribution-section h3 {
+  font-size: 1.25rem;
+  color: #333;
+  margin-bottom: 1.5rem;
+  font-weight: bold;
+}
+
+
+.analysis-section {
+  margin-top: 2rem;
+}
+
+.analysis-section h3 {
+  font-size: 1.5rem;
+  color: #333;
+  margin-bottom: 1.5rem;
+  font-weight: bold;
+}
+
+.analysis-box {
+  background-color: #f4f6fb;
+  padding: 1.5rem;
+  border-radius: 8px;
+  text-align: center;
+  border: 1px solid #ddd;
+}
+
+.analysis-box h4 {
+  font-size: 1.25rem;
+  color: #333;
+  margin-bottom: 1rem;
+  font-weight: bold;
+}
+
+.geo-map {
+  max-width: 100%;
+  border-radius: 8px;
+}
+
+.strategy-legend {
+  margin-top: 1rem;
+}
+
+.strategy-legend ul {
+  list-style: none;
+  padding: 0;
+}
+
+.strategy-legend li {
+  display: flex;
+  align-items: center;
+  margin-bottom: 0.5rem;
+}
+
+.legend-color {
+  width: 12px;
+  height: 12px;
+  display: inline-block;
+  margin-right: 8px;
+  border-radius: 50%;
+}
+
+
+
+
+

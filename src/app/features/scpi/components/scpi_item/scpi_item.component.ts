@@ -1,6 +1,6 @@
-import {Component, Input} from '@angular/core';
+import {Component, EventEmitter, Input, Output} from '@angular/core';
 import {ScpiModel} from "../../../../core/model/scpi.model";
-import {NgForOf, NgIf,CommonModule} from "@angular/common";
+import {CommonModule, NgForOf, NgIf} from "@angular/common";
 import {PaysService} from "../../../../core/service/pays.service";
 
 
@@ -17,7 +17,8 @@ import {PaysService} from "../../../../core/service/pays.service";
 })
 export class Scpi_itemComponent {
 
-@Input() scpi:ScpiModel|undefined;
+  @Input() scpi: ScpiModel | undefined;
+  @Output("onShowDetailClick") onShowDetailClick = new EventEmitter<number>();
 
 
   constructor(private paysService: PaysService) {
@@ -27,4 +28,7 @@ export class Scpi_itemComponent {
     return this.paysService.getCodeByCountryName(pays);
   }
 
+  showScpiDetails(scpi: ScpiModel | undefined) {
+    this.onShowDetailClick.emit(scpi?.id);
+  }
 }
