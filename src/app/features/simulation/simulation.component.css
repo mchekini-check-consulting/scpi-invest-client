@@ -1,0 +1,90 @@
+.action-buttons {
+    display: flex;
+    align-items: center;
+  }
+  
+  .btn {
+    display: flex;
+    align-items: center;
+    padding: 10px 15px;
+    margin-right: 10px;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+  }
+  
+  .btn-primary {
+    background-color: #2979ff; /* Couleur bleue */
+    color: white;
+  }
+  
+  .btn-secondary {
+    background-color: #00bfa5; /* Couleur verte */
+    color: white;
+  }
+  
+  .toggle-container {
+    display: flex;
+    align-items: center;
+  }
+  
+  .switch {
+    position: relative;
+    display: inline-block;
+    width: 34px;
+    height: 20px;
+    margin-right: 10px;
+  }
+  
+  .switch input {
+    display: none;
+  }
+  
+  .slider {
+    position: absolute;
+    cursor: pointer;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: #ccc;
+    transition: 0.4s;
+    border-radius: 34px;
+  }
+  
+  .slider:before {
+    position: absolute;
+    content: "";
+    height: 16px;
+    width: 16px;
+    left: 4px;
+    bottom: 2px;
+    background-color: white;
+    transition: 0.4s;
+    border-radius: 50%;
+  }
+  
+  input:checked + .slider {
+    background-color: #4caf50;
+  }
+  
+  input:checked + .slider:before {
+    transform: translateX(14px);
+  }
+  .container {
+    display: flex;
+    gap: 10px;
+    align-items: center;
+  }
+
+  .input-switch-container {
+    display: flex;
+    align-items: center; /* Aligne verticalement les éléments */
+  }
+  
+  .input-switch-container p {
+    margin-right: 10px; /* Espace entre le texte et l'inputSwitch */
+  }
+  p {
+    margin-top: 15px;
+  }
