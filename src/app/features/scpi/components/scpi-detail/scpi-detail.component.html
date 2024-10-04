@@ -1,0 +1,145 @@
+<div class="scpi-header">
+  <div class="scpi-header-title">
+    <h2>{{scpiDetail.name}}</h2>
+    <div class="scpi-rating">
+      <i class="pi pi-star-fill" *ngFor="let star of [1, 2, 3, 4,5]"></i>
+      <span>15 notes</span>
+    </div>
+  </div>
+
+  <div class="scpi-tags">
+    <span class="p-tag p-tag-rounded">Diversifiée </span>
+    <span class="p-tag p-tag-rounded"><i class="pi pi-euro" style="margin-right: 5px;"></i>Europe</span>
+    <span class="p-tag p-tag-rounded p-tag-info">Cashback</span>
+    <span class="p-tag p-tag-rounded p-tag-success"><i class="pi pi-leaf" style="margin-right: 5px;"></i>ISR</span>
+  </div>
+
+  <div class="scpi-info-boxes">
+    <div class="info-box">
+      <h3>{{distributionData['datasets'][0]['data'][distributionData['datasets'][0]['data'].length-1]}} %</h3>
+      <p>Rendement <i class="pi pi-info-circle"></i></p>
+    </div>
+    <div class="info-box">
+      <h3>{{scpiDetail.minimumSubscription}} €</h3>
+      <p>Minimum</p>
+    </div>
+    <div class="info-box">
+      <h3>{{isCurrentPriceInteresting()}}</h3>
+      <p>Prix d'achat <i class="pi pi-info-circle"></i></p>
+    </div>
+  </div>
+</div>
+
+
+<div class="scpi-details-tabs">
+  <p-tabView>
+    <p-tabPanel header="Vue d'ensemble">
+      <div class="analysis-section">
+        <h3>Analyse</h3>
+        <div class="p-grid p-nogutter " style="display:flex;flex-direction: row; justify-content: space-around">
+            <div class="p-col-6 analysis-box" style="display:flex;flex-direction:column ">
+              <h4>Secteurs</h4>
+              <p-chart type="doughnut" [width]="'400'"   [data]="sectorStrategyData" [options]="chartSectorStrategyOptions"></p-chart>
+            </div>
+
+            <div class=" p-col-6 analysis-box" style="display:flex;flex-direction:column" >
+              <h4>Zones Géographiques</h4>
+              <p-chart type="doughnut" [width]="'400'"  [data]="geoZoneData" [options]="chartZoneGeoOptions"></p-chart>
+            </div>
+        </div>
+      </div>
+
+      <div class="general-info-section">
+        <h3>Infos générales</h3>
+        <div class="general-info-grid">
+          <div class="info-item">
+            <div class="info-box">
+              <h4>{{scpiPartPrice}} €</h4>
+              <p>Prix par part</p>
+            </div>
+          </div>
+          <div class="info-item">
+            <div class="info-box">
+              <h4>{{scpiDetail.minimumSubscription}},00 €</h4>
+              <p>Min. 1ère souscription</p>
+            </div>
+          </div>
+          <div class="info-item">
+            <div class="info-box">
+              <h4>{{scpiDetail.manager}}</h4>
+              <p>Gérant</p>
+            </div>
+          </div>
+          <div class="info-item">
+            <div class="info-box">
+              <h4>{{scpiDetail.capitalization}} M€</h4>
+              <p>Capitalisation</p>
+            </div>
+          </div>
+        </div>
+      </div>
+
+    </p-tabPanel>
+
+
+    <p-tabPanel header="Historique">
+
+      <div class="distribution-section">
+        <h3>Évolution de la distribution</h3>
+        <p-chart type="line" [height]="'400'" [data]="distributionData" [options]="chartDistributionRateOptions"></p-chart>
+      </div>
+
+
+    </p-tabPanel>
+    <p-tabPanel header="Détails">
+      <div class="scpi-fees-section">
+
+        <h3>Frais de la SCPI</h3>
+        <div class="scpi-grid">
+          <div class="scpi-item">
+            <div class="fee-box">
+              <h4>{{scpiDetail.subscriptionFees}} %</h4>
+              <p>Frais de souscription <i class="pi pi-info-circle"></i></p>
+            </div>
+          </div>
+          <div class="scpi-item">
+            <div class="fee-box">
+              <h4>{{ scpiDetail.managementFees }} %</h4>
+              <p>Frais de gestion <i class="pi pi-info-circle"></i></p>
+            </div>
+          </div>
+          <div class="scpi-item">
+            <div class="fee-box">
+              <h4>{{ scpiPartPrice }} €</h4>
+              <p>Prix d'achat</p>
+            </div>
+          </div>
+          <div class="scpi-item">
+            <div class="fee-box">
+              <h4>{{scpiReconstitutionPrice}} €</h4>
+              <p>Prix de retrait</p>
+            </div>
+          </div>
+        </div>
+
+
+        <h3>Loyers</h3>
+        <div class="scpi-grid">
+          <div class="scpi-item">
+            <div class="rent-box">
+              <h4>{{scpiDetail.delayBenefit}}</h4>
+              <p>Délai de jouissance <i class="pi pi-info-circle"></i></p>
+            </div>
+          </div>
+          <div class="scpi-item">
+            <div class="rent-box">
+              <h4>{{scpiDetail.rentFrequency}}</h4>
+              <p>Fréquence des loyers</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </p-tabPanel>
+  </p-tabView>
+</div>
+

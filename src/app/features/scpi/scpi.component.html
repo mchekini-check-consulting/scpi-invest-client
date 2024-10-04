@@ -1,5 +1,7 @@
 <div class="scpi-container">
-  <div class="scpi-item-container" *ngFor="let item of scpiListData | async">
-    <app-scpi-item [scpi]="item"></app-scpi-item>
+  <div class="scpi-item-container" *ngFor="let item of scpiListData">
+    <app-scpi-item [scpi]="item"
+                   (onShowDetailClick)="showScpiDetail($event)"
+    ></app-scpi-item>
   </div>
 </div>
