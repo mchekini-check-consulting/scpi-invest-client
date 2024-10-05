@@ -1,5 +1,5 @@
 export interface StatScpiModel {
   region?: string;
-  secteur?: string;
+  sector?: string;
   percentage: number;
 }

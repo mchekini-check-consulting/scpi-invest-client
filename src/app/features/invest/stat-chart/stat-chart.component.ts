@@ -81,7 +81,7 @@ export class StatChartComponent implements OnInit {
 
 
   private prepareChartData(data: StatScpiModel[], type: string): void {
-    const labels = data.map(item => type === 'region' ? item.region : item.secteur);
+    const labels = data.map(item => type === 'region' ? item.region : item.sector);
     const percentages = data.map(item => item.percentage);
     console.log(`Données pour ${type}:`, {labels, percentages});
     const documentStyle = getComputedStyle(document.documentElement);
