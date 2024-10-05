@@ -2,7 +2,6 @@ import { Component, OnInit } from '@angular/core';
 import { StatScpiService } from "../../../core/service/statistique_service/stat-scpi.service";
 import { StatScpiModel } from "../../../core/model/stat-scpi.models";
 import { ChartModule } from "primeng/chart";
-import {EvalScpiModels} from "../../../core/model/eval-scpi.models";
 
 @Component({
   selector: 'app-stat-chart',
