@@ -1,1 +1,105 @@
-<p>invest works!</p>
+<!--<h1 class="p-10">Mon portefeuille</h1>-->
+
+<p-tabView styleClass="tabview-custom">
+  <p-tabPanel>
+    <ng-template pTemplate="header">
+      <div class="flex align-items-center gap-2">
+        <p-avatar
+          image="https://www.shutterstock.com/image-illustration/stack-gold-coins-steps-graduate-600nw-1831550728.jpg"
+          shape="circle" />
+        <span class="font-bold white-space-nowrap" style="color: black">
+                    Mes Investissements
+                </span>
+      </div>
+    </ng-template>
+    <p-tabView>
+
+        <div class="container">
+
+          <div class="section">
+            <div class="section-header">
+              <i class="pi pi-check"></i>
+              <h2>Souscrit</h2>
+            </div>
+
+            <p-table [columns]="userScpi" [value]="userScpiList">
+              <ng-template pTemplate="header" let-columns>
+                <tr>
+                  <th *ngFor="let col of columns">
+                    {{ col.header }}
+                  </th>
+                </tr>
+              </ng-template>
+
+              <ng-template pTemplate="body" let-rowData let-columns="columns">
+                <tr>
+                  <td *ngFor="let col of columns">
+                    {{ rowData[col.field] }}
+                  </td>
+                </tr>
+              </ng-template>
+            </p-table>
+          </div>
+        </div>
+    </p-tabView>
+  </p-tabPanel>
+  <p-tabPanel header="Header II">
+    <ng-template pTemplate="header">
+      <div class="flex align-items-center gap-2">
+        <p-avatar
+          image="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQtZPb0CUH3bFBiZv1F32Ji5inrcJaINhotNQ&s"
+          shape="circle" />
+        <span class="font-bold white-space-nowrap m-0" style="color: black">Demandes en cours</span>
+
+
+      </div>
+    </ng-template>
+    <div class="section">
+      <div class="section-header">
+        <i class="pi pi-globe"></i>
+        <h2>Demandes en cours</h2>
+      </div>
+
+      <p-table [columns]="currentRequest" [value]="userScpiList">
+        <ng-template pTemplate="header" let-columns>
+          <tr>
+            <th *ngFor="let col of columns">
+              {{ col.header }}
+            </th>
+          </tr>
+        </ng-template>
+        <ng-template pTemplate="body" let-rowData let-columns="columns">
+          <tr>
+            <td *ngFor="let col of columns">
+              {{ rowData[col.field] }}
+            </td>
+          </tr>
+        </ng-template>
+      </p-table>
+    </div>
+  </p-tabPanel>
+  <p-tabPanel header="Header II">
+    <ng-template pTemplate="header">
+      <div class="flex align-items-center gap-2">
+        <p-avatar
+          image="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRJd8Cy7QCWVZ18gL2RPYcv1AjWTMQvK74Myg&s"
+          shape="circle" />
+        <span class="font-bold white-space-nowrap m-0" style="color: black">
+                    Statistiques
+                </span>
+      </div>
+    </ng-template>
+
+    <ng-template pTemplate="content">
+    <p-card>
+      <h3 class="chart-title">Répartition Géographique</h3>
+      <app-stat-chart></app-stat-chart>
+    </p-card>
+    </ng-template>
+
+    <ng-template pTemplate="content">
+      <app-stat-chart></app-stat-chart>
+    </ng-template>
+  </p-tabPanel>
+</p-tabView>
+

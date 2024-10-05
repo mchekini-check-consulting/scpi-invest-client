@@ -1,0 +1,11 @@
+{
+  "regions": [
+    { "region": "Région A", "percentage": 30 },
+    { "region": "Région B", "percentage": 25 },
+    { "region": "Région C", "percentage": 20 },
+    { "region": "Région D", "percentage": 30 },
+    { "region": "Région E", "percentage": 25 },
+    { "region": "Région F", "percentage": 20 },
+    { "region": "Région G", "percentage": 25 }
+  ]
+}

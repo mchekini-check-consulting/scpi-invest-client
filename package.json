@@ -22,6 +22,7 @@
     "@ngx-translate/http-loader": "^8.0.0",
     "angular-oauth2-oidc": "^17.0.2",
     "chart.js": "^4.4.4",
+    "chartjs-plugin-datalabels": "^2.2.0",
     "primeng": "^17.18.10",
     "rxjs": "~7.8.0",
     "tslib": "^2.3.0",
