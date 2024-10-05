@@ -1,0 +1,37 @@
+.stat-chart-container {
+  display: flex;
+  flex-direction: column;
+  margin: 20px;
+  align-items: center;
+  width: 100%;
+}
+
+.top-charts {
+  display: flex;
+  justify-content: space-between;
+  gap: 20px;
+  width: 90%;
+  margin-bottom: 20px;
+}
+
+.chart-card {
+  flex: 1;
+  background-color: #fff;
+  border-radius: 8px;
+  padding: 20px;
+  text-align: center;
+}
+
+.chart-card.half-width {
+  max-width: 46%;
+}
+
+.full-width {
+  width: 90%;
+}
+
+.chart-title {
+  font-size: 1.5rem;
+  color: #333;
+  margin-bottom: 15px;
+}
