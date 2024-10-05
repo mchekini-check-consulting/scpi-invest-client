@@ -61,8 +61,8 @@ export class StatChartComponent implements OnInit {
 
   private loadSectorData() {
     this.statScpiService.getSecteurScpiService().subscribe((response: any) => {
-        const data = response.secteurs;
-        this.prepareChartData(data, 'secteur');
+        const data = response.sectors;
+        this.prepareChartData(data, 'sector');
       },
       (error) => {
         console.error('Erreur lors du chargement des données de secteur', error);
@@ -96,13 +96,21 @@ export class StatChartComponent implements OnInit {
             documentStyle.getPropertyValue('--blue-500'),
             documentStyle.getPropertyValue('--yellow-500'),
             documentStyle.getPropertyValue('--green-500'),
-            documentStyle.getPropertyValue('--red-500')
+            documentStyle.getPropertyValue('--red-500'),
+            documentStyle.getPropertyValue('--purple-500'),
+            documentStyle.getPropertyValue('--orange-500'),
+            documentStyle.getPropertyValue('--cyan-500'),
+            documentStyle.getPropertyValue('--pink-500')
           ],
           hoverBackgroundColor: [
             documentStyle.getPropertyValue('--blue-400'),
             documentStyle.getPropertyValue('--yellow-400'),
             documentStyle.getPropertyValue('--green-400'),
-            documentStyle.getPropertyValue('--red-400')
+            documentStyle.getPropertyValue('--red-400'),
+            documentStyle.getPropertyValue('--purple-400'),
+            documentStyle.getPropertyValue('--orange-400'),
+            documentStyle.getPropertyValue('--cyan-400'),
+            documentStyle.getPropertyValue('--pink-400')
           ]
         }
       ]
