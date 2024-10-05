@@ -1,0 +1,41 @@
+{
+  "id": 1,
+  "name": "Transitions Europe",
+  "minimumSubscription": 5000,
+  "capitalization": 289000000,
+  "manager": "Arkea REIM",
+  "subscriptionFees": 10,
+  "managementFees": 10,
+  "delayBenefit": 5,
+  "rentFrequency": "Trimestrielle",
+  "distributionRate": {
+    "2023": 8.16,
+    "2022": 7.5,
+    "2021": 9.15,
+    "2020": 5.9
+  },
+  "reconstitutionValue": {
+    "2022": 199.95,
+    "2023": 208.35,
+    "2024": 205.37
+  },
+  "prices": {
+    "2022": 200.0,
+    "2023": 200.0,
+    "2024": 200.0
+  },
+  "localizations": {
+    "Allemagne": 6.0,
+    "Espagne": 24.0,
+    "Pays-bas": 47.0,
+    "Irlande": 12.0,
+    "Pologne": 11.0
+  },
+  "sectors": {
+    "Hotels": 18.0,
+    "Bureaux": 46.0,
+    "Commerce": 9.0,
+    "Logistique": 9.0,
+    "Sante": 18.0
+  }
+}

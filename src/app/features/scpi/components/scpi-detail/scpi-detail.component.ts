@@ -8,6 +8,7 @@ import {ChartModule} from "primeng/chart";
 import {TabViewModule} from "primeng/tabview";
 import {InputNumberModule} from "primeng/inputnumber";
 import {FormsModule} from "@angular/forms";
+import {ScpiDetailModel} from "../../../../core/model/scpi-detail.model";
 
 @Component({
   selector: 'app-scpi-detail',
@@ -28,101 +29,132 @@ import {FormsModule} from "@angular/forms";
 })
 export class ScpiDetailComponent implements OnInit {
 
-  distributionData: any;
-  chartOptions: any;
+  scpiDetail!:ScpiDetailModel;
 
-  strategyData: any;
-  chartOptions2: any;
+  distributionData: any;
+  chartDistributionRateOptions: any;
+
+  sectorStrategyData: any;
+  chartSectorStrategyOptions: any;
+
+  geoZoneData:any;
+  chartZoneGeoOptions: any;
+
+  scpiPartPrice!:number;
+  scpiReconstitutionPrice!: number;
+
 
   constructor(private route: ActivatedRoute, private scpiService: ScpiService) {
   }
 
+
+
   ngOnInit(): void {
-
-
-
     const id: number = Number(this.route.snapshot.paramMap.get('id'));
-    this.scpiService.getScpiById(id).subscribe(data => {
-      this.distributionData = {
-        labels: ['2019', '2020', '2021', '2022', '2023'],
-        datasets: [
-          {
-            label: 'Distribution',
-            data: [6.1, 6.2, 6.25, 6.3, 6.15],
-            fill: true,
-            borderColor: '#2e70fa',
-            backgroundColor: 'rgba(46, 112, 250, 0.2)',
-            tension: 0.1
-          }
-        ]
-      };
 
-      // @ts-ignore
-      this.chartOptions = {
-        scales: {
-          y: {
-            beginAtZero: true,
-            ticks: {
-              callback: function(value: string) {
-                return value + ' %';
-              }
-            }
-          }
-        },
-        plugins: {
-          legend: {
-            display: false
-          }
-        }
-      };
+    this.scpiService.getScpiById(id).subscribe(data => {
+     this.scpiDetail = data;
+     this.setDistributionChartData(data.distributionRate);
+     this.setSectorStrategyChartData(data.sectors);
+     this.setZoneGeoChartData(data.localizations)
+     this.initDifferentScpiValueFromScpiDetail();
     });
 
-    this.strategyData = {
-      labels: ['Bureaux', 'Commerces', 'Locaux d\'activités', 'Autre'],
+  }
+
+  isCurrentPriceInteresting() {
+    const priceValues = Object.values(this.scpiDetail.prices);
+    const reconstitutionValues  = Object.values(this.scpiDetail.reconstitutionValue)
+    if (priceValues[priceValues.length-1] > reconstitutionValues[reconstitutionValues.length-1] ) {
+      return "Intéressant";
+    } else {
+      return "Pas Intéressant";
+    }
+  }
+
+  initDifferentScpiValueFromScpiDetail():void {
+    this.scpiPartPrice = Object.values(this.scpiDetail.prices).slice(-1)[0];
+    this.scpiReconstitutionPrice = Object.values(this.scpiDetail.reconstitutionValue).slice(-1)[0];
+  }
+
+  setZoneGeoChartData(zoneGeo:{}):void{
+    this.geoZoneData = {
+      labels: Object.keys(zoneGeo),
       datasets: [
         {
-          data: [50, 31, 20, 1],
-          backgroundColor: ['#FFEB3B', '#1E88E5', '#AB47BC', '#BDBDBD'],
-          hoverBackgroundColor: ['#FDD835', '#1976D2', '#8E24AA', '#9E9E9E']
+          data: Object.values(zoneGeo),
+          backgroundColor: ['#FFEB3B', '#1E88E5', '#AB47BC', '#BDBDBD','#CC65B4'],
+          hoverBackgroundColor: ['#FDD835', '#1976D2', '#8E24AA', '#9E9E9E','#CC65B4']
         }
       ]
     };
 
-    this.chartOptions2 = {
+    this.chartZoneGeoOptions = {
       plugins: {
         legend: {
-          display: false  // On cache la légende du graphique car elle est personnalisée en bas
+          display: true,
+        }
+      }
+    };
+  }
+
+  setSectorStrategyChartData(sectors:{}):void{
+    this.sectorStrategyData = {
+      labels: Object.keys(sectors),
+      datasets: [
+        {
+          data: Object.values(sectors),
+          backgroundColor: ['#FFEB3B', '#1E88E5', '#AB47BC', '#BDBDBD','#CC65B4'],
+          hoverBackgroundColor: ['#FDD835', '#1976D2', '#8E24AA', '#9E9E9E','#CC65B4']
+        }
+      ]
+    };
+
+    this.chartSectorStrategyOptions = {
+      plugins: {
+        legend: {
+          display: true,
         }
       }
     };
   }
 
 
+  setDistributionChartData(distributionRate:{}):void{
+    this.distributionData = {
+      labels: Object.keys(distributionRate),
+      datasets: [
+        {
+          label: 'Distribution',
+          data: Object.values(distributionRate),
+          fill: true,
+          borderColor: '#2e70fa',
+          backgroundColor: 'rgba(46, 112, 250, 0.2)',
+          tension: 0.1
+        }
+      ]
+    };
 
-  parts: number = 25;
-  investedAmount: number = 5000;
-  monthlyRevenue: number = 34;
-  cashback: number = 150;
 
-  geoChartData = {
-    labels: ['Allemagne', 'Espagne', 'Pays-bas', 'Irlande', 'Pologne'],
-    datasets: [
-      {
-        data: [6, 24, 47, 12, 11],
-        backgroundColor: ['#FF6384', '#36A2EB', '#FFCE56', '#4BC0C0', '#9966FF'],
+    this.chartDistributionRateOptions = {
+      scales: {
+        y: {
+          beginAtZero: true,
+          ticks: {
+            callback: function(value: string) {
+              return value + ' %';
+            }
+          }
+        }
       },
-    ],
-  };
+      plugins: {
+        legend: {
+          display: false
+        }
+      }
+    };
 
-  strategyChartData = {
-    labels: ['Bureaux', 'Hôtels', 'Commerce', 'Logistique', 'Santé'],
-    datasets: [
-      {
-        data: [46, 18, 9, 9, 18],
-        backgroundColor: ['#FF6384', '#36A2EB', '#FFCE56', '#4BC0C0', '#9966FF'],
-      },
-    ],
-  };
+  }
 
 
 }

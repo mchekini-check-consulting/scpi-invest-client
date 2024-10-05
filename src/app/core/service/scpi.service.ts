@@ -15,8 +15,8 @@ export class ScpiService {
     return this.http.get<ScpiModel[]>("api/v1/scpi");
   }
 
-
   getScpiById(id: number): Observable<ScpiDetailModel> {
-    return this.http.get<ScpiDetailModel>("api/v1/scpi/" + id);
+    return this.http.get<ScpiDetailModel>("api/v1/scpi/"+id);
+
   }
 }
