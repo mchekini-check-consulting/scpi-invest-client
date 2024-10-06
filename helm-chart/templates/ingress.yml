@@ -4,8 +4,6 @@ metadata:
   name: scpi-invest-client
   annotations:
     nginx.ingress.kubernetes.io/proxy-connect-timeout: "600"
-    nginx.ingress.kubernetes.io/proxy-read-timeout: "600"
-    nginx.ingress.kubernetes.io/proxy-send-timeout: "600"
 spec:
   ingressClassName: nginx
   rules:
@@ -16,6 +14,6 @@ spec:
             pathType: Prefix
             backend:
               service:
-                name: scpi-invest-front
+                name: scpi-invest-inexistant
                 port:
                   number: 80
