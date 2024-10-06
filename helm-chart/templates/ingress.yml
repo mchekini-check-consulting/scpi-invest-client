@@ -3,7 +3,7 @@ kind: Ingress
 metadata:
   name: scpi-invest-client
   annotations:
-    nginx.ingress.kubernetes.io/ssl-redirect: 'false'
+    nginx.ingress.kubernetes.io/ssl-redirect: "true"
 spec:
   ingressClassName: nginx
   rules:
@@ -17,3 +17,7 @@ spec:
                 name: scpi-invest-front
                 port:
                   number: 80
+  tls:
+    - hosts:
+        - scpi-invest.check-consulting.net
+      secretName: scpi-invest-front-tls
