@@ -1,0 +1,13 @@
+{
+  "evolutionPrices": [
+    { "year": 2021, "sectorPrice": 150, "regionPrice": 140 },
+    { "year": 2022, "sectorPrice": 160, "regionPrice": 150 },
+    { "year": 2023, "sectorPrice": 170, "regionPrice": 160 },
+    { "year": 2024, "sectorPrice": 150, "regionPrice": 140 },
+    { "year": 2025, "sectorPrice": 160, "regionPrice": 150 },
+    { "year": 2026, "sectorPrice": 170, "regionPrice": 160 },
+    { "year": 2027, "sectorPrice": 180, "regionPrice": 175 }
+  ]
+}
+
+

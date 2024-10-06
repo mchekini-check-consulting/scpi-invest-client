@@ -111,9 +111,17 @@
                 </span>
       </div>
     </ng-template>
-    <p>
-      Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium...
-    </p>
+
+    <ng-template pTemplate="content">
+    <p-card>
+      <h3 class="chart-title">Répartition Géographique</h3>
+      <app-stat-chart></app-stat-chart>
+    </p-card>
+    </ng-template>
+
+    <ng-template pTemplate="content">
+      <app-stat-chart></app-stat-chart>
+    </ng-template>
   </p-tabPanel>
 </p-tabView>
 

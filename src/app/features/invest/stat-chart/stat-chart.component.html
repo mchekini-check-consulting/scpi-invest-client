@@ -1,0 +1,18 @@
+<div class="stat-chart-container">
+  <div class="top-charts">
+    <div class="chart-card half-width">
+      <h3 class="chart-title">Répartition Géographique</h3>
+      <p-chart type="doughnut" [data]="regionChartData" [options]="options"></p-chart>
+    </div>
+
+    <div class="chart-card half-width">
+      <h3 class="chart-title">Répartition par Secteur</h3>
+      <p-chart type="doughnut" [data]="sectorChartData" [options]="options"></p-chart>
+    </div>
+  </div>
+
+  <div class="chart-card full-width">
+    <h3 class="chart-title">Évolution des Prix des Parts</h3>
+    <p-chart type="line" [data]="evolutionChartData" [options]="options"></p-chart>
+  </div>
+</div>

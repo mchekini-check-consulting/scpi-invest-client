@@ -11,6 +11,8 @@ import {PrimeNGConfig} from "primeng/api";
 import {Button} from "primeng/button";
 import {RatingModule} from "primeng/rating";
 import {TagModule} from "primeng/tag";
+import {StatChartComponent} from "./stat-chart/stat-chart.component";
+import {CardModule} from "primeng/card";
 
 @Component({
   selector: 'app-invest',
@@ -28,7 +30,9 @@ import {TagModule} from "primeng/tag";
     Button,
     RatingModule,
     TagModule,
-    PercentPipe
+    PercentPipe,
+    StatChartComponent,
+    CardModule
   ],
   templateUrl: './invest.component.html',
   styleUrl: './invest.component.css'
