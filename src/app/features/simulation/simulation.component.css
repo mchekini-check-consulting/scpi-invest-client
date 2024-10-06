@@ -73,10 +73,14 @@
   }
   .container {
     display: flex;
+    gap: 400px;
+    align-items: center;
+  }
+  .container1 {
+    display: flex;
     gap: 10px;
     align-items: center;
   }
-
   .input-switch-container {
     display: flex;
     align-items: center; /* Aligne verticalement les éléments */
@@ -87,4 +91,18 @@
   }
   p {
     margin-top: 15px;
+  }
+  .title-editor {
+    display: flex;
+    align-items: center;
+  }
+  
+  .title-editor i {
+    margin-left: 8px;
+    cursor: pointer;
+  }
+  
+  input {
+    font-size: 1.2rem;
+    padding: 4px;
   }

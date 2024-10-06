@@ -1,13 +1,45 @@
+
+
+
+
+
+
+<div class="header">
+
+    <div class="container">
+
+        
+        <div  >
+            <span *ngIf="!isEditing" (click)="editTitle()" style="color: blue;">
+              {{ title }}
+              <i class="edit-icon"  aria-hidden="true">✏️</i> 
+         
+            </span>
+            <input *ngIf="isEditing" type="text" style="color: blue;" [(ngModel)]="title" (blur)="saveTitle()" (keyup.enter)="saveTitle()">
+          </div>
+    <p-button label="Ajouter une SCPI +" [rounded]="true" (click)="AjoutSCPI()" />
+  <!--  <button pButton type="button" label="+ Ajout SCPI" icon="pi pi-plus" class="p-button-success"></button>-->
+
+</div>
 <div class="container">
-    <!-- Bouton Simulateur -->
-    <button pButton type="button" label="Simulateur" icon="pi pi-pencil" class="p-button-primary"></button>
-  
-    <!-- Bouton Ajout SCPI -->
-    <button pButton type="button" label="+ Ajout SCPI" icon="pi pi-plus" class="p-button-success"></button>
-  
-    <!-- Toggle Switch avec texte aligné -->
-    <div class="input-switch-container">
-        <p>Voir avec mon portefeuille actuel</p>
-        <p-inputSwitch [(ngModel)]="checked"></p-inputSwitch>
+
+    <p class="overview">Vue générale</p>
+
+    <div class="container1" >
+        <p  > Voir avec mon portefeuille actuel</p>
+        <form [formGroup]="formGroup">
+            <p-selectButton 
+                [options]="stateOptions" 
+                formControlName="value" 
+                optionLabel="label" 
+                optionValue="value" />
+        </form>
+     
     </div>
 </div>
+  </div>
+
+ 
+
+
+ 
