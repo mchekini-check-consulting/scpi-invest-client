@@ -3,7 +3,8 @@ kind: Ingress
 metadata:
   name: scpi-invest-client
   annotations:
-    nginx.ingress.kubernetes.io/proxy-connect-timeout: "600"
+    nginx.ingress.kubernetes.io/rewrite-target: /
+    nginx.ingress.kubernetes.io/ssl-redirect: "false"
 spec:
   ingressClassName: nginx
   rules:
