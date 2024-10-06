@@ -72,7 +72,8 @@
           </div>
           <div class="info-item">
             <div class="info-box">
-              <h4>{{scpiDetail.capitalization}} M€</h4>
+              <h4 *ngIf="scpiDetail.capitalization == 0">Inconnue</h4>
+              <h4 *ngIf="scpiDetail.capitalization !== 0">{{scpiDetail.capitalization}} M€</h4>
               <p>Capitalisation</p>
             </div>
           </div>

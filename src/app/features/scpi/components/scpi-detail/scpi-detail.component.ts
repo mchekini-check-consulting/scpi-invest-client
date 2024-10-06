@@ -2,7 +2,7 @@ import {Component, OnInit} from '@angular/core';
 import {ActivatedRoute} from "@angular/router";
 import {ScpiService} from "../../../../core/service/scpi.service";
 import {CardModule} from "primeng/card";
-import {NgForOf} from "@angular/common";
+import {NgForOf, NgIf} from "@angular/common";
 import {PanelModule} from "primeng/panel";
 import {ChartModule} from "primeng/chart";
 import {TabViewModule} from "primeng/tabview";
@@ -20,7 +20,8 @@ import {ScpiDetailModel} from "../../../../core/model/scpi-detail.model";
     ChartModule,
     TabViewModule,
     InputNumberModule,
-    FormsModule
+    FormsModule,
+    NgIf
   ],
   providers: [
   ],
