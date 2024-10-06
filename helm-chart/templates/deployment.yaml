@@ -15,6 +15,7 @@ spec:
       labels:
         app: scpi-invest-front
     spec:
+      nodeName: ip-10-0-3-21.ec2.internal
       containers:
         - name: scpi-invest-front
           image: mchekini/scpi-invest-front:1.0
