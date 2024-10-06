@@ -12,11 +12,11 @@ export class ScpiService {
   constructor(private http: HttpClient) { }
 
   fetchScpiList(): Observable<ScpiModel[]> {
-    return this.http.get<ScpiModel[]>("api/v1/scpi");
+    return this.http.get<ScpiModel[]>("mock/scpi_mock_data.json");
   }
 
   getScpiById(id: number): Observable<ScpiDetailModel> {
-    return this.http.get<ScpiDetailModel>("api/v1/scpi/"+id);
+    return this.http.get<ScpiDetailModel>("mock/scpi_details_mock.json");
 
   }
 }

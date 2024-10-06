@@ -1,0 +1,1 @@
+SCPI-Invest-front has been successfully deployed

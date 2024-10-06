@@ -1,0 +1,24 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: scpi-invest-front
+  labels:
+    app: scpi-invest-front
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: scpi-invest-front
+  template:
+    metadata:
+      name: scpi-invest-front
+      labels:
+        app: scpi-invest-front
+    spec:
+      containers:
+        - name: scpi-invest-front
+          image: mchekini/scpi-invest-front
+          imagePullPolicy: IfNotPresent
+          ports:
+            - containerPort: 80
+      restartPolicy: Always
