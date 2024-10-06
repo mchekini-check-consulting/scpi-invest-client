@@ -1,1 +1,119 @@
-<p>invest works!</p>
+<!--<h1 class="p-10">Mon portefeuille</h1>-->
+<p-tabView styleClass="tabview-custom">
+  <p-tabPanel>
+    <ng-template pTemplate="header">
+      <div class="flex align-items-center gap-2">
+        <p-avatar
+          image="https://www.shutterstock.com/image-illustration/stack-gold-coins-steps-graduate-600nw-1831550728.jpg"
+          shape="circle" />
+        <span class="font-bold white-space-nowrap" style="color: black">
+                    Mes Investissements
+                </span>
+      </div>
+    </ng-template>
+    <div class="card">
+      <p-table  class="fixed-table" [value]="userScpiList" sortMode="multiple" [paginator]="true" [rows]="10" [totalRecords]="userScpiList.length" [tableStyle]="{'min-width': '60rem'}">
+        <ng-template pTemplate="caption">
+          <h2 class="flex align-items-center justify-content-between">
+            Mes Investissements
+          </h2>
+        </ng-template>
+        <ng-template pTemplate="header">
+          <tr>
+            <th pSortableColumn="scpiName"> Nom <p-sortIcon field="scpiName"></p-sortIcon></th>
+            <th>Image</th>
+            <th pSortableColumn="detentionPeriod"> Période de détention<p-sortIcon field="detentionPeriod"></p-sortIcon></th>
+            <th pSortableColumn="amount"> Prix d'achat <p-sortIcon field="amount"></p-sortIcon></th>
+            <th pSortableColumn="price"> Valeur actuelle <p-sortIcon field="price"></p-sortIcon></th>
+            <th pSortableColumn="distributionRate"> Taux de Distribution <p-sortIcon field="distributionRate"></p-sortIcon></th>
+          </tr>
+        </ng-template>
+        <ng-template pTemplate="body" let-product>
+          <tr>
+            <td class="name-align">{{product.scpiName}}</td>
+            <td><img class="image-scpi"  [src]="product.image" /></td>
+            <td>{{product.detentionPeriod}}</td>
+            <td>{{product.amount | currency:'EUR'}}</td>
+            <td>{{product.price | currency:'EUR'}}
+            <span>
+                <i *ngIf="product.amount > product.price" class="pi pi-arrow-down-right" style="color: #FF0000; margin-left: 5px; font-weight: 600"></i>
+                <i *ngIf="product.amount < product.price" class="pi pi-arrow-up-right" style="color: #289d28; margin-left: 5px; font-weight: 600"></i>
+              </span>
+            </td>
+            <td>{{product.distributionRate}}%</td>
+          </tr>
+        </ng-template>
+        <ng-template pTemplate="summary">
+          <div class="flex align-items-center justify-content-between">
+            Nombre total d'investissements réalisés :  {{userScpiList ? userScpiList.length : 0 }}
+          </div>
+        </ng-template>
+      </p-table>
+    </div>
+  </p-tabPanel>
+  <p-tabPanel header="Header II">
+    <ng-template pTemplate="header">
+      <div class="flex align-items-center gap-2">
+        <p-avatar
+          image="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQtZPb0CUH3bFBiZv1F32Ji5inrcJaINhotNQ&s"
+          shape="circle" />
+        <span class="font-bold white-space-nowrap m-0" style="color: black">Demandes en cours</span>
+
+        <span class="notification">
+            {{ userScpiList.length }}
+        </span>
+
+      </div>
+    </ng-template>
+    <div class="card">
+      <p-table class="fixed-table" [value]="userScpiList" sortMode="multiple" [paginator]="true" [rows]="10" [totalRecords]="userScpiList.length" [tableStyle]="{'min-width': '60rem'}">
+        <ng-template pTemplate="caption">
+          <h2 class="flex align-items-center justify-content-between">
+            Demandes en cours de traitement
+          </h2>
+        </ng-template>
+        <ng-template pTemplate="header">
+          <tr>
+            <th pSortableColumn="scpiName"> Nom <p-sortIcon field="scpiName"></p-sortIcon></th>
+            <th>Image</th>
+            <th pSortableColumn="transactionDate"> Date d'achat <p-sortIcon field="transactionDate"></p-sortIcon></th>
+            <th pSortableColumn="amount"> Prix d'achat <p-sortIcon field="amount"></p-sortIcon></th>
+            <th>Status</th>
+            <th pSortableColumn="distributionRate"> Taux de Distribution <p-sortIcon field="distributionRate"></p-sortIcon></th>
+          </tr>
+        </ng-template>
+        <ng-template pTemplate="body" let-product>
+          <tr>
+            <td class="name-align">{{product.scpiName}}</td>
+            <td><img class="image-scpi" [src]="product.image"/></td>
+            <td>{{product.transactionDate | date : 'dd MMM yyyy'}}</td>
+            <td>{{product.amount | currency:'EUR'}}</td>
+            <td><p-tag value="{{product.status}}" severity="info"></p-tag></td>
+            <td>{{product.distributionRate}}%</td>
+          </tr>
+        </ng-template>
+        <ng-template pTemplate="summary">
+          <div class="flex align-items-center justify-content-between">
+            Nombre de demandes en cours :  {{userScpiList ? userScpiList.length : 0 }}
+          </div>
+        </ng-template>
+      </p-table>
+    </div>
+  </p-tabPanel>
+  <p-tabPanel header="Header II">
+    <ng-template pTemplate="header">
+      <div class="flex align-items-center gap-2">
+        <p-avatar
+          image="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRJd8Cy7QCWVZ18gL2RPYcv1AjWTMQvK74Myg&s"
+          shape="circle" />
+        <span class="font-bold white-space-nowrap m-0" style="color: black">
+                    Statistiques
+                </span>
+      </div>
+    </ng-template>
+    <p>
+      Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium...
+    </p>
+  </p-tabPanel>
+</p-tabView>
+

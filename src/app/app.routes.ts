@@ -8,6 +8,7 @@ export const routes: Routes = [
 
   {
     path: '', component: TemplateComponent, children: [
+      {path: '', component: ScpiComponent},
       {path: 'scpi', component: ScpiComponent},
       {path: 'scpi/:id', component: ScpiDetailComponent },
       {path: 'invest', component: InvestComponent}

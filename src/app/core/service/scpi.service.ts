@@ -3,6 +3,7 @@ import { Observable} from "rxjs";
 import {ScpiModel} from "../model/scpi.model";
 import {HttpClient} from "@angular/common/http";
 import {ScpiDetailModel} from "../model/scpi-detail.model";
+import {UserScpiModel} from "../model/user-scpi.model";
 
 @Injectable({
   providedIn: 'root'
@@ -18,5 +19,10 @@ export class ScpiService {
   getScpiById(id: number): Observable<ScpiDetailModel> {
     return this.http.get<ScpiDetailModel>("api/v1/scpi/" + id);
 
+  }
+
+  userScpiService() : Observable<UserScpiModel[]> {
+
+    return this.http.get<UserScpiModel[]>("mock/user_data.json");
   }
 }
