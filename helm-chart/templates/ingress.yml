@@ -7,7 +7,7 @@ metadata:
 spec:
   ingressClassName: nginx
   rules:
-    - host: test.check-consulting.net
+    - host: scpi-invest.check-consulting.net
       http:
         paths:
           - path: /
