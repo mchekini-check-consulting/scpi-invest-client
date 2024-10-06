@@ -14,6 +14,6 @@ spec:
             pathType: Prefix
             backend:
               service:
-                name: scpi-invest-inexistant
+                name: scpi-invest-front
                 port:
                   number: 80
