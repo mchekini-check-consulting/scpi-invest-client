@@ -1,6 +1,6 @@
 export interface UserScpiModel {
   scpiName : String;
-  detentionPeriod :String;
+  detentionPeriod :Number;
   amount : Number;
   status : String;
   price: Number;
