@@ -1,7 +1,7 @@
 [
   {
     "scpiName" : "Elevation Tertiom",
-    "detentionPeriod" : "4 mois",
+    "detentionPeriod" : 12,
     "amount" : 1200,
     "status" : "En cours",
     "price": 400,
@@ -11,7 +11,7 @@
   },
   {
     "scpiName" : "Transitions Europe",
-    "detentionPeriod" : "2 ans",
+    "detentionPeriod" : 24,
     "amount" : 1800,
     "status" : "En cours",
     "price": 4560,
@@ -21,7 +21,7 @@
   },
   {
     "scpiName" : "Activimmo",
-    "detentionPeriod" : "5 ans",
+    "detentionPeriod" : 61,
     "amount" : 2000,
     "status" : "En cours",
     "price": 3000,
@@ -31,7 +31,7 @@
   },
   {
     "scpiName" : "Iroko Zen",
-    "detentionPeriod" : "18 mois",
+    "detentionPeriod" : 9,
     "amount" : 100,
     "status" : "En cours",
     "price": 400,
