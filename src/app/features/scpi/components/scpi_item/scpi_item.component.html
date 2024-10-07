@@ -1,23 +1,29 @@
 <div class="card-container">
-  <div class="investment-card" >
-    <div class="card-header">
-      <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcT0H5C7w7wxMcMTzshWJyXPOEcvarJt1pOcaw-z_YNYP51JqzhoRevhf8mH1H0-J4vOsLU&usqp=CAU" alt="Image" class="card-image">
-      <h3 class="card-title">{{scpi?.name}}</h3>
-      <div class="card-rating">⭐⭐⭐⭐⭐ 31 notes</div>
+        <div class="investment-card" >
+            <div class="card-header">
+                <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcT0H5C7w7wxMcMTzshWJyXPOEcvarJt1pOcaw-z_YNYP51JqzhoRevhf8mH1H0-J4vOsLU&usqp=CAU" alt="Image" class="card-image">
+                <h3 class="card-title">{{scpi?.name}}</h3>
+                <div class="card-rating">⭐⭐⭐⭐⭐ 31 notes</div>
+            </div>
+            <div class="card-body">
+                <div class="card-category">{{scpi?.sector}}</div>
+                <div class="card-location">
+                    <img src="img/flags/{{getCountryCode(scpi?.localization!) }}.png" alt="France/Europe"> {{scpi?.localization}}
+                </div>
+                <div class="card-details">
+                    <span class="card-yield">{{scpi?.lastYearDistributionRate}} %</span>
+                    <span class="card-minimum">{{scpi?.minimumSubscription}} € Minimum</span>
+                </div>
+            </div>
+            <div *ngIf="fromWhere!=='form'; else none" class="card-footer">
+                <button class="card-btn" (click)="showScpiDetails(scpi)">Voir plus</button>
+                <button *ngIf="fromWhere==='simulation'; else investButton" (click)=investAddBtn(scpi)  class="card-btn invest">Ajouter</button>
+                <ng-template #investButton>
+                    <button *ngIf="fromWhere==='invest'; else none" class="card-btn invest" (click)=investAddBtn(scpi) >Investir</button>
+                </ng-template>
+            </div>
+
+            <ng-template #none></ng-template>
+
+        </div>
     </div>
-    <div class="card-body">
-      <div class="card-category">{{scpi?.sector}}</div>
-      <div class="card-location">
-        <img src="img/flags/{{getCountryCode(scpi?.localization!) }}.png" alt="France/Europe"> {{scpi?.localization}}
-      </div>
-      <div class="card-details">
-        <span class="card-yield">{{scpi?.lastYearDistributionRate}} %</span>
-        <span class="card-minimum">{{scpi?.minimumSubscription}} € Minimum</span>
-      </div>
-    </div>
-    <div class="card-footer">
-      <button class="card-btn" (click)="showScpiDetails(scpi)">Voir plus</button>
-      <button class="card-btn invest">Investir</button>
-    </div>
-  </div>
-</div>
