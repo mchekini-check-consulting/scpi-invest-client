@@ -32,7 +32,7 @@
           <tr>
             <td class="name-align">{{product.scpiName}}</td>
             <td><img class="image-scpi"  [src]="product.image" /></td>
-            <td>{{product.detentionPeriod}}</td>
+            <td>{{product.detentionPeriod | period}}</td>
             <td>{{product.amount | currency:'EUR'}}</td>
             <td>{{product.price | currency:'EUR'}}
             <span>

@@ -13,6 +13,7 @@ import {RatingModule} from "primeng/rating";
 import {TagModule} from "primeng/tag";
 import {StatChartComponent} from "./stat-chart/stat-chart.component";
 import {CardModule} from "primeng/card";
+import {PeriodPipe} from "../../core/pipe/period.pipe";
 
 @Component({
   selector: 'app-invest',
@@ -32,7 +33,8 @@ import {CardModule} from "primeng/card";
     TagModule,
     PercentPipe,
     StatChartComponent,
-    CardModule
+    CardModule,
+    PeriodPipe
   ],
   templateUrl: './invest.component.html',
   styleUrl: './invest.component.css'
