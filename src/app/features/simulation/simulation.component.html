@@ -1,0 +1,75 @@
+<div class="scpi-component">
+  <div class="header">
+    <h2 class="title">
+      {{ title }}
+      <span class="edit-icon">
+        <i (click)="showEditDialog()" class="fa fa-pencil"></i>
+      </span>
+    </h2>
+    <button (click)="showScpiDialog()" class="add-button">
+      Ajouter une SCPI
+      <span class="plus-icon">+</span>
+    </button>
+  </div>
+
+  <div class="content">
+    <div class="portfolio-options">
+      <span class="spa-v">Voir avec mon portefeuille actuel</span>
+      <div class="p-selection">
+        <p-selectButton
+          [(ngModel)]="includeActualPort"
+          [options]="stateOptions"
+          optionLabel="label"
+          optionValue="value"
+        />
+      </div>
+
+    </div>
+  </div>
+
+  <p-dialog [(visible)]="EditDialogvisible" [modal]="true" [style]="{ width: '25rem' }" header="Titre">
+    <div class="flex align-items-center gap-3 mb-3">
+      <input (change)="editTitle($event)" autocomplete="off" class="flex-auto" pInputText/>
+    </div>
+
+    <div class="flex justify-content-end gap-2">
+      <p-button (onClick)="EditDialogvisible = false" label="Save"/>
+    </div>
+  </p-dialog>
+
+  <p-dialog
+    [(visible)]="selectScpiDialogVisible"
+    [modal]="true"
+    [draggable]="false"
+    [style]="{ height:'90%',width: '90%', } "
+    header="Ajouter une scpi">
+    <div>
+      <app-scpi
+        (OnAddBtnClick)="openAddDialogForm($event)"
+        [fromWhere]="'simulation'"
+      ></app-scpi>
+    </div>
+
+  </p-dialog>
+
+
+  <p-dialog
+    [showHeader]="true"
+    [closable]="true"
+    [closeOnEscape]="true"
+    [dismissableMask]="true"
+    [(visible)]="scpiSimulationFormDialogVisible"
+    [modal]="true"
+    [style]="{ height:'100%',width: '60%', } ">
+    <div>
+      <app-add-simulation-form
+        [scpiDetails]="scpiDetail!"
+        [scpi]="scpi!"
+        (onCloseForm)="closeScpiFormDialog($event)"
+      ></app-add-simulation-form>
+    </div>
+
+  </p-dialog>
+
+</div>
+

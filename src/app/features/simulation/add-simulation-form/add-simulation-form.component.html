@@ -1,0 +1,87 @@
+<div class="global_container">
+
+    <div class="component">
+        <app-scpi-item
+                [fromWhere]="'form'"
+                [scpi]="scpi!"
+        ></app-scpi-item>
+    </div>
+
+    <div class="form_container">
+        <h2 class="title">{{ scpi.name }}</h2>
+        <div class="desc">
+            <p>
+                Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed non risus. Suspendisse lectus tortor,
+                dignissim sit amet, adipiscing nec, ultricies sed, dolor. Cras elementum ultrices diam.
+            </p>
+        </div>
+        <label class="type_property block font-bold mb-2" for="selector_detector">Type de propriété</label>
+
+        <p-dropdown
+                [(ngModel)]="selectedSectors"
+                [options]="sector"
+                [style]="{width: '24rem'}"
+                id="selector_detector"
+                optionLabel="name"
+                placeholder="Pleine propriété (Standard)"/>
+
+        <div class="flex flex-row">
+            <div class="montant ">
+                <label class="block font-bold mb-2" for="currency-europe">
+                    Montant total
+                </label>
+                <p-inputNumber
+                        [(ngModel)]="totalInvest"
+                        currency="EUR"
+                        id="currency-europe"
+                        inputId="currency-germany"
+                        locale="de-DE"
+                        mode="currency"
+                        readonly/>
+            </div>
+
+            <div class="step flex flex-column pl-4">
+                <label class="mb-2 block font-bold" for="horizontal">
+                    Nombre de parts
+                </label>
+                <p-inputNumber
+                        [(ngModel)]="partNb"
+                        [showButtons]="true"
+                        [step]="1"
+                        buttonLayout="horizontal"
+                        decrementButtonClass="null"
+                        decrementButtonIcon="pi pi-minus"
+                        id="horizontal"
+                        incrementButtonClass="null"
+                        incrementButtonIcon="pi pi-plus"
+                        inputId="horizontal"
+                        mode="decimal"
+                        spinnerMode="horizontal"/>
+            </div>
+
+        </div>
+
+        <div class="rendement">
+            <h4 class="rendement_title">
+                Votre revenu sur cet investissement
+            </h4>
+            <p class="rendement_text">
+                {{ calculateRevenus(partNb) }} €/mois
+            </p>
+
+        </div>
+
+        <div class="card_footer">
+            <button (click)="onCancelBtnClick()" class="cancel_btn">
+                <i class="pi pi-arrow-left pr-2"></i>
+                Annuler la sélection
+            </button>
+            <button class="add-button">
+                Ajouter a ma simulation
+                <span class="plus-icon">+</span>
+            </button>
+
+        </div>
+    </div>
+
+</div>
