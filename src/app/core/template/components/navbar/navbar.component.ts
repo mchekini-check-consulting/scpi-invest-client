@@ -2,6 +2,8 @@ import {Component, OnInit} from '@angular/core';
 import {TranslateModule, TranslateService} from "@ngx-translate/core";
 import {CommonModule} from "@angular/common";
 import {OAuthService} from "angular-oauth2-oidc";
+import {UserService} from "../../../service/user.service";
+import {filter} from "rxjs";
 
 interface Lang {
   name: string;
@@ -27,10 +29,16 @@ export class NavbarComponent implements OnInit{
   selectedLang: String ="Français";
   selectedFlag: string = 'img/Flag_fr.png';
 
-  username:String='';
+  username:string | undefined='';
 
-  constructor(private translate: TranslateService, private oauthService: OAuthService) {
+  constructor(private translate: TranslateService, private oauthService: OAuthService, private userService: UserService) {
     translate.setDefaultLang('fr');
+
+    this.userService.user$.subscribe(user => {
+      if (user != null)
+      this.username = user.lastName + user.firstName;
+    });
+
   }
 
   ngOnInit() {
@@ -56,6 +64,18 @@ export class NavbarComponent implements OnInit{
   }
 
   logout() {
-    this.oauthService.logOut();
+    this.deleteCookie('AUTH_SESSION_ID');
+    this.deleteCookie('AUTH_SESSION_ID_LEGACY');
+    this.deleteCookie('KEYCLOAK_IDENTITY');
+    this.deleteCookie('KEYCLOAK_IDENTITY_LEGACY');
+    this.deleteCookie('KEYCLOAK_SESSION');
+    this.deleteCookie('KEYCLOAK_SESSION_LEGACY');
+    setTimeout(() => {
+      this.logout();
+    }, 2000)
+  }
+
+  deleteCookie(name: string) {
+    document.cookie = name + '=;expires=Thu, 01 Jan 1970 00:00:01 GMT;path=/;';
   }
 }

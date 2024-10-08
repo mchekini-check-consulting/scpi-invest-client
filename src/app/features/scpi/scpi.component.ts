@@ -8,6 +8,7 @@ import {ScpiService} from "../../core/service/scpi.service";
 import {ScpiModel} from "../../core/model/scpi.model";
 import {Scpi_itemComponent} from "./components/scpi_item/scpi_item.component";
 import {Router} from "@angular/router";
+import {UserService} from "../../core/service/user.service";
 
 
 @Component({
@@ -26,7 +27,7 @@ import {Router} from "@angular/router";
 export class ScpiComponent implements OnInit{
   scpiListData : ScpiModel[] | undefined;
 
-  constructor(private scpiService:ScpiService, private router: Router) {}
+  constructor(private scpiService:ScpiService, private router: Router, private userService : UserService) {}
 
   ngOnInit() {
     this.scpiService.fetchScpiList().subscribe(data =>{
