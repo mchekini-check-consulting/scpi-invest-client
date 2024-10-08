@@ -1,0 +1,14 @@
+.header_m {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 90%;
+}
+
+p-table th {
+  background-color: white;
+  color: #7c7b7b;
+  padding: 10px;
+  border-bottom: 1px solid #ddd;
+}
+

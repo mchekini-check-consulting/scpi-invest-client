@@ -15,23 +15,37 @@
                 dignissim sit amet, adipiscing nec, ultricies sed, dolor. Cras elementum ultrices diam.
             </p>
         </div>
-        <label class="type_property block font-bold mb-2" for="selector_detector">Type de propriété</label>
 
-        <p-dropdown
-                [(ngModel)]="selectedSectors"
-                [options]="sector"
+        <div>
+          <label class="type_property block font-bold mb-2" for="selector_detector">Type de propriété </label>
+          <p-dropdown
+                [(ngModel)]="simulatedScpi.selectedProperty"
+                [options]="properties"
                 [style]="{width: '24rem'}"
                 id="selector_detector"
-                optionLabel="name"
-                placeholder="Pleine propriété (Standard)"/>
+                optionLabel="propertyLabel"
+                placeholder="{{simulatedScpi.selectedProperty.propertyLabel}}"/>
+        </div>
 
-        <div class="flex flex-row">
-            <div class="montant ">
+
+      <div *ngIf="simulatedScpi.selectedProperty.type === property_type.NUE_PROPRIETE;">
+        <label class="type_property block font-bold mb-2" for="nue_propriete_dropdown">Durée</label>
+        <p-dropdown
+          [(ngModel)]="selectedStrip"
+          [options]="stripping"
+          [style]="{width: '24rem'}"
+          id="nue_propriete_dropdown"
+          optionLabel="stipLabel"
+          placeholder="{{selectedStrip.stipLabel}}"/>
+      </div>
+
+        <div class="flex flex-row flex-wrap">
+            <div class="montant pr-4">
                 <label class="block font-bold mb-2" for="currency-europe">
                     Montant total
                 </label>
                 <p-inputNumber
-                        [(ngModel)]="totalInvest"
+                        [(ngModel)]="simulatedScpi.totalInvest"
                         currency="EUR"
                         id="currency-europe"
                         inputId="currency-germany"
@@ -40,14 +54,15 @@
                         readonly/>
             </div>
 
-            <div class="step flex flex-column pl-4">
+            <div class="step flex flex-column">
                 <label class="mb-2 block font-bold" for="horizontal">
                     Nombre de parts
                 </label>
                 <p-inputNumber
-                        [(ngModel)]="partNb"
+                        [(ngModel)]="simulatedScpi.partNb"
                         [showButtons]="true"
                         [step]="1"
+                        [min]="1"
                         buttonLayout="horizontal"
                         decrementButtonClass="null"
                         decrementButtonIcon="pi pi-minus"
@@ -66,7 +81,7 @@
                 Votre revenu sur cet investissement
             </h4>
             <p class="rendement_text">
-                {{ calculateRevenus(partNb) }} €/mois
+                {{ calculateRevenus(simulatedScpi.partNb) }} €/mois
             </p>
 
         </div>
@@ -76,7 +91,7 @@
                 <i class="pi pi-arrow-left pr-2"></i>
                 Annuler la sélection
             </button>
-            <button class="add-button">
+            <button class="add-button" (click)="onAddSimulatedScpi()">
                 Ajouter a ma simulation
                 <span class="plus-icon">+</span>
             </button>
