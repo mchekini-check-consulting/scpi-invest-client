@@ -18,7 +18,6 @@ export class UserService {
 
   public loadUser() {
     const claims = this.oauthService.getIdentityClaims();
-    console.log(claims);
     if (claims) {
       this.userSubject.next({
         userName: claims['preferred_username'],
