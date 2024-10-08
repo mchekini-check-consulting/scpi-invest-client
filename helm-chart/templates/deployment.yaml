@@ -17,8 +17,8 @@ spec:
     spec:
       containers:
         - name: scpi-invest-front
-          image: mchekini/scpi-invest-front:3.0
-          imagePullPolicy: IfNotPresent
+          image: mchekini/scpi-invest-front:4.0
+          imagePullPolicy: Always
           ports:
             - containerPort: 80
       restartPolicy: Always

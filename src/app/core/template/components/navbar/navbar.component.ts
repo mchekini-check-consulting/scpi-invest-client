@@ -36,7 +36,7 @@ export class NavbarComponent implements OnInit{
 
     this.userService.user$.subscribe(user => {
       if (user != null)
-      this.username = user.lastName + user.firstName;
+      this.username = user.lastName + " " + user.firstName;
     });
 
   }
