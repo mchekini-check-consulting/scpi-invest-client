@@ -1,3 +1,4 @@
+<div class="global_container">
 <div class="scpi-component">
   <div class="header">
     <h2 class="title">
@@ -66,10 +67,18 @@
         [scpiDetails]="scpiDetail!"
         [scpi]="scpi!"
         (onCloseForm)="closeScpiFormDialog($event)"
+        (onAddScpi)="addSimulatedScpi($event)"
       ></app-add-simulation-form>
     </div>
-
   </p-dialog>
+</div>
+
+  <div class="details"  *ngIf="simulatedScpiList.length > 0">
+    <h2>Détails</h2>
+    <app-scpi-simulation class="details-item" *ngFor="let scpi of simulatedScpiList"
+                          [simulatedScpi]="scpi"
+    ></app-scpi-simulation>
+  </div>
 
 </div>
 

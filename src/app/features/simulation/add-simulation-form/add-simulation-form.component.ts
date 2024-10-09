@@ -7,28 +7,13 @@ import {ScpiDetailModel} from "../../../core/model/scpi-detail.model";
 import {NgIf} from "@angular/common";
 import {DropdownModule} from "primeng/dropdown";
 import {ScpiModel} from "../../../core/model/scpi.model";
+import {Property, property_type, SimulatedScpiModel} from "../../../core/model/scpi-simulated.model";
 
-
-enum property_type {
-  PLEINE_PROPRIETE,
-  NUE_PROPRIETE
-}
-interface Property {
-  type: property_type;
-  propertyLabel: string;
-}
 
 interface Stripping {
   time: number;
   percent : number;
   stipLabel : string;
-}
-
-interface SimulatedScpi {
-  selectedProperty: Property;
-  totalInvest: number;
-  partNb: number;
-  monthlyIncomes: number;
 }
 
 @Component({
@@ -49,13 +34,11 @@ export class AddSimulationFormComponent implements OnInit {
   @Input() scpiDetails!:ScpiDetailModel;
   @Input() scpi!:ScpiModel;
   @Output("onCloseForm") onCloseForm = new EventEmitter<boolean>();
-  // @Output("onAddScpi") onAddScpi = new EventEmitter<ScpiDetailModel>();
-
-  protected readonly property_type = property_type;
+  @Output("onAddScpi") onAddScpi = new EventEmitter<SimulatedScpiModel>();
 
   // Sector
   properties!: Property[];
-  simulatedScpi!: SimulatedScpi;
+  simulatedScpi!: SimulatedScpiModel;
 
   // Delay
   selectedStrip!: Stripping;
@@ -84,6 +67,8 @@ export class AddSimulationFormComponent implements OnInit {
 
 
     this.simulatedScpi = {
+      scpi_id : -1,
+      name : '',
       selectedProperty: this.properties[0],
       totalInvest : 0,
       partNb: 1,
@@ -120,6 +105,11 @@ export class AddSimulationFormComponent implements OnInit {
   }
 
   onAddSimulatedScpi() {
-    console.log(this.simulatedScpi);
+    this.simulatedScpi.scpi_id = this.scpiDetails.id;
+    this.simulatedScpi.name = this.scpi.name;
+
+    this.onAddScpi.emit(this.simulatedScpi);
   }
+
+  protected readonly property_type = property_type;
 }

@@ -100,3 +100,14 @@
   justify-content: center;
   text-align: center;
 }
+
+.details {
+  border: 1px solid red;
+}
+
+/*.details-item {*/
+/*  display: flex;*/
+/*  align-content: space-between;*/
+/*  width: 100%*/
+/*}*/
+
