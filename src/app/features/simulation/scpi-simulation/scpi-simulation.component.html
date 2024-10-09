@@ -1,5 +1,5 @@
 <p-panel [toggleable]="true">
-  <ng-template pTemplate="header">
+  <ng-template pTemplate="header" style="display:flex; align-content: space-between;" >
 
     <div class="header_m">
       <div class="flex">
@@ -8,19 +8,19 @@
         size="large"
         shape="circle" />
       </div>
-      <p class="flex font-bold"> {{simulatedScpi.name}} </p>
-      <p class="flex font-bold">- {{simulatedScpi.partNb}} parts </p>
-      <p class="flex font-bold">{{simulatedScpi.totalInvest}} €</p>
-      <p class="flex font-bold">{{simulatedScpi.monthlyIncomes}}€/mois</p>
+      <div class="flex font-bold"> {{simulatedScpi.name}} </div>
+      <div class="flex font-bold">- {{simulatedScpi.partNb}} parts </div>
+      <div class="flex font-bold">{{simulatedScpi.totalInvest}} €</div>
+      <div class="flex font-bold">{{simulatedScpi.monthlyIncomes}}€/mois</div>
     </div>
 
 
   </ng-template>
-  <ng-template pTemplate="icons">
-    <button class="p-panel-header-icon p-link mr-2" (click)="menu.toggle($event)">
-    </button>
-    <p-menu #menu id="config_menu" [model]="items" [popup]="true" />
-  </ng-template>
+<!--  <ng-template pTemplate="icons">-->
+<!--    <button class="p-panel-header-icon p-link mr-2" (click)="menu.toggle($event)">-->
+<!--    </button>-->
+<!--    <p-menu #menu id="config_menu" [model]="items" [popup]="true" />-->
+<!--  </ng-template>-->
   <p class="m-0">
     Lorem ipsum dolor sit amet...
   </p>

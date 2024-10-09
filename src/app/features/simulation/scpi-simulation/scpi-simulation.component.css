@@ -1,9 +1,6 @@
 .header_m {
-  display : flex;
-  flex-direction: row;
+  display: flex;
+  justify-content: space-between;
   align-items: center;
-  align-content: space-between;
-  border: 1px solid green;
   width: 90%;
-  flex-wrap: wrap;
 }
