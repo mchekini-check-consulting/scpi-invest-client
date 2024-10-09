@@ -63,12 +63,12 @@
     [modal]="true"
     [style]="{ height:'100%',width: '60%', } ">
     <div>
-      <app-add-simulation-form
-        [scpiDetails]="scpiDetail!"
-        [scpi]="scpi!"
-        (onCloseForm)="closeScpiFormDialog($event)"
-        (onAddScpi)="addSimulatedScpi($event)"
-      ></app-add-simulation-form>
+<!--      <app-add-simulation-form-->
+<!--      [scpiDetails]="scpiDetail!"-->
+<!--      [scpi]="scpi!"-->
+<!--      (onCloseForm)="closeScpiFormDialog($event)"-->
+<!--      (onAddScpi)="addSimulatedScpi($event)"-->
+<!--    ></app-add-simulation-form>-->
     </div>
   </p-dialog>
 </div>
@@ -76,21 +76,27 @@
   <div class="vue_general">
     <div class="chart_1">
       <div class="data">
-        <div>
+        <div class="data_info">
           <p>Valeur total</p>
           <p>450</p>
         </div>
-        <div>
+        <div class="data_info">
           <p>Revenus</p>
           <p>3€/mois</p>
         </div>
       </div>
       <div class="chart_scpi_name">
+        <p-chart  type="doughnut" [width]="'400'" [data]="data" [options]="options" />
       </div>
     </div>
-    <div class="chart_2">
-      <div class="chart_scpi_pays"></div>
-      <div class="chart_scpi_secteur"></div>
+    <div class="chart_2" style="align-content: space-between">
+      <div class="chart_scpi_pays">
+        <p-chart  type="doughnut" [width]="'400'" [data]="data" [options]="options" />
+
+      </div>
+      <div class="chart_scpi_secteur">
+        <p-chart  type="doughnut" [width]="'400'" [data]="data" [options]="options" />
+      </div>
     </div>
   </div>
 
@@ -103,10 +109,5 @@
     ></app-scpi-simulation>
   </div>
 
-</div>
-
-
-<div class="card flex justify-content-center">
-  <p-chart type="pie" [data]="data" [options]="options" />
 </div>
 
