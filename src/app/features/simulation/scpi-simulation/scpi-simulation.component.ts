@@ -1,12 +1,27 @@
-import {Component, Input, OnInit} from '@angular/core';
-import {SimulatedScpiModel} from "../../../core/model/scpi-simulated.model";
+import {Component, Input} from '@angular/core';
+import {property_type, SimulatedScpiModel} from "../../../core/model/scpi-simulated.model";
 import {DropdownModule} from "primeng/dropdown";
 import {FormsModule} from "@angular/forms";
 import {PanelModule} from "primeng/panel";
 import {AvatarModule} from "primeng/avatar";
 import {Button} from "primeng/button";
 import {MenuModule} from "primeng/menu";
+import {TableModule} from "primeng/table";
+import {NgIf} from "@angular/common";
 
+
+interface ProductModel {
+  id: string;
+  code: string;
+  name: string;
+  description: string;
+  image: string;
+  price: number;
+  category: string;
+  quantity: number;
+  inventoryStatus: string;
+  rating: number;
+}
 @Component({
   selector: 'app-scpi-simulation',
   standalone: true,
@@ -16,35 +31,16 @@ import {MenuModule} from "primeng/menu";
     PanelModule,
     AvatarModule,
     Button,
-    MenuModule
+    MenuModule,
+    TableModule,
+    NgIf
   ],
   templateUrl: './scpi-simulation.component.html',
   styleUrl: './scpi-simulation.component.css'
 })
-export class ScpiSimulationComponent  implements OnInit{
+export class ScpiSimulationComponent {
 
-  @Input() simulatedScpi!: SimulatedScpiModel;
-  items: any;
+  @Input() simulatedScpi!: SimulatedScpiModel[];
 
-   ngOnInit() {
-
-     this.items = [
-       {
-         label: 'Refresh',
-         icon: 'pi pi-refresh'
-       },
-       {
-         label: 'Search',
-         icon: 'pi pi-search'
-       },
-       {
-         separator: true
-       },
-       {
-         label: 'Delete',
-         icon: 'pi pi-times'
-       }
-     ];
-   }
-
+  protected readonly property_type = property_type;
 }

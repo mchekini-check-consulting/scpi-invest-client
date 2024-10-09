@@ -73,12 +73,40 @@
   </p-dialog>
 </div>
 
+  <div class="vue_general">
+    <div class="chart_1">
+      <div class="data">
+        <div>
+          <p>Valeur total</p>
+          <p>450</p>
+        </div>
+        <div>
+          <p>Revenus</p>
+          <p>3€/mois</p>
+        </div>
+      </div>
+      <div class="chart_scpi_name">
+      </div>
+    </div>
+    <div class="chart_2">
+      <div class="chart_scpi_pays"></div>
+      <div class="chart_scpi_secteur"></div>
+    </div>
+  </div>
+
+
+
   <div class="details"  *ngIf="simulatedScpiList.length > 0">
-    <h2>Détails</h2>
+    <p style="font-weight: 700; font-size: 28px; margin: 24px 24px">Détails</p>
     <app-scpi-simulation class="details-item" *ngFor="let scpi of simulatedScpiList"
                           [simulatedScpi]="scpi"
     ></app-scpi-simulation>
   </div>
 
+</div>
+
+
+<div class="card flex justify-content-center">
+  <p-chart type="pie" [data]="data" [options]="options" />
 </div>
 

@@ -1,3 +1,5 @@
+import {ReconstitutionValue} from "./scpi-detail.model";
+
 export enum property_type {
   PLEINE_PROPRIETE,
   NUE_PROPRIETE
@@ -14,4 +16,5 @@ export interface SimulatedScpiModel {
   totalInvest: number;
   partNb: number;
   monthlyIncomes: number;
+  reconstitutionValue : number;
 }

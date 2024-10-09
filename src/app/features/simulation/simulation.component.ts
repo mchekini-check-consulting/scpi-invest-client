@@ -13,6 +13,7 @@ import {ScpiDetailModel} from "../../core/model/scpi-detail.model";
 import {ScpiService} from "../../core/service/scpi.service";
 import {SimulatedScpiModel} from "../../core/model/scpi-simulated.model";
 import {ScpiSimulationComponent} from "./scpi-simulation/scpi-simulation.component";
+import {ChartModule} from "primeng/chart";
 
 @Component({
   selector: 'app-simulation',
@@ -27,7 +28,8 @@ import {ScpiSimulationComponent} from "./scpi-simulation/scpi-simulation.compone
     CommonModule,
     ScpiComponent,
     AddSimulationFormComponent,
-    ScpiSimulationComponent
+    ScpiSimulationComponent,
+    ChartModule
   ],
   templateUrl: './simulation.component.html',
   styleUrl: './simulation.component.css'
@@ -42,14 +44,44 @@ export class SimulationComponent implements OnInit{
   EditDialogvisible: boolean = false;
   selectScpiDialogVisible: boolean = false;
   scpiSimulationFormDialogVisible: boolean = false;
-
-  simulatedScpiList!: SimulatedScpiModel[];
+  simulatedScpiList!: SimulatedScpiModel[][];
+  data: any;
+  options: any;
 
   constructor(private scpiService:ScpiService) {
   }
 
   ngOnInit(): void {
     this.simulatedScpiList = [];
+
+    const documentStyle = getComputedStyle(document.documentElement);
+    const textColor = documentStyle.getPropertyValue('--text-color');
+
+    this.data = {
+      labels: ['A', 'B', 'C'],
+      datasets: [
+        {
+          data: [540, 325, 702],
+          backgroundColor: [
+            documentStyle.getPropertyValue('--blue-500'),
+            documentStyle.getPropertyValue('--yellow-500'),
+            documentStyle.getPropertyValue('--green-500')
+          ],
+          hoverBackgroundColor: [documentStyle.getPropertyValue('--blue-400'), documentStyle.getPropertyValue('--yellow-400'), documentStyle.getPropertyValue('--green-400')]
+        }
+      ]
+    };
+
+    this.options = {
+      plugins: {
+        legend: {
+          labels: {
+            usePointStyle: true,
+            color: textColor
+          }
+        }
+      }
+    };
   }
 
 
@@ -87,26 +119,37 @@ export class SimulationComponent implements OnInit{
     )
   }
 
+
   addSimulatedScpi(simulatedScpi: SimulatedScpiModel) {
     this.scpiSimulationFormDialogVisible = false;
     this.selectScpiDialogVisible = false;
 
-    //Find if already exist
-    const index = this.simulatedScpiList.findIndex(scpi => scpi.scpi_id === simulatedScpi.scpi_id);
+    const index = this.simulatedScpiList.findIndex(scpiList =>
+      scpiList.some(scpi => scpi.scpi_id === simulatedScpi.scpi_id)
+    );
 
-    if(index === -1) {
-      this.simulatedScpiList.push({...simulatedScpi});
+    if (index === -1) {
+      console.log(this.simulatedScpiList);
+      this.simulatedScpiList.push([{ ...simulatedScpi }]);
+
+    } else {
+      const existingScpiIndex = this.simulatedScpiList[index].findIndex(scpi =>
+        scpi.selectedProperty.propertyLabel === simulatedScpi.selectedProperty.propertyLabel
+      );
+
+
+      if (existingScpiIndex === -1) {
+        this.simulatedScpiList[index].push({ ...simulatedScpi });
+
+      } else {
+        const existingScpi = this.simulatedScpiList[index][existingScpiIndex];
+        this.simulatedScpiList[index][existingScpiIndex] = {
+          ...existingScpi,
+          totalInvest: existingScpi.totalInvest + simulatedScpi.totalInvest,
+          partNb: existingScpi.partNb + simulatedScpi.partNb,
+          monthlyIncomes: existingScpi.monthlyIncomes + simulatedScpi.monthlyIncomes
+        };
+      }
     }
-    else {
-      this.simulatedScpiList[index] = {
-        scpi_id: this.simulatedScpiList[index].scpi_id,
-        name: this.simulatedScpiList[index].name,
-        selectedProperty: this.simulatedScpiList[index].selectedProperty,
-        totalInvest: this.simulatedScpiList[index].totalInvest + simulatedScpi.totalInvest,
-        partNb: this.simulatedScpiList[index].partNb + simulatedScpi.partNb,
-        monthlyIncomes: this.simulatedScpiList[index].monthlyIncomes + simulatedScpi.monthlyIncomes
-      };
-    }
-    console.log(this.simulatedScpiList);
   }
 }

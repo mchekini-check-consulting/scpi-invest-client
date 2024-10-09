@@ -72,7 +72,8 @@ export class AddSimulationFormComponent implements OnInit {
       selectedProperty: this.properties[0],
       totalInvest : 0,
       partNb: 1,
-      monthlyIncomes : 0
+      monthlyIncomes : 0,
+      reconstitutionValue : 0
     };
   }
 
@@ -107,6 +108,9 @@ export class AddSimulationFormComponent implements OnInit {
   onAddSimulatedScpi() {
     this.simulatedScpi.scpi_id = this.scpiDetails.id;
     this.simulatedScpi.name = this.scpi.name;
+    this.simulatedScpi.reconstitutionValue = Object.values(this.scpiDetails.reconstitutionValue)[Object.values(
+      this.scpiDetails.reconstitutionValue
+    ).length - 1];
 
     this.onAddScpi.emit(this.simulatedScpi);
   }
