@@ -1,0 +1,29 @@
+
+<div class="vue_general">
+  <div class="chart_1">
+    <div class="data">
+      <div class="data_info">
+        <p style="font-weight: 700">Valeur total</p>
+        <p style="font-weight: 900;color:#3b90ff">450 €</p>
+      </div>
+      <div class="data_info">
+        <p style="font-weight: 700">Revenus</p>
+        <p style="font-weight: 900;color:#3b90ff">3 €/mois</p>
+      </div>
+    </div>
+    <div class="chart_scpi_name">
+      <p-chart  type="doughnut" [width]="'300'" [data]="data" [options]="options" />
+    </div>
+  </div>
+  <div class="chart_2" style="align-content: space-between">
+    <div class="chart_scpi_pays">
+      <p-chart  type="doughnut" [width]="'300'" [data]="data" [options]="options" />
+
+    </div>
+    <div class="chart_scpi_secteur">
+      <p-chart  type="doughnut" [width]="'300'" [data]="data" [options]="options" />
+    </div>
+  </div>
+</div>
+
+
