@@ -1,4 +1,4 @@
-import {Component, OnInit} from '@angular/core';
+import {ChangeDetectorRef, Component, OnInit} from '@angular/core';
 import { ToggleButtonModule } from "primeng/togglebutton";
 import { FormsModule } from "@angular/forms";
 import { SelectButtonModule } from "primeng/selectbutton";
@@ -14,6 +14,8 @@ import {ScpiService} from "../../core/service/scpi.service";
 import {SimulatedScpiModel} from "../../core/model/scpi-simulated.model";
 import {ScpiSimulationComponent} from "./scpi-simulation/scpi-simulation.component";
 import {ChartModule} from "primeng/chart";
+import {ScpiDetailComponent} from "../scpi/components/scpi-detail/scpi-detail.component";
+import {ScpiDetailSimulationComponent} from "./scpi-simulation/scpi-detail-simulation/scpi-detail-simulation.component";
 
 @Component({
   selector: 'app-simulation',
@@ -29,7 +31,9 @@ import {ChartModule} from "primeng/chart";
     ScpiComponent,
     AddSimulationFormComponent,
     ScpiSimulationComponent,
-    ChartModule
+    ChartModule,
+    ScpiDetailComponent,
+    ScpiDetailSimulationComponent
   ],
   templateUrl: './simulation.component.html',
   styleUrl: './simulation.component.css'
@@ -45,43 +49,13 @@ export class SimulationComponent implements OnInit{
   selectScpiDialogVisible: boolean = false;
   scpiSimulationFormDialogVisible: boolean = false;
   simulatedScpiList!: SimulatedScpiModel[][];
-  data: any;
-  options: any;
+
 
   constructor(private scpiService:ScpiService) {
   }
 
   ngOnInit(): void {
     this.simulatedScpiList = [];
-
-    const documentStyle = getComputedStyle(document.documentElement);
-    const textColor = documentStyle.getPropertyValue('--text-color');
-
-    this.data = {
-      labels: ['A', 'B', 'C'],
-      datasets: [
-        {
-          data: [540, 325, 702],
-          backgroundColor: [
-            documentStyle.getPropertyValue('--blue-500'),
-            documentStyle.getPropertyValue('--yellow-500'),
-            documentStyle.getPropertyValue('--green-500')
-          ],
-          hoverBackgroundColor: [documentStyle.getPropertyValue('--blue-400'), documentStyle.getPropertyValue('--yellow-400'), documentStyle.getPropertyValue('--green-400')]
-        }
-      ]
-    };
-
-    this.options = {
-      plugins: {
-        legend: {
-          labels: {
-            usePointStyle: true,
-            color: textColor
-          }
-        }
-      }
-    };
   }
 
 

@@ -15,7 +15,7 @@
 
   <div class="content">
     <div class="portfolio-options">
-      <span class="spa-v">Voir avec mon portefeuille actuel</span>
+      <span class="spa-v p-2">Voir avec mon portefeuille actuel</span>
       <div class="p-selection">
         <p-selectButton
           [(ngModel)]="includeActualPort"
@@ -63,45 +63,21 @@
     [modal]="true"
     [style]="{ height:'100%',width: '60%', } ">
     <div>
-<!--      <app-add-simulation-form-->
-<!--      [scpiDetails]="scpiDetail!"-->
-<!--      [scpi]="scpi!"-->
-<!--      (onCloseForm)="closeScpiFormDialog($event)"-->
-<!--      (onAddScpi)="addSimulatedScpi($event)"-->
-<!--    ></app-add-simulation-form>-->
+      <app-add-simulation-form
+      [scpiDetails]="scpiDetail!"
+      [scpi]="scpi!"
+      (onCloseForm)="closeScpiFormDialog($event)"
+      (onAddScpi)="addSimulatedScpi($event)"
+    ></app-add-simulation-form>
     </div>
   </p-dialog>
 </div>
 
-  <div class="vue_general">
-    <div class="chart_1">
-      <div class="data">
-        <div class="data_info">
-          <p>Valeur total</p>
-          <p>450</p>
-        </div>
-        <div class="data_info">
-          <p>Revenus</p>
-          <p>3€/mois</p>
-        </div>
-      </div>
-      <div class="chart_scpi_name">
-        <p-chart  type="doughnut" [width]="'400'" [data]="data" [options]="options" />
-      </div>
-    </div>
-    <div class="chart_2" style="align-content: space-between">
-      <div class="chart_scpi_pays">
-        <p-chart  type="doughnut" [width]="'400'" [data]="data" [options]="options" />
-
-      </div>
-      <div class="chart_scpi_secteur">
-        <p-chart  type="doughnut" [width]="'400'" [data]="data" [options]="options" />
-      </div>
-    </div>
-  </div>
-
-
-
+<div
+        *ngIf="simulatedScpiList.length > 0"
+        style="width:100%">
+    <app-scpi-detail-simulation></app-scpi-detail-simulation>
+</div>
   <div class="details"  *ngIf="simulatedScpiList.length > 0">
     <p style="font-weight: 700; font-size: 28px; margin: 24px 24px">Détails</p>
     <app-scpi-simulation class="details-item" *ngFor="let scpi of simulatedScpiList"
