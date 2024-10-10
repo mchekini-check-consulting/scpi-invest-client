@@ -1,7 +1,41 @@
-<div class="scpi-container">
-  <div class="scpi-item-container" *ngFor="let item of scpiListData">
-    <app-scpi-item [scpi]="item"
-                   (onShowDetailClick)="showScpiDetail($event)"
-    ></app-scpi-item>
+<div class="global_container">
+<!--  <div class="search_zone">-->
+
+<!--   <div class="search_bar">-->
+<!--     <input pInputText id="search" class="flex-auto" [placeholder]="'Rechercher une SCPI'" autocomplete="off" />-->
+<!--   </div>-->
+
+<!--    <div class="multi-criteria">-->
+<!--      <p-multiSelect-->
+<!--        [style]="{width: '16rem'}"-->
+<!--        [options]="regions"-->
+<!--        [(ngModel)]="selectedRegions"-->
+<!--        optionLabel="name"-->
+<!--        placeholder="Region">-->
+<!--      <ng-template let-region pTemplate="item">-->
+<!--        <div class="region-item">-->
+<!--          <img src="img/flags/{{region.code}}.png">-->
+<!--          <span>{{region.name}}</span>-->
+<!--        </div>-->
+<!--      </ng-template>-->
+<!--      </p-multiSelect>-->
+<!--<div class="p-4"></div>-->
+<!--      <p-multiSelect-->
+<!--        [style]="{width: '16rem'}"-->
+<!--        [options]="sector"-->
+<!--        [(ngModel)]="selectedSectors"-->
+<!--        optionLabel="name"-->
+<!--        placeholder="Secteur" />-->
+<!--  </div>-->
+
+  <div class="scpi-container">
+    <div class="scpi-item-container" *ngFor="let item of scpiListData">
+      <app-scpi-item
+        [fromWhere]="fromWhere"
+        [scpi]="item"
+        (onShowDetailClick)="showScpiDetail($event)"
+        (onInvestAddClick)="investirFunction($event)"
+      ></app-scpi-item>
+    </div>
   </div>
 </div>

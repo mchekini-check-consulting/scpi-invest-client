@@ -7,6 +7,7 @@ import {TranslateHttpLoader} from "@ngx-translate/http-loader";
 import {TranslateLoader, TranslateModule} from "@ngx-translate/core";
 import {OAuthModule, OAuthService} from "angular-oauth2-oidc";
 import {HttpRequestInterceptor} from "./core/interceptor/HttpInterceptor";
+import {BrowserAnimationsModule} from "@angular/platform-browser/animations";
 
 export function createTranslateLoader(http: HttpClient) {
   return new TranslateHttpLoader(http, 'i18n/', '.json');
@@ -25,6 +26,7 @@ export const appConfig: ApplicationConfig = {
       }
     })),
     { provide: OAuthService, useClass: OAuthService },
-    importProvidersFrom(OAuthModule.forRoot())
+    importProvidersFrom(OAuthModule.forRoot()),
+    importProvidersFrom(BrowserAnimationsModule)
   ]
 };

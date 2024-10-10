@@ -1,0 +1,40 @@
+<p-panel [toggleable]="true">
+  <ng-template pTemplate="header" style="display:flex; align-content: space-between;" >
+
+    <div class="header_m">
+      <div class="flex">
+      <p-avatar
+        image="https://media.istockphoto.com/id/1706162624/fr/photo/zone-industrielle-quartier-industriel-vue-a%C3%A9rienne.jpg?s=1024x1024&w=is&k=20&c=sfIY4mqJmNsznGDMrhAPXkLQg85EevNGtdSYrHu4dwo="
+        size="large"
+        shape="circle" />
+      </div>
+      <div class="flex font-bold" style="width: 20%"> {{simulatedScpi[0].name}} </div>
+      <div class="flex font-bold" style="width: 20%"> {{simulatedScpi[0].partNb}} parts </div>
+      <div class="flex font-bold" style="width: 20%">{{simulatedScpi[0].totalInvest}} €</div>
+      <div class="flex font-bold" style="width: 20%">{{simulatedScpi[0].monthlyIncomes}}€/mois</div>
+    </div>
+
+  </ng-template>
+  <div class="m-0">
+    <p-table [value]="simulatedScpi" [tableStyle]="{ 'min-width': '50rem' }">
+      <ng-template pTemplate="header">
+        <tr>
+          <th>Type</th>
+          <th>Parts</th>
+          <th>Valeur</th>
+          <th>Valeur de retrait</th>
+          <th>Revenus mensuels</th>
+        </tr>
+      </ng-template>
+      <ng-template pTemplate="body" let-simulation>
+        <tr>
+          <td>{{ simulation.selectedProperty.propertyLabel }}</td>
+          <td>{{ simulation.partNb }}</td>
+          <td>{{ simulation.totalInvest }}€</td>
+          <td>{{ simulation.reconstitutionValue }}€</td>
+          <td>{{ simulation.monthlyIncomes }}€/mois</td>
+        </tr>
+      </ng-template>
+    </p-table>
+  </div>
+</p-panel>

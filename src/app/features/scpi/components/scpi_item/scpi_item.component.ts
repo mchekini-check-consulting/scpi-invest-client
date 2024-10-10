@@ -1,8 +1,7 @@
 import {Component, EventEmitter, Input, Output} from '@angular/core';
 import {ScpiModel} from "../../../../core/model/scpi.model";
-import {CommonModule, NgForOf, NgIf} from "@angular/common";
+import {NgForOf, NgIf} from "@angular/common";
 import {PaysService} from "../../../../core/service/pays.service";
-
 
 @Component({
   selector: 'app-scpi-item',
@@ -10,15 +9,15 @@ import {PaysService} from "../../../../core/service/pays.service";
   imports: [
     NgForOf,
     NgIf,
-    CommonModule
   ],
   templateUrl: './scpi_item.component.html',
   styleUrl: './scpi_item.component.css'
 })
 export class Scpi_itemComponent {
-
+  @Input() fromWhere:string="invest";
   @Input() scpi: ScpiModel | undefined;
   @Output("onShowDetailClick") onShowDetailClick = new EventEmitter<number>();
+  @Output("onInvestAddClick") onInvestAddClick = new EventEmitter<ScpiModel>();
 
 
   constructor(private paysService: PaysService) {
@@ -30,5 +29,8 @@ export class Scpi_itemComponent {
 
   showScpiDetails(scpi: ScpiModel | undefined) {
     this.onShowDetailClick.emit(scpi?.id);
+  }
+  investAddBtn(scpi:ScpiModel| undefined){
+    this.onInvestAddClick.emit(scpi);
   }
 }
