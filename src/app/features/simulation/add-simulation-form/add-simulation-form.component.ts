@@ -51,17 +51,12 @@ export class AddSimulationFormComponent implements OnInit {
       {propertyLabel: "Nue-propriété (avancée)", type: property_type.NUE_PROPRIETE},
     ];
 
-    this.stripping = [
-      {time: 5, percent : 80},
-      {time: 6, percent : 77},
-      {time: 7, percent : 74},
-      {time: 8, percent : 71},
-      {time: 9, percent : 69},
-      {time: 10, percent : 67}
-    ].map(option => ({
-      ...option,
-      stipLabel : `${option.time} ans - ${option.percent}%`
+    this.stripping = Array.from({ length: 18 }, (_, i) => ({
+      time: i + 3,
+      percent: 100 - (i + 3) * 2, // Ce pourcentage n'a pas été donné par le PO, donc je l'ajoute moi-même le minimum c'est 60 le résultat du calcule n'est pas correcte
+      stipLabel: `${i + 3} ans`
     }));
+
 
     this.selectedStrip = this.stripping[0];
 

@@ -16,7 +16,7 @@
                 </div>
             </div>
             <div *ngIf="fromWhere!=='form'; else none" class="card-footer">
-                <button class="card-btn" (click)="showScpiDetails(scpi)">Voir plus</button>
+                <button class="card-btn" (click)="showScpiDetails(scpi)">Détails</button>
                 <button *ngIf="fromWhere==='simulation'; else investButton" (click)=investAddBtn(scpi)  class="card-btn invest">Ajouter</button>
                 <ng-template #investButton>
                     <button *ngIf="fromWhere==='invest'; else none" class="card-btn invest" (click)=investAddBtn(scpi) >Investir</button>

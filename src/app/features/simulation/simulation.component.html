@@ -18,29 +18,27 @@
     <div class="portfolio-options">
       <span class="spa-v p-2">Voir avec mon portefeuille actuel</span>
       <div class="p-selection">
-        <p-selectButton
-          [(ngModel)]="includeActualPort"
-          [options]="stateOptions"
-          optionLabel="label"
-          optionValue="value"
-        />
+          <p-toggleButton
+                  [(ngModel)]="includeActualPort"
+                  [style]="{height:'30px','background-color': includeActualPort ? 'rgba(23,200,23,0.75)' : 'white'}"
+                  onLabel="Oui"
+                  offLabel="Non" />
       </div>
     </div>
   </div>
 
-  </div>
+    </div>
 
-  <div class="dialog">
-    <p-dialog [(visible)]="EditDialogvisible" [modal]="true" [style]="{ width: '25rem' }" header="Titre">
-      <div class="flex align-items-center gap-3 mb-3">
-        <input (change)="editTitle($event)" autocomplete="off" class="flex-auto" pInputText/>
-      </div>
-
-      <div class="flex justify-content-end gap-2">
-        <p-button (onClick)="EditDialogvisible = false" label="Save"/>
-      </div>
-    </p-dialog>
-  </div>
+    <div class="dialog">
+        <p-dialog [(visible)]="EditDialogvisible" [modal]="true" [style]="{ width: '25rem' }" header="Titre">
+            <form (ngSubmit)="editTitle($event)" class="flex flex-column gap-3 mb-3">
+                <input #titleInput autocomplete="off" class="flex-auto" pInputText/>
+                <div class="flex justify-content-end gap-2">
+                    <p-button label="Save" type="submit"></p-button>
+                </div>
+            </form>
+        </p-dialog>
+    </div>
 
   <div class="dialog">
     <p-dialog
