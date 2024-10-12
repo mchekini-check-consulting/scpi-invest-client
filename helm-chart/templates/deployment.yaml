@@ -17,7 +17,7 @@ spec:
     spec:
       containers:
         - name: scpi-invest-front
-          image: mchekini/scpi-invest-front:4.0
+          image: "{{.Values.image.repo}}/{{.Values.image.name}}:{{.Values.image.tag}}"
           imagePullPolicy: Always
           ports:
             - containerPort: 80
