@@ -9,7 +9,7 @@ spec:
     name: lets-encrypt
   secretName: scpi-invest-front-tls
   dnsNames:
-    - scpi-invest.check-consulting.net
+    - {{ if .Values.ingressPrefix }}{{ .Values.ingressPrefix }}.{{ end }}scpi-invest.check-consulting.net
   usages:
   - digital signature
   - key encipherment
