@@ -13,6 +13,8 @@ import {RatingModule} from "primeng/rating";
 import {TagModule} from "primeng/tag";
 import {StatChartComponent} from "./stat-chart/stat-chart.component";
 import {CardModule} from "primeng/card";
+import {PanelModule} from "primeng/panel";
+import {Router} from "@angular/router";
 
 @Component({
   selector: 'app-invest',
@@ -32,28 +34,48 @@ import {CardModule} from "primeng/card";
     TagModule,
     PercentPipe,
     StatChartComponent,
-    CardModule
+    CardModule,
+    PanelModule
   ],
   templateUrl: './invest.component.html',
   styleUrl: './invest.component.css'
 })
 export class InvestComponent implements OnInit{
 
-  userScpiList!: UserScpiModel[];
+  scpiOwnedList!: UserScpiModel[];
+  scpiInPendingList!: UserScpiModel[];
 
-  constructor(private scpiService: ScpiService, private primengConfig: PrimeNGConfig) {
+  constructor(private router: Router, private scpiService: ScpiService, private primengConfig: PrimeNGConfig) {
   }
   ngOnInit(): void {
+
+    this.scpiOwnedList = [];
+    this.scpiInPendingList = [];
+
 
     this.primengConfig.ripple = true;
 
     this.scpiService.userScpiService().subscribe(data => {
-        this.userScpiList = data.map(item => {
-          return {
-            ...item,
-            transactionDate : new Date(item.transactionDate),
-          }
-        });
+
+
+      data.forEach(scpi => {
+        if(scpi.status === 'En cours') {
+          this.scpiInPendingList.push({
+            ...scpi,
+            transactionDate : new Date(scpi.transactionDate)
+          });
+        }
+        else {
+          this.scpiOwnedList.push({
+            ...scpi,
+            transactionDate : new Date(scpi.transactionDate)
+          });
+        }
+      })
     })
+  }
+
+  navigateToScpiList(): void {
+    this.router.navigate(['/scpi']);
   }
 }

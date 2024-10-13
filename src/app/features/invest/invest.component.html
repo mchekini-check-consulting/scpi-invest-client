@@ -1,6 +1,5 @@
-<!--<h1 class="p-10">Mon portefeuille</h1>-->
 <p-tabView styleClass="tabview-custom">
-  <p-tabPanel>
+  <p-tabPanel header="Header I">
     <ng-template pTemplate="header">
       <div class="flex align-items-center gap-2">
         <p-avatar
@@ -11,8 +10,14 @@
                 </span>
       </div>
     </ng-template>
-    <div class="card">
-      <p-table  class="fixed-table" [value]="userScpiList" sortMode="multiple" [paginator]="true" [rows]="10" [totalRecords]="userScpiList.length" [tableStyle]="{'min-width': '60rem'}">
+    <div class="card"  *ngIf="scpiOwnedList.length > 0; else noInvest">
+      <p-table class="fixed-table"
+               [value]="scpiOwnedList"
+               sortMode="multiple"
+               [paginator]="true"
+               [rows]="10"
+               [totalRecords]="scpiOwnedList.length"
+               [tableStyle]="{'min-width': '60rem'}">
         <ng-template pTemplate="caption">
           <h2 class="flex align-items-center justify-content-between">
             Mes Investissements
@@ -45,13 +50,25 @@
         </ng-template>
         <ng-template pTemplate="summary">
           <div class="flex align-items-center justify-content-between">
-            Nombre total d'investissements réalisés :  {{userScpiList ? userScpiList.length : 0 }}
+            Nombre total d'investissements réalisés :  {{scpiOwnedList ? scpiOwnedList.length : 0 }}
           </div>
         </ng-template>
       </p-table>
     </div>
+    <ng-template #noInvest>
+      <div class="empty-portfolio">
+        <p-card>
+          <div class="content-no-invest">
+            <h3>Votre portefeuille est vide</h3>
+            <p>Découvrez notre sélection de SCPI</p>
+            <button (click)="navigateToScpiList()"  type="button" label="Commencer à investir" class="invest-btn">Commencer à investir</button>
+          </div>
+        </p-card>
+      </div>
+    </ng-template>
   </p-tabPanel>
-  <p-tabPanel header="Header II">
+  <p-tabPanel header="Header II"
+              *ngIf="scpiInPendingList.length > 0">
     <ng-template pTemplate="header">
       <div class="flex align-items-center gap-2">
         <p-avatar
@@ -60,13 +77,13 @@
         <span class="font-bold white-space-nowrap m-0" style="color: black">Demandes en cours</span>
 
         <span class="notification">
-            {{ userScpiList.length }}
+            {{ scpiInPendingList.length }}
         </span>
 
       </div>
     </ng-template>
     <div class="card">
-      <p-table class="fixed-table" [value]="userScpiList" sortMode="multiple" [paginator]="true" [rows]="10" [totalRecords]="userScpiList.length" [tableStyle]="{'min-width': '60rem'}">
+      <p-table class="fixed-table" [value]="scpiInPendingList" sortMode="multiple" [paginator]="true" [rows]="10" [totalRecords]="scpiInPendingList.length" [tableStyle]="{'min-width': '60rem'}">
         <ng-template pTemplate="caption">
           <h2 class="flex align-items-center justify-content-between">
             Demandes en cours de traitement
@@ -94,13 +111,14 @@
         </ng-template>
         <ng-template pTemplate="summary">
           <div class="flex align-items-center justify-content-between">
-            Nombre de demandes en cours :  {{userScpiList ? userScpiList.length : 0 }}
+            Nombre de demandes en cours :  {{scpiInPendingList ? scpiInPendingList.length : 0 }}
           </div>
         </ng-template>
       </p-table>
     </div>
   </p-tabPanel>
-  <p-tabPanel header="Header II">
+  <p-tabPanel header="Header III"
+              *ngIf="scpiOwnedList.length > 0">
     <ng-template pTemplate="header">
       <div class="flex align-items-center gap-2">
         <p-avatar
