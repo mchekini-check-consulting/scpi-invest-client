@@ -1,4 +1,4 @@
-import {ChangeDetectorRef, Component, OnInit} from '@angular/core';
+import { Component, OnInit} from '@angular/core';
 import { ToggleButtonModule } from "primeng/togglebutton";
 import { FormsModule } from "@angular/forms";
 import { SelectButtonModule } from "primeng/selectbutton";
@@ -43,7 +43,6 @@ export class SimulationComponent implements OnInit{
   title: string = "TITRE";
   scpi: ScpiModel | undefined;
   scpiDetail:ScpiDetailModel|undefined;
-  stateOptions: any[] = [{ label: 'Non', value: false }, { label: 'Oui', value: true }];
   includeActualPort: boolean = false;
   EditDialogvisible: boolean = false;
   selectScpiDialogVisible: boolean = false;
@@ -69,12 +68,13 @@ export class SimulationComponent implements OnInit{
 
   closeScpiFormDialog(isOpen:boolean){
     this.scpiSimulationFormDialogVisible = isOpen;
-    this.selectScpiDialogVisible = true;
+    // this.selectScpiDialogVisible = false;
   }
 
   editTitle(event: Event) {
-    const inputElement = event.target as HTMLInputElement;
+    const inputElement = (event.target as HTMLFormElement).querySelector('input') as HTMLInputElement;
     this.title = inputElement.value;
+    this.EditDialogvisible = false;
   }
 
   openAddDialogForm(scpi:ScpiModel){
