@@ -81,7 +81,7 @@
                 Votre revenu sur cet investissement
             </h4>
             <p class="rendement_text">
-                {{ calculateRevenus(simulatedScpi.partNb) }} €/mois
+                {{ calculateRevenus(simulatedScpi.partNb) }}
             </p>
 
         </div>
@@ -91,10 +91,8 @@
                 <i class="pi pi-arrow-left pr-2"></i>
                 Annuler
             </button>
-            <button class="add-button" (click)="onAddSimulatedScpi()">
-                Ajouter a ma simulation
-                <span class="plus-icon">+</span>
-            </button>
+            <button *ngIf="formModification === false" class="add-button" (click)="onClickAddInvestment()"> Ajouter a ma simulation <span class="plus-icon">+</span> </button>
+            <button *ngIf="formModification === true" class="add-button" (click)="onClickAddInvestment()"> Modifier ma simulation </button>
 
         </div>
     </div>
