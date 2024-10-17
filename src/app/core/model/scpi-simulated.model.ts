@@ -16,5 +16,5 @@ export interface SimulatedScpiModel {
   totalInvest: number;
   partNb: number;
   monthlyIncomes: number;
-  reconstitutionValue : number;
+  cashbackValue : number;
 }

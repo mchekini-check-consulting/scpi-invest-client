@@ -9,9 +9,9 @@
         shape="circle" />
       </div>
       <div class="flex font-bold" style="width: 20%"> {{simulatedScpi[0].name}} </div>
-      <div class="flex font-bold" style="width: 20%"> {{simulatedScpi[0].partNb}} parts </div>
-      <div class="flex font-bold" style="width: 20%">{{simulatedScpi[0].totalInvest}} €</div>
-      <div class="flex font-bold" style="width: 20%">{{simulatedScpi[0].monthlyIncomes}}€/mois</div>
+      <div class="flex font-bold" style="width: 20%"> {{ getTotalParts() }} parts </div>
+      <div class="flex font-bold" style="width: 20%">{{ getTotalInvest() }} €</div>
+      <div class="flex font-bold" style="width: 20%">{{getMonthlyIncomes()}}</div>
     </div>
 
   </ng-template>
@@ -31,8 +31,15 @@
           <td>{{ simulation.selectedProperty.propertyLabel }}</td>
           <td>{{ simulation.partNb }}</td>
           <td>{{ simulation.totalInvest }}€</td>
-          <td>{{ simulation.reconstitutionValue }}€</td>
-          <td>{{ simulation.monthlyIncomes }}€/mois</td>
+          <td>{{ simulation.cashbackValue }}€</td>
+          <td *ngIf="simulation.selectedProperty.type === property_type.PLEINE_PROPRIETE">{{ simulation.monthlyIncomes }}€/mois</td>
+          <td *ngIf="simulation.selectedProperty.type === property_type.NUE_PROPRIETE"> -- </td>
+          <td>
+            <i class="pi pi-pencil" style="cursor:pointer;" (click)="onClickModifyScpi(simulation.scpi_id, simulation.selectedProperty.type)"></i>
+          </td>
+          <td>
+            <i class="pi pi-trash" style="cursor:pointer;" (click)="onClickDeleteScpi(simulation.scpi_id, simulation.selectedProperty.type)"></i>
+          </td>
         </tr>
       </ng-template>
     </p-table>
