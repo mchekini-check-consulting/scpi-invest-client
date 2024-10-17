@@ -69,13 +69,15 @@
         <app-add-simulation-form
           [scpiDetails]="scpiDetail!"
           [scpi]="scpi!"
+          [investmentToModify]="investmentToModify!"
+          [formModification]="scpiSimulationFormDialogForModification"
           (onCloseForm)="closeScpiFormDialog($event)"
           (onAddScpi)="addSimulatedScpi($event)"
+          (onModifyScpi)="modifyInvestment($event)"
         ></app-add-simulation-form>
       </div>
     </p-dialog>
   </div>
-
 
   <div class="simulation_charts" *ngIf="simulatedScpiList.length > 0"style="width:100%">
     <app-scpi-detail-simulation></app-scpi-detail-simulation>
@@ -85,6 +87,8 @@
     <p style="font-weight: 700; font-size: 28px; margin: 24px 24px">Détails</p>
     <app-scpi-simulation class="details-item" *ngFor="let scpi of simulatedScpiList"
                           [simulatedScpi]="scpi"
+                         (onClickOnDeleteEvent)="deleteScpiSimulation($event)"
+                         (onClickOnModifyEvent)="openModifyScpiDialog($event)"
     ></app-scpi-simulation>
   </div>
 
