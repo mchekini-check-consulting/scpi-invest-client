@@ -11,11 +11,11 @@ import {ScpiModel} from "../../core/model/scpi.model";
 import {AddSimulationFormComponent} from "./add-simulation-form/add-simulation-form.component";
 import {ScpiDetailModel} from "../../core/model/scpi-detail.model";
 import {ScpiService} from "../../core/service/scpi.service";
-import {SimulatedScpiModel} from "../../core/model/scpi-simulated.model";
+import {property_type, SimulatedScpiModel} from "../../core/model/scpi-simulated.model";
 import {ScpiSimulationComponent} from "./scpi-simulation/scpi-simulation.component";
 import {ChartModule} from "primeng/chart";
 import {ScpiDetailComponent} from "../scpi/components/scpi-detail/scpi-detail.component";
-import {ScpiDetailSimulationComponent} from "./scpi-simulation/scpi-detail-simulation/scpi-detail-simulation.component";
+import {ScpiDetailSimulationComponent} from "./scpi-detail-simulation/scpi-detail-simulation.component";
 
 @Component({
   selector: 'app-simulation',
@@ -47,7 +47,9 @@ export class SimulationComponent implements OnInit{
   EditDialogvisible: boolean = false;
   selectScpiDialogVisible: boolean = false;
   scpiSimulationFormDialogVisible: boolean = false;
+  scpiSimulationFormDialogForModification : boolean = false;
   simulatedScpiList!: SimulatedScpiModel[][];
+  investmentToModify!: SimulatedScpiModel | undefined;
 
 
   constructor(private scpiService:ScpiService) {
@@ -68,7 +70,7 @@ export class SimulationComponent implements OnInit{
 
   closeScpiFormDialog(isOpen:boolean){
     this.scpiSimulationFormDialogVisible = isOpen;
-    // this.selectScpiDialogVisible = false;
+    this.scpiSimulationFormDialogForModification = false;
   }
 
   editTitle(event: Event) {
@@ -81,6 +83,7 @@ export class SimulationComponent implements OnInit{
     this.scpi=scpi;
     this.selectScpiDialogVisible = false;
     this.scpiSimulationFormDialogVisible =true;
+    this.scpiSimulationFormDialogForModification = false;
     this.getSpicDetail(scpi.id);
 
   }
@@ -93,6 +96,14 @@ export class SimulationComponent implements OnInit{
     )
   }
 
+  getScpi(scpiId:number):void{
+
+    this.scpiService.fetchScpiList().subscribe(
+      data =>{
+        this.scpi = data.find(scpi => scpi.id === scpiId);
+      }
+    )
+  }
 
   addSimulatedScpi(simulatedScpi: SimulatedScpiModel) {
     this.scpiSimulationFormDialogVisible = false;
@@ -125,5 +136,60 @@ export class SimulationComponent implements OnInit{
         };
       }
     }
+  }
+
+  modifyInvestment($event : {oldInvestment: SimulatedScpiModel, newInvestment: SimulatedScpiModel}) {
+
+    // On doit récupéré l'ancienne version de simulatedScpi et la nouvelle
+    // si le type est le même => alors on ecrase l'ancienne version
+    if($event.oldInvestment.selectedProperty.type === $event.newInvestment.selectedProperty.type) {
+      const rowIndex = this.simulatedScpiList.findIndex(row => row.some(scpi => scpi.scpi_id === $event.newInvestment.scpi_id));
+      const colIndex = this.simulatedScpiList[rowIndex].findIndex(scpi => scpi.selectedProperty.type === $event.newInvestment.selectedProperty.type);
+      this.simulatedScpiList[rowIndex][colIndex] = {...$event.newInvestment };
+    } else {
+      // s'il existe il faudra additionner la nouvelle valeur avec l'ancienne
+      const rowIndex1 = this.simulatedScpiList.findIndex(row => row.some(scpi => scpi.scpi_id === $event.newInvestment.scpi_id));
+      const colIndex1 = this.simulatedScpiList[rowIndex1].findIndex(scpi => scpi.selectedProperty.type === $event.newInvestment.selectedProperty.type);
+      if(colIndex1 !== -1) {
+        const existingScpi = this.simulatedScpiList[rowIndex1][colIndex1];
+        this.simulatedScpiList[rowIndex1][colIndex1] = {
+          ...existingScpi,
+          totalInvest: existingScpi.totalInvest + $event.newInvestment.totalInvest,
+          partNb: existingScpi.partNb + $event.newInvestment.partNb,
+          monthlyIncomes: existingScpi.monthlyIncomes + $event.newInvestment.monthlyIncomes
+        };
+      } else {
+        // s'il existe pas alors il faut le déclarer
+        this.simulatedScpiList[rowIndex1].push({ ...$event.newInvestment });
+      }
+
+      // si le type est différent => on supprime l'ancienne et on regarde si le nouveau type existe
+      const rowIndex = this.simulatedScpiList.findIndex(row => row.some(scpi => scpi.scpi_id === $event.oldInvestment.scpi_id));
+      const colIndex = this.simulatedScpiList[rowIndex].findIndex(scpi => scpi.selectedProperty.type === $event.oldInvestment.selectedProperty.type);
+      let investmentToDelete = this.simulatedScpiList[rowIndex][colIndex];
+      this.deleteScpiSimulation({ id: investmentToDelete.scpi_id, type: investmentToDelete.selectedProperty.type});
+    }
+
+    this.scpiSimulationFormDialogForModification = false;
+    this.scpiSimulationFormDialogVisible = false;
+    this.selectScpiDialogVisible = false;
+  }
+
+  deleteScpiSimulation(scpiSimulated: {id: number, type: property_type}) {
+    this.simulatedScpiList = this.simulatedScpiList.map(scpiList =>
+      scpiList.filter(scpi =>
+        scpi.scpi_id !== scpiSimulated.id || scpi.selectedProperty.type !== scpiSimulated.type
+      ))
+      .filter(scpiList => scpiList.length > 0)
+  }
+
+  openModifyScpiDialog($event: { id: number; type: property_type }) {
+    this.getSpicDetail($event.id);
+    this.getScpi($event.id);
+
+    this.investmentToModify = this.simulatedScpiList.flat().find(scpi => scpi.scpi_id === $event.id && scpi.selectedProperty.type === $event.type);
+
+    this.scpiSimulationFormDialogVisible =true;
+    this.scpiSimulationFormDialogForModification = true;
   }
 }
