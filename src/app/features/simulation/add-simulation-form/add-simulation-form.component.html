@@ -62,7 +62,7 @@
                         [(ngModel)]="simulatedScpi.partNb"
                         [showButtons]="true"
                         [step]="1"
-                        [min]="1"
+                        [min]="minimiumSubscriptionPart"
                         buttonLayout="horizontal"
                         decrementButtonClass="null"
                         decrementButtonIcon="pi pi-minus"
@@ -91,8 +91,16 @@
                 <i class="pi pi-arrow-left pr-2"></i>
                 Annuler
             </button>
-            <button *ngIf="formModification === false" class="add-button" (click)="onClickAddInvestment()"> Ajouter a ma simulation <span class="plus-icon">+</span> </button>
-            <button *ngIf="formModification === true" class="add-button" (click)="onClickAddInvestment()"> Modifier ma simulation </button>
+            <button *ngIf="formModification === false; else edit " class="add-button" (click)="onClickAddInvestment()"> Ajouter a ma simulation <span class="plus-icon">+</span> </button>
+
+          <ng-template #edit>
+            <button *ngIf="!fromInvest else toInvest" class="add-button" (click)="onClickAddInvestment()"> Modifier ma simulation </button>
+          </ng-template>
+          <ng-template #toInvest>
+            <button class="add-button" (click)="onAddSimulatedScpi()">
+              Investir
+            </button>
+          </ng-template>
 
         </div>
     </div>

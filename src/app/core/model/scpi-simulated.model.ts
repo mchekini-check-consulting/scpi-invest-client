@@ -1,9 +1,6 @@
-import {ReconstitutionValue} from "./scpi-detail.model";
+import {property_type} from "../enum/property-type.enum";
+export { property_type } from "../enum/property-type.enum";
 
-export enum property_type {
-  PLEINE_PROPRIETE,
-  NUE_PROPRIETE
-}
 export interface Property {
   type: property_type;
   propertyLabel: string;

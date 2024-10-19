@@ -1,4 +1,4 @@
-import {Component, EventEmitter, Input, OnChanges, OnInit, Output, SimpleChanges} from '@angular/core';
+import {AfterViewInit, Component, EventEmitter, Input, OnChanges, OnInit, Output, SimpleChanges} from '@angular/core';
 import {Scpi_itemComponent} from "../../scpi/components/scpi_item/scpi_item.component";
 import {MultiSelectModule} from "primeng/multiselect";
 import {FormsModule} from "@angular/forms";
@@ -7,14 +7,10 @@ import {ScpiDetailModel} from "../../../core/model/scpi-detail.model";
 import {NgIf} from "@angular/common";
 import {DropdownModule} from "primeng/dropdown";
 import {ScpiModel} from "../../../core/model/scpi.model";
-import {Property, property_type, SimulatedScpiModel} from "../../../core/model/scpi-simulated.model";
+import {Property, SimulatedScpiModel} from "../../../core/model/scpi-simulated.model";
+import {property_type} from "../../../core/enum/property-type.enum";
+import {ScpiInvestModel, Stripping} from "../../../core/model/scpi-invest.model";
 
-
-interface Stripping {
-  time: number;
-  percent : number;
-  stipLabel : string;
-}
 
 @Component({
   selector: 'app-add-simulation-form',
@@ -30,16 +26,17 @@ interface Stripping {
   templateUrl: './add-simulation-form.component.html',
   styleUrl: './add-simulation-form.component.css'
 })
-export class AddSimulationFormComponent implements OnInit, OnChanges {
+export class AddSimulationFormComponent implements OnInit, OnChanges,AfterViewInit {
   @Input() scpiDetails!:ScpiDetailModel;
   @Input() scpi!:ScpiModel;
   @Input() formModification!: boolean;
+  @Input() fromInvest: boolean=false;
   @Input("investmentToModify") investmentToModify!: SimulatedScpiModel;
 
   @Output("onCloseForm") onCloseForm = new EventEmitter<boolean>();
   @Output("onAddScpi") onAddScpi = new EventEmitter<SimulatedScpiModel>();
   @Output("onModifyScpi") onModifyScpi = new EventEmitter<{oldInvestment: SimulatedScpiModel, newInvestment: SimulatedScpiModel}>();
-
+  @Output("onInvest") onInvest = new EventEmitter<ScpiInvestModel>();
 
   // Sector
   properties!: Property[];
@@ -48,6 +45,9 @@ export class AddSimulationFormComponent implements OnInit, OnChanges {
   // Delay
   selectedStrip!: Stripping;
   stripping!: Stripping[];
+
+  minimiumSubscriptionPart: number=0;
+
 
   ngOnChanges(changes: SimpleChanges) {
     if(changes["investmentToModify"]) {
@@ -60,6 +60,7 @@ export class AddSimulationFormComponent implements OnInit, OnChanges {
     this.properties = [
       {propertyLabel: "Pleine propriété (Standard)", type: property_type.PLEINE_PROPRIETE},
       {propertyLabel: "Nue-propriété (avancée)", type: property_type.NUE_PROPRIETE},
+      {propertyLabel:"Usufruit",type:property_type.USUFRUIT},
     ];
 
     this.stripping = [
@@ -86,6 +87,10 @@ export class AddSimulationFormComponent implements OnInit, OnChanges {
     };
   }
 
+  ngAfterViewInit(): void {
+    this.minimumPart();
+  }
+
   onCancelBtnClick() {
     this.onCloseForm.emit(false);
     this.simulatedScpi.totalInvest = 0;
@@ -99,7 +104,7 @@ export class AddSimulationFormComponent implements OnInit, OnChanges {
 
   // part
   let percentagePart = 1
-  if(this.simulatedScpi.selectedProperty.type === property_type.NUE_PROPRIETE)
+  if(this.simulatedScpi.selectedProperty.type !== property_type.PLEINE_PROPRIETE) //TODO: EDIT HERE TO IF IS NU PROP AND USUFRUIT
   {
     percentagePart = this.selectedStrip.percent / 100;
   }
@@ -139,6 +144,34 @@ export class AddSimulationFormComponent implements OnInit, OnChanges {
       withdrawalValue : 0
     };
   }
+  onAddSimulatedScpi() {
+    if(!this.fromInvest){
+      this.simulatedScpi.scpi_id = this.scpiDetails.id;
+      this.simulatedScpi.name = this.scpi.name;
+      this.simulatedScpi.withdrawalValue = Object.values(this.scpiDetails.reconstitutionValue)[Object.values(
+        this.scpiDetails.reconstitutionValue
+      ).length - 1];
+
+      this.onAddScpi.emit(this.simulatedScpi);
+    }else{
+      let scpiInvestIn:ScpiInvestModel;
+      scpiInvestIn = {
+        scpiId:this.scpi.id,
+        propertyType: this.simulatedScpi.selectedProperty.type,
+        totalInvest: this.simulatedScpi.totalInvest,
+        numberOfShares: this.simulatedScpi.partNb,
+        stripping:this.selectedStrip.time
+      }
+      this.onInvest.emit(scpiInvestIn);
+   }
+  }
+
+  minimumPart():void{
+    this.minimiumSubscriptionPart = this.scpiDetails.minimumSubscription/Object.values(this.scpiDetails.prices)[Object.values(this.scpiDetails.prices).length - 1];
+    this.simulatedScpi.partNb=this.minimiumSubscriptionPart;
+  }
 
   protected readonly property_type = property_type;
+
+
 }

@@ -13,6 +13,15 @@ import {InputTextModule} from "primeng/inputtext";
 import {MegaMenuModule} from "primeng/megamenu";
 import {MultiSelectModule} from "primeng/multiselect";
 import {SliderModule} from "primeng/slider";
+import {DialogModule} from "primeng/dialog";
+import {AddSimulationFormComponent} from "../simulation/add-simulation-form/add-simulation-form.component";
+import {InvestService} from "../../core/service/invest.service";
+import {ScpiDetailModel} from "../../core/model/scpi-detail.model";
+import {property_type, SimulatedScpiModel} from "../../core/model/scpi-simulated.model";
+import {ScpiInvestModel} from "../../core/model/scpi-invest.model";
+import {StepperModule} from "primeng/stepper";
+import {PaymentInfoModel} from "../../core/model/payment_info.model";
+import {UserService} from "../../core/service/user.service";
 
 
 
@@ -40,6 +49,9 @@ interface Montant {
     MegaMenuModule,
     MultiSelectModule,
     SliderModule,
+    DialogModule,
+    AddSimulationFormComponent,
+    StepperModule,
   ],
   providers: [MessageService, OAuthService],
   templateUrl: './scpi.component.html',
@@ -54,31 +66,80 @@ export class ScpiComponent implements OnInit{
   montant!: Montant;
   value: number = 50000;
 
+  selectedScpi?:ScpiModel;
+  scpiDetails?:ScpiDetailModel;
+
   selectedRegions!: Region[];
-  selectedSectors!: Sector[];
+  showFormDialog: boolean = false;
+
+  bankInformation?:PaymentInfoModel;
+  username?:String;
+  email?:String;
 
   @Input() fromWhere:string="invest";
   @Output("OnAddBtnClick") onAddBtnClick = new EventEmitter<ScpiModel>();
-  constructor(private scpiService:ScpiService, private router: Router) {}
+  constructor(private scpiService:ScpiService, private router: Router, private investService: InvestService, private userService: UserService) {
+    this.userService.user$.subscribe(user => {
+      if (user != null)
+        this.username = user.firstName + " " + user.lastName ;
+        this.email = user?.email;
+    });
+  }
+
 
 
   ngOnInit() {
     this.scpiService.fetchScpiList().subscribe(data =>{
       this.scpiListData = data;
+      this.scpiListData.forEach((scpi)=> scpi.image=this.randomImage())
     });
     this.setSearchCriteriaValue()
   }
+
+  getScpiDetail(scpi_id:number): void{
+    this.scpiService.getScpiById(scpi_id).subscribe(data=>{
+      this.scpiDetails = data;
+    })
+  }
+
 
   showScpiDetail(id: number) {
     this.router.navigateByUrl("scpi/" + id);
 
   }
-  investirFunction(scpi:ScpiModel) {
-    if(this.fromWhere ==="simulation")
-      this.onAddBtnClick.emit(scpi);
-    else if(this.fromWhere == "invest")
-      console.log('Button clicked on investire '+scpi.id);
+  closeScpiFormDialog(isOpen:boolean,prevCallback?:{ emit: () => void }){
+    this.showFormDialog = isOpen;
+    this.bankInformation =undefined;
+    if(prevCallback!=null){
+      prevCallback.emit();
+    }
+  }
 
+
+  confirmInevst(invest:ScpiInvestModel,nextCallback: { emit: () => void }):void{
+    if (invest.propertyType === property_type.PLEINE_PROPRIETE.toString()) {
+      invest.stripping = null;
+    }
+    this.investService.investInScpi(invest).subscribe(data => {
+      this.bankInformation=data;
+      nextCallback.emit()
+    })
+  }
+
+  investirFunction(scpi:ScpiModel) {
+    if(this.fromWhere ==="simulation"){
+      this.onAddBtnClick.emit(scpi);
+    }
+    else if(this.fromWhere == "invest"){
+      this.selectedScpi = scpi;
+      this.getScpiDetail(scpi.id)
+      this.showFormDialog=true;
+    }
+  }
+
+
+  randomImage():String{
+    return(Math.floor(Math.random() * 10) + 1).toString();
   }
 
 

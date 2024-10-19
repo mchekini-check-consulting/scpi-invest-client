@@ -50,3 +50,98 @@
     flex: 1 1 100%;
   }
 }
+
+body {
+  font-family: Arial, sans-serif;
+  margin: 0;
+  padding: 20px;
+  background-color: #f9f9f9;
+}
+
+.investment-container {
+  background-color: white;
+  border: 1px solid #ccc;
+  padding: 20px;
+  border-radius: 8px;
+  max-width: 600px;
+  margin: 0 auto;
+}
+
+.investment-info {
+  text-align: left;
+}
+
+.investment-info h3 {
+  font-size: 18px;
+  margin-bottom: 10px;
+}
+
+.investment-info p {
+  font-size: 14px;
+  color: #333;
+}
+
+.investment-form {
+  margin-top: 20px;
+}
+
+.form-group {
+  margin-bottom: 15px;
+}
+
+.form-group label {
+  display: block;
+  font-size: 14px;
+  color: #666;
+  margin-bottom: 5px;
+}
+
+.form-group input {
+  width: 100%;
+  padding: 10px;
+  font-size: 14px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  background-color: #f4f4f4;
+}
+
+.form-group input[readonly] {
+  background-color: #e9e9e9;
+  color: #333;
+}
+
+.email-confirmation {
+
+
+  margin: 20px auto;
+  font-size: 14px;
+  padding: 8px;
+  width: 80%;
+  border-radius: 4px;
+  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+  color: #333;
+  text-align: left;
+}
+
+.email {
+  font-weight: bold;
+  display: block;
+  margin-top: 5px;
+}
+
+.close_dial_btn{
+  width: 40%;
+  height: 40px;
+  background-color: #84a9e6;
+  border: none;
+  border-radius: 5px;
+  color: white;
+  font-size: 16px;
+  cursor: pointer;
+  transition: background-color 0.3s;
+  align-items: center;
+}
+
+.centered-button:hover {
+  background-color: #87CEEB;
+}
