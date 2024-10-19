@@ -5,5 +5,6 @@ export interface ScpiModel {
   localization: string;
   minimumSubscription: number;
   lastYearDistributionRate: string;
+  image:String;
 }
 
