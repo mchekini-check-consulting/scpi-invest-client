@@ -1,4 +1,4 @@
-<p-panel [toggleable]="true">
+<p-panel [toggleable]="true"  [collapsed]="true">
   <ng-template pTemplate="header" style="display:flex; align-content: space-between;" >
 
     <div class="header_m">
@@ -12,6 +12,7 @@
       <div class="flex font-bold" style="width: 20%"> {{ getTotalParts() }} parts </div>
       <div class="flex font-bold" style="width: 20%">{{ getTotalInvest() }} €</div>
       <div class="flex font-bold" style="width: 20%">{{getMonthlyIncomes()}}</div>
+      <div class="flex font-bold" style="width: 20%">{{getLastDistributionRate()}}</div>
     </div>
 
   </ng-template>
@@ -24,6 +25,7 @@
           <th>Valeur</th>
           <th>Valeur de retrait</th>
           <th>Revenus mensuels</th>
+          <th>Rendement</th>
         </tr>
       </ng-template>
       <ng-template pTemplate="body" let-simulation>
@@ -32,8 +34,8 @@
           <td>{{ simulation.partNb }}</td>
           <td>{{ simulation.totalInvest }}€</td>
           <td>{{ simulation.withdrawalValue }}€</td>
-          <td *ngIf="simulation.selectedProperty.type === property_type.PLEINE_PROPRIETE; else NoIncome">{{ simulation.monthlyIncomes }}€/mois</td>
-          <ng-template #NoIncome><td> -- </td></ng-template>
+          <td>{{getMonthlyIncomes()}}</td>
+          <td>{{getLastDistributionRate()}}</td>
             <td>
             <i class="pi pi-pencil" style="cursor:pointer;" (click)="onClickModifyScpi(simulation.scpi_id, simulation.selectedProperty.type)"></i>
           </td>

@@ -101,6 +101,12 @@ export class SimulationComponent implements OnInit{
     this.scpiService.fetchScpiList().subscribe(
       data =>{
         this.scpi = data.find(scpi => scpi.id === scpiId);
+
+        // Utiliser ça pour afficher une image de la scpi en attendant d'avoir les images récupérés du back
+        if(this.scpi)
+        {
+          this.scpi.image = '1';
+        }
       }
     )
   }
@@ -132,6 +138,7 @@ export class SimulationComponent implements OnInit{
           ...existingScpi,
           totalInvest: existingScpi.totalInvest + simulatedScpi.totalInvest,
           partNb: existingScpi.partNb + simulatedScpi.partNb,
+          withdrawalValue: existingScpi.withdrawalValue + simulatedScpi.withdrawalValue,
           monthlyIncomes: existingScpi.monthlyIncomes + simulatedScpi.monthlyIncomes
         };
       }
@@ -156,6 +163,7 @@ export class SimulationComponent implements OnInit{
           ...existingScpi,
           totalInvest: existingScpi.totalInvest + $event.newInvestment.totalInvest,
           partNb: existingScpi.partNb + $event.newInvestment.partNb,
+          withdrawalValue: existingScpi.withdrawalValue + $event.newInvestment.withdrawalValue,
           monthlyIncomes: existingScpi.monthlyIncomes + $event.newInvestment.monthlyIncomes
         };
       } else {
