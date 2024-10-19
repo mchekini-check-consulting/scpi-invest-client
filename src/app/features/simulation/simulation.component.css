@@ -116,4 +116,10 @@
   margin: 60px;
 }
 
+.performance {
+  box-shadow: 2px 4px 6px rgba(0, 0, 0, 0.3);
+  height: 100%;
+  width: 80%;
+  margin: 60px;
+}
 

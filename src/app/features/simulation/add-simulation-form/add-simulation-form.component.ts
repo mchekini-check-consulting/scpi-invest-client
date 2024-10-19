@@ -9,8 +9,14 @@ import {DropdownModule} from "primeng/dropdown";
 import {ScpiModel} from "../../../core/model/scpi.model";
 import {Property, SimulatedScpiModel} from "../../../core/model/scpi-simulated.model";
 import {property_type} from "../../../core/enum/property-type.enum";
-import {ScpiInvestModel, Stripping} from "../../../core/model/scpi-invest.model";
+import {ScpiInvestModel} from "../../../core/model/scpi-invest.model";
 
+
+export interface Stripping {
+  time: number;
+  percent : number;
+  stipLabel : string;
+}
 
 @Component({
   selector: 'app-add-simulation-form',
@@ -83,8 +89,9 @@ export class AddSimulationFormComponent implements OnInit, OnChanges,AfterViewIn
       totalInvest : 0,
       partNb: 1,
       monthlyIncomes : 0,
+      lastYearDistributionRate : '',
       withdrawalValue : 0,
-      lastYearDistributionRate : ''
+      strip:  {time : 0, percent: 100, stipLabel: ''}
     };
   }
 
@@ -127,6 +134,10 @@ export class AddSimulationFormComponent implements OnInit, OnChanges,AfterViewIn
     this.simulatedScpi.name = this.scpi.name;
     this.simulatedScpi.lastYearDistributionRate = this.scpi.lastYearDistributionRate;
 
+    if(this.simulatedScpi.selectedProperty.type === property_type.NUE_PROPRIETE) {
+      this.simulatedScpi.strip = this.selectedStrip;
+    }
+
     if(this.formModification === false) {
       this.onAddScpi.emit(this.simulatedScpi);
     } else {
@@ -144,7 +155,8 @@ export class AddSimulationFormComponent implements OnInit, OnChanges,AfterViewIn
       partNb: 1,
       monthlyIncomes : 0,
       withdrawalValue : 0,
-      lastYearDistributionRate : ''
+      lastYearDistributionRate : '',
+      strip:  {time : 0, percent: 100, stipLabel: ''}
     };
   }
   onAddSimulatedScpi() {
