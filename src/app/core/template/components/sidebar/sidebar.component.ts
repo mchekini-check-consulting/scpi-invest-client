@@ -1,9 +1,12 @@
 import {Component, OnInit} from '@angular/core';
-import {NgForOf} from "@angular/common";
+import {NgForOf, NgIf} from "@angular/common";
 import {
   TranslateModule,
 } from "@ngx-translate/core";
 import {RouterLink} from "@angular/router";
+import {UserService} from "../../../service/user.service";
+import {AppDetailsService} from "../../../service/app.details.service";
+import {AppDetailModel} from "../../../model/app.detail.model";
 
 declare interface RouteInfo {
   path: string;
@@ -27,7 +30,8 @@ export const ROUTES: RouteInfo[] = [
   imports: [
     NgForOf,
     TranslateModule,
-    RouterLink
+    RouterLink,
+    NgIf
   ],
   styleUrls: ['./sidebar.component.scss'],
 
@@ -36,8 +40,16 @@ export class SidebarComponent implements OnInit {
 
   menuItems: RouteInfo[] = [];
   version = "1.0.0";
+  appDetails : AppDetailModel | undefined;
 
-  constructor() {
+  constructor(private userService: UserService, private appDetailsService : AppDetailsService) {
+
+    this.userService.user$.subscribe(user => {
+      if (user != null)
+        this.appDetailsService.getApplicationDetails().subscribe(resp => {
+          this.appDetails = resp;
+        })
+    });
   }
 
   ngOnInit() {

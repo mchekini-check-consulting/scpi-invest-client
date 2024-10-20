@@ -2,8 +2,12 @@
   <div class="sidebar-wrapper">
     <div class="logo">
       <a href="#" class="simple-text logo-normal" style="font-size: x-large">
-        SCPI INVEST + <br>
-        <span>v{{ version }}</span>
+        {{ appDetails?.applicationName}}
+        <br>
+        <span>v{{ appDetails?.applicationVersion }}</span>
+        <br>
+        <br>
+        <span *ngIf="appDetails?.environment != 'prd'">env : {{ appDetails?.environment }} </span>
       </a>
     </div>
 <div style="margin-top:40%">
