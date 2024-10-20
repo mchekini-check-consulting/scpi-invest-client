@@ -1,8 +1,9 @@
 {
   "SIDEBAR": {
     "SCPI": "List of SCPI",
-    "INVEST": "My INvestissments",
-    "SIMULATION": "Simulations",
-    "COMPARATEUR": "Comparaison"
+    "INVEST": "My Investments",
+    "SIMULATION": "My Simulations",
+    "COMPARATEUR": "Comparison"
   }
 }
+
