@@ -17,7 +17,9 @@ export const routes: Routes = [
       {path: 'invest', component: InvestComponent, canActivate: [AuthGuard]},
       {path: 'simulation', component: SimulationComponent, canActivate: [AuthGuard]},
       {path: 'versement', component: PlannedInvestmentComponent, canActivate: [AuthGuard]},
-      {path: '**', component: ScpiComponent, canActivate: [AuthGuard] }
+      {path: '**', component: ScpiComponent, canActivate: [AuthGuard] },
+      {path: 'comparateur', component: ComparateurComponent, canActivate: [AuthGuard]}
+
     ]
   }
 
