@@ -1,4 +1,27 @@
 <div class="global_container">
+  <div class="search_zone">
+
+    <p-iconField [style]="{width:'60%','margin-right':'60px'}" iconPosition="left">
+      <p-inputIcon [style]="{width:'60%'}" styleClass="pi pi-search"/>
+      <input (input)="onSearchInputChange($event)"
+             class="search_input"
+             style="width:100%;border-radius: 40px"
+             pInputText placeholder="Search" type="text"/>
+    </p-iconField>
+
+   <div class="btn-container">
+     <button (click)="showFilter()" class="btn">
+       <i class="pi pi-sliders-h" style="margin-right: 8px"></i>
+       Filter
+     </button>
+   </div>
+    <app-multicriteria-search
+      [sidebarVisible]="filterVisible"
+      (filter)="search($event)"
+      [onSimulation]="fromWhere==='simulation'"
+    ></app-multicriteria-search>
+
+  </div>
   <div class="scpi-container">
     <div *ngFor="let item of scpiListData" class="scpi-item-container">
       <app-scpi-item
@@ -34,7 +57,7 @@
             <p-stepperPanel header="Confirmation du virement">
 
 
-              <ng-template #bankInfo pTemplate="content" let-prevCallback="prevCallback">
+              <ng-template #bankInfo let-prevCallback="prevCallback" pTemplate="content">
                 <div class="investment-container">
                   <div class="investment-info">
                     <h3>Finaliser l'investissement SCPI</h3>
