@@ -29,6 +29,10 @@
   gap: 5px;
 }
 
+::ng-deep .p-tabview-panels {
+  background-color: transparent;
+}
+
 .notification {
   font-weight: bold;
   background-color: red;
@@ -53,4 +57,39 @@
   height: 100px;
   object-fit: cover;
   border-radius: 8px;
+}
+
+.empty-portfolio {
+  margin-top: 20px;
+  margin-left: 20px;
+  display: flex;
+  justify-content: center;
+}
+
+p-card {
+  width: 100%;
+  max-width: 600px;
+  border-radius: 8px;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+  margin: 0;
+  padding: 0;
+}
+
+.content-no-invest {
+  padding: 20px;
+  display: flex;
+  flex-direction: column;
+}
+
+.invest-btn {
+  margin-top: 20px;
+  background-color: #262626;
+  color: white;
+  border-radius: 5px;
+  text-align: right;
+  align-self: flex-end;
+}
+
+.invest-btn:hover {
+  background-color: #5a5a5a;
 }

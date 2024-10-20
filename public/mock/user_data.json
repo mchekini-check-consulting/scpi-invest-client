@@ -1,42 +1,42 @@
 [
-  {
-    "scpiName" : "Elevation Tertiom",
-    "detentionPeriod" : "4 mois",
-    "amount" : 1200,
-    "status" : "En cours",
-    "price": 400,
-    "transactionDate" : "09-12-2023",
-    "distributionRate" : 4.5,
-    "image" : "https://images.unsplash.com/photo-1712652056542-58ca6baac1d3?w=600&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8OHx8ZnJlZSUyMGltYWdlc3xlbnwwfHwwfHx8MA%3D%3D"
-  },
-  {
-    "scpiName" : "Transitions Europe",
-    "detentionPeriod" : "2 ans",
-    "amount" : 1800,
-    "status" : "En cours",
-    "price": 4560,
-    "transactionDate" : "05-17-2024",
-    "distributionRate" : 8.16,
-    "image" : "https://plus.unsplash.com/premium_photo-1672423156257-9a2bc5e1f480?q=80&w=1887&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
-  },
-  {
-    "scpiName" : "Activimmo",
-    "detentionPeriod" : "5 ans",
-    "amount" : 2000,
-    "status" : "En cours",
-    "price": 3000,
-    "transactionDate" : "09-23-2023",
-    "distributionRate" : 3.9,
-    "image" : "https://media.istockphoto.com/id/1706162624/fr/photo/zone-industrielle-quartier-industriel-vue-a%C3%A9rienne.jpg?s=1024x1024&w=is&k=20&c=sfIY4mqJmNsznGDMrhAPXkLQg85EevNGtdSYrHu4dwo="
-  },
-  {
-    "scpiName" : "Iroko Zen",
-    "detentionPeriod" : "18 mois",
-    "amount" : 100,
-    "status" : "En cours",
-    "price": 400,
-    "transactionDate" : "11-06-2024",
-    "distributionRate" : 7.3,
-    "image" : "https://media.istockphoto.com/id/1460762245/fr/photo/style-moderne-hi-rise-b%C3%A2timent-en-verre-bleu-ext%C3%A9rieur-avec-mur-transparent-3d-rendu.jpg?s=1024x1024&w=is&k=20&c=wt2oJyXts9z9pwdq7WTc_kOjNY7W4ygf5DR89_zGhf4="
-  }
+//  {
+//    "scpiName" : "Elevation Tertiom",
+//    "detentionPeriod" : "4 mois",
+//    "amount" : 1200,
+//    "status" : "Done",
+//    "price": 400,
+//    "transactionDate" : "09-12-2023",
+//    "distributionRate" : 4.5,
+//    "image" : "https://images.unsplash.com/photo-1712652056542-58ca6baac1d3?w=600&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8OHx8ZnJlZSUyMGltYWdlc3xlbnwwfHwwfHx8MA%3D%3D"
+//  },
+//  {
+//    "scpiName" : "Transitions Europe",
+//    "detentionPeriod" : "2 ans",
+//    "amount" : 1800,
+//    "status" : "Done",
+//    "price": 4560,
+//    "transactionDate" : "05-17-2024",
+//    "distributionRate" : 8.16,
+//    "image" : "https://plus.unsplash.com/premium_photo-1672423156257-9a2bc5e1f480?q=80&w=1887&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
+//  },
+//  {
+//    "scpiName" : "Activimmo",
+//    "detentionPeriod" : "5 ans",
+//    "amount" : 2000,
+//    "status" : "En cours",
+//    "price": 3000,
+//    "transactionDate" : "09-23-2023",
+//    "distributionRate" : 3.9,
+//    "image" : "https://media.istockphoto.com/id/1706162624/fr/photo/zone-industrielle-quartier-industriel-vue-a%C3%A9rienne.jpg?s=1024x1024&w=is&k=20&c=sfIY4mqJmNsznGDMrhAPXkLQg85EevNGtdSYrHu4dwo="
+//  },
+//  {
+//    "scpiName" : "Iroko Zen",
+//    "detentionPeriod" : "18 mois",
+//    "amount" : 100,
+//    "status" : "En cours",
+//    "price": 400,
+//    "transactionDate" : "11-06-2024",
+//    "distributionRate" : 7.3,
+//    "image" : "https://media.istockphoto.com/id/1460762245/fr/photo/style-moderne-hi-rise-b%C3%A2timent-en-verre-bleu-ext%C3%A9rieur-avec-mur-transparent-3d-rendu.jpg?s=1024x1024&w=is&k=20&c=wt2oJyXts9z9pwdq7WTc_kOjNY7W4ygf5DR89_zGhf4="
+//  }
 ]
