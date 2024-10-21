@@ -1,0 +1,45 @@
+.performance-content {
+  display: flex;
+  flex-direction: column;
+  padding: 20px;
+  background-color: #f9f9f9;
+  border-radius: 8px;
+}
+
+.performance-line {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 10px;
+}
+
+.label {
+  color: #707070;
+  margin: 0;
+  font-weight: 600;
+  font-size: 24px;
+}
+
+.value {
+  font-weight: 600;
+  font-size: 24px;
+  color: #646464;
+  margin: 0 0 10px 0;
+}
+
+.value.green {
+  color: #27ae60;
+}
+
+.performance-charts {
+  margin: 20px;
+}
+
+.custom-tab-header {
+  display: flex;
+  align-items: center;
+  gap: 10px;   /* Space between text and icon */
+  font-weight: 600;
+  font-size: 24px;
+  color: #4a90e2;  /* Blue color for the header */
+}

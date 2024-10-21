@@ -92,5 +92,12 @@
     ></app-scpi-simulation>
   </div>
 
+  <div class="performance" *ngIf="simulatedScpiList.length > 0">
+    <p style="font-weight: 700; font-size: 28px; margin: 24px 24px">Performances Futures</p>
+    <app-scpi-performance-simulation [perfomanceCharts]="futureIncomesEveryYear"
+                                     [futureIncomesEveryFiveYears]="futureIncomesEveryFiveYears"
+    ></app-scpi-performance-simulation>
+  </div>
+
 </div>
 

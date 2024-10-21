@@ -1,4 +1,5 @@
 import {property_type} from "../enum/property-type.enum";
+import {Stripping} from "./scpi-invest.model";
 export { property_type } from "../enum/property-type.enum";
 
 export interface Property {
@@ -14,5 +15,6 @@ export interface SimulatedScpiModel {
   partNb: number;
   monthlyIncomes: number;
   withdrawalValue : number;
+  strip: Stripping;
   lastYearDistributionRate : string;
 }

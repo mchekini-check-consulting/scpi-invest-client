@@ -1,0 +1,38 @@
+<div class="performance">
+  <div class="card">
+    <p-tabView>
+      <p-tabPanel *ngFor="let year of years">
+
+        <ng-template pTemplate="header">
+          <div class="custom-tab-header">
+            <span>{{ year }} ANS</span>
+          </div>
+        </ng-template>
+
+        <div class="performance-content">
+          <div class="performance-line">
+            <p class="label">Revenus bruts cumulés sur la durée</p>
+            <p class="value">
+              {{futureIncomesEveryFiveYears.get(year)?.incomes | number: '1.2-2'}}€
+            </p>
+          </div>
+          <div class="performance-line">
+            <p class="label">Gain sur la revalorisation</p>
+            <p class="value" [ngStyle]="{'color': futureIncomesEveryFiveYears.get(year)?.revaluation || 0 > 0 ? '#27ae60' : '#646464'}">
+              {{futureIncomesEveryFiveYears.get(year)?.revaluation | number: '1.2-2'}}€
+            </p>
+          </div>
+          <div class="performance-line">
+            <p class="label"> Gain total sur la durée </p>
+            <p class="value" [ngStyle]="{'color': futureIncomesEveryFiveYears.get(year)?.total || 0 > 0 ? '#27ae60' : '#646464'}">
+              {{futureIncomesEveryFiveYears.get(year)?.total | number: '1.2-2'}}€
+            </p>
+          </div>
+        </div>
+      </p-tabPanel>
+    </p-tabView>
+  </div>
+  <div class="performance-charts">
+    <p-chart type="bar" [data]="data" [options]="options" />
+  </div>
+</div>

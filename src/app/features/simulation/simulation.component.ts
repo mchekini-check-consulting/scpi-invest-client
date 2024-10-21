@@ -16,6 +16,7 @@ import {ScpiSimulationComponent} from "./scpi-simulation/scpi-simulation.compone
 import {ChartModule} from "primeng/chart";
 import {ScpiDetailComponent} from "../scpi/components/scpi-detail/scpi-detail.component";
 import {ScpiDetailSimulationComponent} from "./scpi-detail-simulation/scpi-detail-simulation.component";
+import {ScpiPerformanceSimulationComponent} from "./scpi-performance-simulation/scpi-performance-simulation.component";
 
 @Component({
   selector: 'app-simulation',
@@ -33,7 +34,8 @@ import {ScpiDetailSimulationComponent} from "./scpi-detail-simulation/scpi-detai
     ScpiSimulationComponent,
     ChartModule,
     ScpiDetailComponent,
-    ScpiDetailSimulationComponent
+    ScpiDetailSimulationComponent,
+    ScpiPerformanceSimulationComponent
   ],
   templateUrl: './simulation.component.html',
   styleUrl: './simulation.component.css'
@@ -50,7 +52,8 @@ export class SimulationComponent implements OnInit{
   scpiSimulationFormDialogForModification : boolean = false;
   simulatedScpiList!: SimulatedScpiModel[][];
   investmentToModify!: SimulatedScpiModel | undefined;
-
+  futureIncomesEveryYear!:Map<number, {accumulatedInvestment: number ,accumulatedIncomes : number}>;
+  futureIncomesEveryFiveYears!: Map<number, {incomes: number, revaluation: number, total : number}>
 
   constructor(private scpiService:ScpiService) {
   }
@@ -120,7 +123,6 @@ export class SimulationComponent implements OnInit{
     );
 
     if (index === -1) {
-      console.log(this.simulatedScpiList);
       this.simulatedScpiList.push([{ ...simulatedScpi }]);
 
     } else {
@@ -143,6 +145,9 @@ export class SimulationComponent implements OnInit{
         };
       }
     }
+
+    this.oneYearIncomesInterval();
+    this.fiveYearsIncomesInterval();
   }
 
   modifyInvestment($event : {oldInvestment: SimulatedScpiModel, newInvestment: SimulatedScpiModel}) {
@@ -178,6 +183,9 @@ export class SimulationComponent implements OnInit{
       this.deleteScpiSimulation({ id: investmentToDelete.scpi_id, type: investmentToDelete.selectedProperty.type});
     }
 
+    this.oneYearIncomesInterval();
+    this.fiveYearsIncomesInterval();
+
     this.scpiSimulationFormDialogForModification = false;
     this.scpiSimulationFormDialogVisible = false;
     this.selectScpiDialogVisible = false;
@@ -199,5 +207,45 @@ export class SimulationComponent implements OnInit{
 
     this.scpiSimulationFormDialogVisible =true;
     this.scpiSimulationFormDialogForModification = true;
+  }
+
+  accumulatedIncomes(time : number): number {
+    return  this.simulatedScpiList.flat()
+      .filter(scpi => (time - scpi.strip.time) > 0 )
+      .reduce((sum, scpi) => sum + ((time - scpi.strip.time) * 12 * scpi.monthlyIncomes), 0);
+  }
+
+  revaluationGain(time: number) : number {
+    return  this.simulatedScpiList.flat()
+      .filter(scpi => scpi.strip.percent < 100 && (time - scpi.strip.time) > 0)
+      .reduce((sum, scpi )=> sum + ((scpi.totalInvest * 100 / scpi.strip.percent) - scpi.totalInvest),0);
+  }
+
+  fiveYearsIncomesInterval() {
+    this.futureIncomesEveryFiveYears = new Map<number, {incomes: number, revaluation: number, total: number}>();
+
+    for (let annee = 5; annee<= 25; annee+=5) {
+      let incomes = this.accumulatedIncomes(annee);
+      let revaluation =  this.revaluationGain(annee);
+      this.futureIncomesEveryFiveYears.set(annee, {incomes: incomes, revaluation:revaluation, total: incomes + revaluation})
+    }
+  }
+
+  oneYearIncomesInterval(){
+
+    this.futureIncomesEveryYear = new Map<number, {accumulatedInvestment: number ,accumulatedIncomes : number}>();
+    //Somme des montant investi PLEINE/NUE Confondus
+    let accumulatedInvestment = this.simulatedScpiList.flat().reduce((sum, scpi) => sum + scpi.totalInvest, 0);
+    let beneficesCumule = [];
+
+    let revaluationGain = 0;
+    for(let annee = 1; annee <= 25; annee++) {
+      let scpi = this.simulatedScpiList.flat().find(s => s.strip.time + 1 === annee);
+      if(scpi) {
+        revaluationGain = (scpi.totalInvest * 100 / scpi.strip.percent) - scpi.totalInvest;
+        accumulatedInvestment += revaluationGain;
+      }
+      this.futureIncomesEveryYear.set(annee, {accumulatedInvestment : accumulatedInvestment, accumulatedIncomes : this.accumulatedIncomes(annee)});
+    }
   }
 }
