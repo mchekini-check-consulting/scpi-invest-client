@@ -11,6 +11,6 @@ export class StatScpiService {
   constructor(private http: HttpClient) { }
 
   getStatistiques(): Observable<Statistique> {
-    return this.http.get<Statistique>('mock/stats_scpi_data.json');
+    return this.http.get<Statistique>('/api/v1/investement/portfolio/performance');
   }
 }
