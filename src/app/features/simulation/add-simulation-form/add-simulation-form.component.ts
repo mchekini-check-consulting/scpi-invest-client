@@ -83,7 +83,8 @@ export class AddSimulationFormComponent implements OnInit, OnChanges,AfterViewIn
       totalInvest : 0,
       partNb: 1,
       monthlyIncomes : 0,
-      withdrawalValue : 0
+      withdrawalValue : 0,
+      lastYearDistributionRate : ''
     };
   }
 
@@ -124,6 +125,7 @@ export class AddSimulationFormComponent implements OnInit, OnChanges,AfterViewIn
   onClickAddInvestment() {
     this.simulatedScpi.scpi_id = this.scpiDetails.id;
     this.simulatedScpi.name = this.scpi.name;
+    this.simulatedScpi.lastYearDistributionRate = this.scpi.lastYearDistributionRate;
 
     if(this.formModification === false) {
       this.onAddScpi.emit(this.simulatedScpi);
@@ -141,7 +143,8 @@ export class AddSimulationFormComponent implements OnInit, OnChanges,AfterViewIn
       totalInvest : 0,
       partNb: 1,
       monthlyIncomes : 0,
-      withdrawalValue : 0
+      withdrawalValue : 0,
+      lastYearDistributionRate : ''
     };
   }
   onAddSimulatedScpi() {
@@ -168,7 +171,7 @@ export class AddSimulationFormComponent implements OnInit, OnChanges,AfterViewIn
 
   minimumPart():void{
     this.minimiumSubscriptionPart = this.scpiDetails.minimumSubscription/Object.values(this.scpiDetails.prices)[Object.values(this.scpiDetails.prices).length - 1];
-    this.simulatedScpi.partNb=this.minimiumSubscriptionPart;
+    this.simulatedScpi.partNb= this.minimiumSubscriptionPart;
   }
 
   protected readonly property_type = property_type;

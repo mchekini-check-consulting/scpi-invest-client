@@ -14,4 +14,5 @@ export interface SimulatedScpiModel {
   partNb: number;
   monthlyIncomes: number;
   withdrawalValue : number;
+  lastYearDistributionRate : string;
 }

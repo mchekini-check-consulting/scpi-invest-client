@@ -57,5 +57,13 @@ export class ScpiSimulationComponent {
     }
   }
 
-  protected readonly property_type = property_type;
+  getLastDistributionRate() : string {
+    let scpi = this.simulatedScpi.find(scpi => scpi.selectedProperty.type === property_type.PLEINE_PROPRIETE);
+    if(scpi) {
+      return scpi.lastYearDistributionRate + '%';
+    }
+    else {
+      return '--';
+    }
+  }
 }
