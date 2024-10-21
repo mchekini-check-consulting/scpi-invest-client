@@ -1,0 +1,18 @@
+button {
+  display: flex;
+  align-items: center;
+  padding: 10px;
+  background-color: #f0f0f0;
+  border: 1px solid #ccc;
+  border-radius: 16px;
+  cursor: pointer;
+}
+
+button.selected {
+  background-color: #007bff;
+  color: white;
+}
+
+i {
+  margin-right: 8px;
+}

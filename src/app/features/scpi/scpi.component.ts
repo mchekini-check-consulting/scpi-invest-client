@@ -22,20 +22,15 @@ import {ScpiInvestModel} from "../../core/model/scpi-invest.model";
 import {StepperModule} from "primeng/stepper";
 import {PaymentInfoModel} from "../../core/model/payment_info.model";
 import {UserService} from "../../core/service/user.service";
+import {MulticriteriaSearchComponent} from "../multicriteria-search/multicriteria-search.component";
+import {IconFieldModule} from "primeng/iconfield";
+import {InputIconModule} from "primeng/inputicon";
+import {ScpiSearch} from "../../core/model/scpi-search.model";
+import {debounceTime, Subject} from "rxjs";
 
 
 
-interface Region {
-  name: string,
-  code: string
-}
-interface Sector {
-  name: string,
-}
 
-interface Montant {
-  amount:number
-}
 @Component({
   selector: 'app-scpi',
   standalone: true,
@@ -52,6 +47,9 @@ interface Montant {
     DialogModule,
     AddSimulationFormComponent,
     StepperModule,
+    MulticriteriaSearchComponent,
+    IconFieldModule,
+    InputIconModule,
   ],
   providers: [MessageService, OAuthService],
   templateUrl: './scpi.component.html',
@@ -60,21 +58,15 @@ interface Montant {
 export class ScpiComponent implements OnInit{
   scpiListData : ScpiModel[] | undefined;
   items: MegaMenuItem[] | undefined;
-
-  regions!: Region[];
-  sector!: Sector[];
-  montant!: Montant;
   value: number = 50000;
-
   selectedScpi?:ScpiModel;
   scpiDetails?:ScpiDetailModel;
-
-  selectedRegions!: Region[];
   showFormDialog: boolean = false;
-
   bankInformation?:PaymentInfoModel;
   username?:String;
   email?:String;
+  filterVisible:boolean = false;
+  searchSubject = new Subject<string>();
 
   @Input() fromWhere:string="invest";
   @Output("OnAddBtnClick") onAddBtnClick = new EventEmitter<ScpiModel>();
@@ -83,6 +75,22 @@ export class ScpiComponent implements OnInit{
       if (user != null)
         this.username = user.firstName + " " + user.lastName ;
         this.email = user?.email;
+    });
+
+    let scpiRequest:ScpiSearch={};
+
+    this.searchSubject.pipe(debounceTime(300)).subscribe((searchText) => {
+      if(searchText!==""){
+        scpiRequest.searchTerm =searchText;
+        console.log(scpiRequest.searchTerm);
+
+        this.search(scpiRequest);
+      }else{
+        scpiRequest={};
+        this.search(scpiRequest);
+
+      }
+
     });
   }
 
@@ -93,7 +101,7 @@ export class ScpiComponent implements OnInit{
       this.scpiListData = data;
       this.scpiListData.forEach((scpi)=> scpi.image=this.randomImage())
     });
-    this.setSearchCriteriaValue()
+
   }
 
   getScpiDetail(scpi_id:number): void{
@@ -142,49 +150,25 @@ export class ScpiComponent implements OnInit{
     return(Math.floor(Math.random() * 10) + 1).toString();
   }
 
+  showFilter(){
+    this.filterVisible=!this.filterVisible;
+  }
 
-  setSearchCriteriaValue() {
-    this.montant = {amount:300};
-    this.sector = [
-      {name: "Résidentiel"},
-      {name: "Bureaux"},
-      {name: "Hôtels"},
-      {name: "Commerces"},
-      {name: "Logistique"},
-      {name: "Santé"},
-      {name: "Locaux d’activité"},
-      {name: "Transport"},
-      {name: "Autres"}
-    ];
+  onSearchInputChange(value: any): void {
+    let inputValue = value.target.value;
+    if(inputValue.length>=3){
 
-    this.regions = [
-      {name: 'Autriche', code: 'AT'},
-      {name: 'Belgique', code: 'BE'},
-      {name: 'Bulgarie', code: 'BG'},
-      {name: 'Chypre', code: 'CY'},
-      {name: 'Croatie', code: 'HR'},
-      {name: 'Danemark', code: 'DK'},
-      {name: 'Espagne', code: 'ES'},
-      {name: 'Estonie', code: 'EE'},
-      {name: 'Finlande', code: 'FI'},
-      {name: 'France', code: 'FR'},
-      {name: 'Grèce', code: 'GR'},
-      {name: 'Hongrie', code: 'HU'},
-      {name: 'Irlande', code: 'IE'},
-      {name: 'Italie', code: 'IT'},
-      {name: 'Lettonie', code: 'LV'},
-      {name: 'Lituanie', code: 'LT'},
-      {name: 'Luxembourg', code: 'LU'},
-      {name: 'Malte', code: 'MT'},
-      {name: 'Pays-Bas', code: 'NL'},
-      {name: 'Pologne', code: 'PL'},
-      {name: 'Portugal', code: 'PT'},
-      {name: 'République tchèque', code: 'CZ'},
-      {name: 'Roumanie', code: 'RO'},
-      {name: 'Slovaquie', code: 'SK'},
-      {name: 'Slovénie', code: 'SI'},
-      {name: 'Suède', code: 'SE'}
-    ];
+      this.searchSubject.next(inputValue);
+    }else{
+      this.searchSubject.next("");
+    }
+  }
 
+  search(scpiSearch:ScpiSearch):void{
+    this.scpiService.searchScpi(scpiSearch).subscribe(data=>{
+      this.scpiListData = data;
+      this.scpiListData.forEach((scpi)=> scpi.image=this.randomImage())
+
+    })
   }
 }

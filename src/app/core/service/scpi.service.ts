@@ -4,6 +4,7 @@ import {ScpiModel} from "../model/scpi.model";
 import {HttpClient} from "@angular/common/http";
 import {ScpiDetailModel} from "../model/scpi-detail.model";
 import {UserScpiModel} from "../model/user-scpi.model";
+import {ScpiSearch} from "../model/scpi-search.model";
 
 @Injectable({
   providedIn: 'root'
@@ -24,5 +25,9 @@ export class ScpiService {
   userScpiService() : Observable<UserScpiModel[]> {
 
     return this.http.get<UserScpiModel[]>("mock/user_data.json");
+  }
+
+  searchScpi(search?:ScpiSearch): Observable<ScpiModel[]> {
+    return this.http.post<ScpiModel[]>("api/v1/scpi/search",search);
   }
 }
