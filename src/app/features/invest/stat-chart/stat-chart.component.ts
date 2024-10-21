@@ -1,157 +1,143 @@
 import { Component, OnInit } from '@angular/core';
-import { StatScpiService } from "../../../core/service/statistique_service/stat-scpi.service";
-import { StatScpiModel } from "../../../core/model/stat-scpi.models";
 import { ChartModule } from "primeng/chart";
+import { StatScpiService } from "../../../core/service/stat-scpi.service";
+import { Statistique } from "../../../core/model/statistique.model";
 
 @Component({
-  selector: 'app-stat-chart',
-  standalone: true,
-  imports: [ChartModule],
-  templateUrl: './stat-chart.component.html',
-  styleUrls: ['./stat-chart.component.css']
+    selector: 'app-stat-chart',
+    standalone: true,
+    imports: [ChartModule],
+    templateUrl: './stat-chart.component.html',
+    styleUrls: ['./stat-chart.component.css']
 })
 export class StatChartComponent implements OnInit {
-  public regionChartData: any;
-  public sectorChartData: any;
-  public evolutionChartData: any;
-  public options: any;
+    public regionChartData: any;
+    public sectorChartData: any;
+    public evolutionChartData: any;
+    public options: any;
+    private colors: string[];
 
-  constructor(private statScpiService: StatScpiService) {
-  }
-
-  ngOnInit(): void {
-    this.loadRegionData();
-    this.loadSectorData();
-    this.loadEvolutionData();
-
-    const documentStyle = getComputedStyle(document.documentElement);
-    const textColor = documentStyle.getPropertyValue('--text-color');
-
-    this.options = {
-      cutout: '60%',
-      plugins: {
-        legend: {
-          labels: {
-            color: textColor
-          }
-        },
-        tooltip: {
-          callbacks: {
-            label: (tooltipItem: any) => {
-              const label = tooltipItem.label || '';
-              const value = tooltipItem.raw;
-              return label + ': ' + value + '%';
-            }
-          }
-        }
-      }
-    };
-  }
-
-  private loadRegionData() {
-    this.statScpiService.getRegionScpiService().subscribe((response: any) => {
-        const data = response.regions;
-        this.prepareChartData(data, 'region');
-      },
-      (error) => {
-        console.error('Erreur lors du chargement des données de région', error);
-      }
-    );
-  }
-
-  private loadSectorData() {
-    this.statScpiService.getSecteurScpiService().subscribe((response: any) => {
-        const data = response.sectors;
-        this.prepareChartData(data, 'sector');
-      },
-      (error) => {
-        console.error('Erreur lors du chargement des données de secteur', error);
-      });
-  }
-
-  private loadEvolutionData() {
-    this.statScpiService.getEvolutionScpiService().subscribe((response: any) => {
-        const data = response.evolutionPrices;
-        this.prepareEvolutionChartData(data);
-      },
-      (error) => {
-        console.error('Erreur lors du chargement des données d\'évolution', error);
-      });
-  }
-
-
-  private prepareChartData(data: StatScpiModel[], type: string): void {
-    const labels = data.map(item => type === 'region' ? item.region : item.sector);
-    const percentages = data.map(item => item.percentage);
-    console.log(`Données pour ${type}:`, {labels, percentages});
-    const documentStyle = getComputedStyle(document.documentElement);
-
-
-    const chartData = {
-      labels: labels,
-      datasets: [
-        {
-          data: percentages,
-          backgroundColor: [
-            documentStyle.getPropertyValue('--blue-500'),
-            documentStyle.getPropertyValue('--yellow-500'),
-            documentStyle.getPropertyValue('--green-500'),
-            documentStyle.getPropertyValue('--red-500'),
-            documentStyle.getPropertyValue('--purple-500'),
-            documentStyle.getPropertyValue('--orange-500'),
-            documentStyle.getPropertyValue('--cyan-500'),
-            documentStyle.getPropertyValue('--pink-500')
-          ],
-          hoverBackgroundColor: [
-            documentStyle.getPropertyValue('--blue-400'),
-            documentStyle.getPropertyValue('--yellow-400'),
-            documentStyle.getPropertyValue('--green-400'),
-            documentStyle.getPropertyValue('--red-400'),
-            documentStyle.getPropertyValue('--purple-400'),
-            documentStyle.getPropertyValue('--orange-400'),
-            documentStyle.getPropertyValue('--cyan-400'),
-            documentStyle.getPropertyValue('--pink-400')
-          ]
-        }
-      ]
-    };
-
-    if (type === 'region') {
-      this.regionChartData = chartData;
-    } else {
-      this.sectorChartData = chartData;
+    constructor(private statScpiService: StatScpiService) {
+        this.colors = [];
     }
-  }
 
-  private prepareEvolutionChartData(data: any) {
-    const documentStyle = getComputedStyle(document.documentElement);
+    ngOnInit(): void {
+        this.loadStatistics();
 
-    const years = data.map((item: any) => item.year);
-    const sectorPrices = data.map((item: any) => item.sectorPrice);
-    const regionPrices = data.map((item: any) => item.regionPrice);
+        const documentStyle = getComputedStyle(document.documentElement);
+        const textColor = documentStyle.getPropertyValue('--text-color').trim();
 
+        this.colors = [
+            documentStyle.getPropertyValue('--blue-500').trim(),
+            documentStyle.getPropertyValue('--yellow-500').trim(),
+            documentStyle.getPropertyValue('--green-500').trim(),
+            documentStyle.getPropertyValue('--red-500').trim(),
+            documentStyle.getPropertyValue('--purple-500').trim(),
+            documentStyle.getPropertyValue('--orange-500').trim(),
+            documentStyle.getPropertyValue('--cyan-500').trim(),
+            documentStyle.getPropertyValue('--pink-500').trim()
+        ];
 
+        this.options = {
+            cutout: '60%',
+            plugins: {
+                legend: {
+                    labels: {
+                        color: textColor
+                    }
+                },
+                tooltip: {
+                    callbacks: {
+                        label: (tooltipItem: any) => {
+                            const label = tooltipItem.label || '';
+                            const value = tooltipItem.raw;
+                            return `${label}: ${value}%`;
+                        }
+                    }
+                }
+            }
+        };
+    }
 
-    this.evolutionChartData = {
-      labels: years,
-      datasets: [
-        {
-          label: 'Prix des Parts - Secteurs',
-          data: sectorPrices,
-          fill: false,
-          borderColor: documentStyle.getPropertyValue('--blue-500'),
-          tension: 0.4
-        },
-        {
-          label: 'Prix des Parts - Régions',
-          data: regionPrices,
-          fill: false,
-          borderColor: documentStyle.getPropertyValue('--pink-500'),
-          tension: 0.4
+    private loadStatistics() {
+        this.statScpiService.getStatistiques().subscribe(
+            (data: Statistique) => {
+                const repartitionGeographiqueMap = new Map<string, number>(
+                    Object.entries(data.repartitionGeographique)
+                );
+                const repartitionSectorielleMap = new Map<string, number>(
+                    Object.entries(data.repartitionSectorielle)
+                );
+
+                const evolutionPrixPartMap = new Map<string, Map<string, number>>();
+                for (const [scpiName, prices] of Object.entries(data.evolutionPrixPart)) {
+                    evolutionPrixPartMap.set(scpiName, new Map<string, number>(Object.entries(prices)));
+                }
+
+                this.prepareChartData(repartitionGeographiqueMap, 'region');
+                this.prepareChartData(repartitionSectorielleMap, 'sector');
+                this.prepareEvolutionChartData(evolutionPrixPartMap);
+            },
+            (error) => {
+                console.error('Erreur lors du chargement des statistiques', error);
+            }
+        );
+    }
+
+    private prepareChartData(data: Map<string, number>, type: 'region' | 'sector') {
+        const labels = Array.from(data.keys());
+        const percentages = Array.from(data.values());
+
+        const chartData = {
+            labels: labels,
+            datasets: [
+                {
+                    data: percentages,
+                    backgroundColor: this.colors,
+                    hoverBackgroundColor: this.colors.map(color => this.adjustColorBrightness(color, -20))
+                }
+            ]
+        };
+
+        if (type === 'region') {
+            this.regionChartData = chartData;
+        } else {
+            this.sectorChartData = chartData;
         }
-      ]
-    };
-  }
+    }
+
+    private prepareEvolutionChartData(data: Map<string, Map<string, number>>) {
+        const years = new Set<string>();
+        const datasets = Array.from(data.entries()).map(([scpiName, prices], index) => {
+            prices.forEach((_, year) => years.add(year));
+
+            const scpiPrices = Array.from(years).map(year => {
+                const price = prices.get(year);
+                return price !== undefined ? price : 0;
+            });
+
+            return {
+                label: scpiName,
+                data: scpiPrices,
+                fill: false,
+                borderColor: this.colors[index % this.colors.length],
+                tension: 0.4
+            };
+        });
+
+        this.evolutionChartData = {
+            labels: Array.from(years),
+            datasets: datasets
+        };
+    }
+
+    private adjustColorBrightness(hex: string, percent: number): string {
+        const num = parseInt(hex.slice(1), 16),
+            amt = Math.round(2.55 * percent),
+            R = (num >> 16) + amt,
+            G = (num >> 8 & 0x00FF) + amt,
+            B = (num & 0x0000FF) + amt;
+
+        return '#' + (0x1000000 + (R < 255 ? (R < 1 ? 0 : R) : 255) * 0x10000 + (G < 255 ? (G < 1 ? 0 : G) : 255) * 0x100 + (B < 255 ? (B < 1 ? 0 : B) : 255)).toString(16).slice(1);
+    }
 }
-
-
