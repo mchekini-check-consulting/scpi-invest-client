@@ -1,7 +1,0 @@
-{
-  "sectors": [
-    { "sector": "Secteur A", "percentage": 10 },
-    { "sector": "Secteur B", "percentage": 25 },
-    { "sector": "Secteur C", "percentage": 30 },
-    { "sector": "Secteur D", "percentage": 45 }
-  ]}

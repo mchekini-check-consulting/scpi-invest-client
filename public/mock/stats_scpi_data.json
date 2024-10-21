@@ -1,0 +1,53 @@
+{
+  "repartitionGeographique": {
+    "France": 30.0,
+    "Allemagne": 25.0,
+    "Italie": 15.0,
+    "Espagne": 10.0,
+    "Belgique": 5.0,
+    "Pays-Bas": 5.0,
+    "Royaume-Uni": 3.0,
+    "Suisse": 4.0,
+    "Suède": 2.0,
+    "Portugal": 1.0
+  },
+  "repartitionSectorielle": {
+    "logement": 40,
+    "hôpitaux": 30,
+    "bureaux": 15,
+    "commerces": 10,
+    "entrepôts": 5
+  },
+  "evolutionPrixPart": {
+    "scpi1": {
+      "2023": 250,
+      "2024": 260,
+      "2025": 275,
+      "2026": 290
+    },
+    "scpi2": {
+      "2023": 200,
+      "2024": 220,
+      "2025": 230,
+      "2026": 250
+    },
+    "scpi3": {
+      "2023": 150,
+      "2024": 160,
+      "2025": 170,
+      "2026": 180
+    },
+    "scpi4": {
+      "2023": 300,
+      "2024": 320,
+      "2025": 350,
+      "2026": 370
+    },
+    "scpi5": {
+      "2023": 180,
+      "2024": 200,
+      "2025": 220,
+      "2026": 240
+    }
+  }
+}
