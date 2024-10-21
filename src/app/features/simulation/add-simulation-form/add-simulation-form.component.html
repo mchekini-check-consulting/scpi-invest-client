@@ -28,7 +28,7 @@
         </div>
 
 
-      <div *ngIf="simulatedScpi.selectedProperty.type === property_type.NUE_PROPRIETE;">
+      <div *ngIf="simulatedScpi.selectedProperty.type !== property_type.PLEINE_PROPRIETE;">
         <label class="type_property block font-bold mb-2" for="nue_propriete_dropdown">Durée</label>
         <p-dropdown
           [(ngModel)]="selectedStrip"
