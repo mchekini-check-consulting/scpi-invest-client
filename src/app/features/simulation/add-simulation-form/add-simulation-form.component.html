@@ -22,6 +22,7 @@
                 [(ngModel)]="simulatedScpi.selectedProperty"
                 [options]="properties"
                 [style]="{width: '24rem'}"
+                (ngModelChange)="calculateRevenus()"
                 id="selector_detector"
                 optionLabel="propertyLabel"
                 placeholder="{{simulatedScpi.selectedProperty.propertyLabel}}"/>
@@ -34,6 +35,7 @@
           [(ngModel)]="selectedStrip"
           [options]="stripping"
           [style]="{width: '24rem'}"
+          (ngModelChange)="calculateRevenus()"
           id="nue_propriete_dropdown"
           optionLabel="stipLabel"
           placeholder="{{selectedStrip.stipLabel}}"/>
@@ -46,6 +48,7 @@
                 </label>
                 <p-inputNumber
                         [(ngModel)]="simulatedScpi.totalInvest"
+                        (ngModelChange)="calculateRevenus()"
                         currency="EUR"
                         id="currency-europe"
                         inputId="currency-germany"
@@ -63,6 +66,7 @@
                         [showButtons]="true"
                         [step]="1"
                         [min]="minimiumSubscriptionPart"
+                        (ngModelChange)="calculateRevenus()"
                         buttonLayout="horizontal"
                         decrementButtonClass="null"
                         decrementButtonIcon="pi pi-minus"
@@ -80,10 +84,10 @@
             <h4 class="rendement_title">
                 Votre revenu sur cet investissement
             </h4>
-            <p class="rendement_text">
-                {{ calculateRevenus(simulatedScpi.partNb) }}
-            </p>
-
+          <p class="rendement_text" *ngIf="simulatedScpi.selectedProperty.type === property_type.NUE_PROPRIETE; else displayRevenues"> -- </p>
+          <ng-template #displayRevenues>
+          <p class="rendement_text"> {{ simulatedScpi.monthlyIncomes | number: '1.2-2'}}€/mois</p>
+          </ng-template>
         </div>
 
         <div class="card_footer">
