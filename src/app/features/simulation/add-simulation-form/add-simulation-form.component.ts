@@ -1,10 +1,10 @@
-import {AfterViewInit, Component, EventEmitter, Input, OnChanges, OnInit, Output, SimpleChanges} from '@angular/core';
+import {Component, EventEmitter, Input, OnChanges, OnInit, Output, SimpleChanges} from '@angular/core';
 import {Scpi_itemComponent} from "../../scpi/components/scpi_item/scpi_item.component";
 import {MultiSelectModule} from "primeng/multiselect";
 import {FormsModule} from "@angular/forms";
 import {InputNumberModule} from "primeng/inputnumber";
 import {ScpiDetailModel} from "../../../core/model/scpi-detail.model";
-import {NgIf} from "@angular/common";
+import {DecimalPipe, NgIf} from "@angular/common";
 import {DropdownModule} from "primeng/dropdown";
 import {ScpiModel} from "../../../core/model/scpi.model";
 import {Property, SimulatedScpiModel} from "../../../core/model/scpi-simulated.model";
@@ -27,13 +27,14 @@ export interface Stripping {
     FormsModule,
     InputNumberModule,
     NgIf,
-    DropdownModule
+    DropdownModule,
+    DecimalPipe
   ],
   templateUrl: './add-simulation-form.component.html',
   styleUrl: './add-simulation-form.component.css'
 })
-export class AddSimulationFormComponent implements OnInit, OnChanges,AfterViewInit {
-  @Input() scpiDetails!:ScpiDetailModel;
+export class AddSimulationFormComponent implements OnInit, OnChanges {
+  @Input("scpiDetails") scpiDetails!:ScpiDetailModel;
   @Input() scpi!:ScpiModel;
   @Input() formModification!: boolean;
   @Input() fromInvest: boolean=false;
@@ -58,6 +59,11 @@ export class AddSimulationFormComponent implements OnInit, OnChanges,AfterViewIn
   ngOnChanges(changes: SimpleChanges) {
     if(changes["investmentToModify"]) {
       this.simulatedScpi = {...this.investmentToModify};
+    }
+
+    if(changes["scpiDetails"]) {
+      this.minimumPart();
+      this.calculateRevenus();
     }
   }
 
@@ -95,10 +101,6 @@ export class AddSimulationFormComponent implements OnInit, OnChanges,AfterViewIn
     };
   }
 
-  ngAfterViewInit(): void {
-    this.minimumPart();
-  }
-
   onCancelBtnClick() {
     this.onCloseForm.emit(false);
     this.simulatedScpi.totalInvest = 0;
@@ -107,26 +109,27 @@ export class AddSimulationFormComponent implements OnInit, OnChanges,AfterViewIn
     this.selectedStrip = this.stripping[0];
   }
 
-  calculateRevenus(partNumber: number): string {
+  calculateRevenus(): number {
+
   let partPrice = Object.values(this.scpiDetails.prices)[Object.values(this.scpiDetails.prices).length - 1];
+  let lastDistributionRateInPercent = Number(this.scpi.lastYearDistributionRate) / 100;
 
   // part
   let percentagePart = 1
-  if(this.simulatedScpi.selectedProperty.type !== property_type.PLEINE_PROPRIETE) //TODO: EDIT HERE TO IF IS NU PROP AND USUFRUIT
+  if(this.simulatedScpi.selectedProperty.type === property_type.NUE_PROPRIETE)
   {
     percentagePart = this.selectedStrip.percent / 100;
   }
-  this.simulatedScpi.totalInvest = partPrice * partNumber * percentagePart;
+  else if (this.simulatedScpi.selectedProperty.type === property_type.USUFRUIT) {
+    percentagePart = 1 - (this.selectedStrip.percent / 100);
+  }
+
+  this.simulatedScpi.monthlyIncomes = partPrice * this.simulatedScpi.partNb * lastDistributionRateInPercent / 12;
+  this.simulatedScpi.totalInvest = partPrice * this.simulatedScpi.partNb * percentagePart;
   this.simulatedScpi.withdrawalValue = this.simulatedScpi.totalInvest * ((100 - this.scpiDetails.subscriptionFees)/ 100);
 
-    if(this.simulatedScpi.selectedProperty.type === property_type.PLEINE_PROPRIETE)
-    {
-      let revenusGeneres = this.simulatedScpi.totalInvest * Object.values(this.scpiDetails.distributionRate)[Object.values(this.scpiDetails.distributionRate).length - 1] / 100;
-      this.simulatedScpi.monthlyIncomes = Number((revenusGeneres / 12).toFixed(2));
-      return this.simulatedScpi.monthlyIncomes + '€/mois';
-    } else {
-      return '--';
-    }
+  return this.simulatedScpi.monthlyIncomes;
+
   }
 
   onClickAddInvestment() {

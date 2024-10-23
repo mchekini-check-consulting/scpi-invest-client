@@ -8,10 +8,11 @@
         size="large"
         shape="circle" />
       </div>
-      <div class="flex font-bold" style="width: 20%"> {{simulatedScpi[0].name}} </div>
+      <div class="flex font-bold ml-4" style="width: 20%"> {{simulatedScpi[0].name}} </div>
       <div class="flex font-bold" style="width: 20%"> {{ getTotalParts() }} parts </div>
       <div class="flex font-bold" style="width: 20%">{{ getTotalInvest() }} €</div>
-      <div class="flex font-bold" style="width: 20%">{{getMonthlyIncomes()}}</div>
+      <div class="flex font-bold" style="width: 20%" *ngIf="getMonthlyIncomes()"> {{getMonthlyIncomes() | number: '1.2-2'}}€/mois</div>
+      <div class="flex font-bold" style="width: 20%" *ngIf="getMonthlyIncomes() === undefined">--</div>
       <div class="flex font-bold" style="width: 20%">{{getLastDistributionRate()}}</div>
     </div>
 
@@ -34,9 +35,12 @@
           <td>{{ simulation.partNb }}</td>
           <td>{{ simulation.totalInvest }}€</td>
           <td>{{ simulation.withdrawalValue }}€</td>
-          <td>{{getMonthlyIncomes()}}</td>
-          <td>{{getLastDistributionRate()}}</td>
-            <td>
+          <td *ngIf="simulation.selectedProperty.type === property_type.PLEINE_PROPRIETE; else noIncomes"> {{simulation.monthlyIncomes | number: '1.2-2'}}€/mois</td>
+          <ng-template #noIncomes><td> -- </td></ng-template>
+          <td *ngIf="simulation.selectedProperty.type === property_type.PLEINE_PROPRIETE; else noRate">{{getLastDistributionRate()}}</td>
+          <ng-template #noRate><td> -- </td></ng-template>
+
+          <td>
             <i class="pi pi-pencil" style="cursor:pointer;" (click)="onClickModifyScpi(simulation.scpi_id, simulation.selectedProperty.type)"></i>
           </td>
           <td>

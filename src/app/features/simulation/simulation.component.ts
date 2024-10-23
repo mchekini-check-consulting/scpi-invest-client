@@ -196,7 +196,10 @@ export class SimulationComponent implements OnInit{
       scpiList.filter(scpi =>
         scpi.scpi_id !== scpiSimulated.id || scpi.selectedProperty.type !== scpiSimulated.type
       ))
-      .filter(scpiList => scpiList.length > 0)
+      .filter(scpiList => scpiList.length > 0);
+
+    this.oneYearIncomesInterval();
+    this.fiveYearsIncomesInterval();
   }
 
   openModifyScpiDialog($event: { id: number; type: property_type }) {
@@ -234,7 +237,6 @@ export class SimulationComponent implements OnInit{
   oneYearIncomesInterval(){
 
     this.futureIncomesEveryYear = new Map<number, {accumulatedInvestment: number ,accumulatedIncomes : number}>();
-    //Somme des montant investi PLEINE/NUE Confondus
     let accumulatedInvestment = this.simulatedScpiList.flat().reduce((sum, scpi) => sum + scpi.totalInvest, 0);
     let beneficesCumule = [];
 
