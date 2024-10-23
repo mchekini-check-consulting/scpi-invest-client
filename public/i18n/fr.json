@@ -2,6 +2,7 @@
   "SIDEBAR": {
     "SCPI": "Liste des SCPI",
     "INVEST": "Mes Investissements",
-    "SIMULATION": "Simulations"
+    "SIMULATION": "Simulations",
+    "VERSEMENT": "Versement programmé"
   }
 }

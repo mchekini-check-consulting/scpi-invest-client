@@ -17,9 +17,11 @@ declare interface RouteInfo {
 }
 
 export const ROUTES: RouteInfo[] = [
-  {path: '/scpi', title: 'Liste des SCPI ', key: 'SIDEBAR.SCPI', icon: 'nc-icon nc-ruler-pencil', class: ''},
-  {path: '/invest', title: 'Mes investissements',key : 'SIDEBAR.INVEST', icon: 'nc-icon nc-layers-3', class: ''},
-  {path: '/simulation', title: 'Mes simulations',key : 'SIDEBAR.SIMULATION', icon: 'nc-icon nc-layers-3', class: ''},
+  {path: '/scpi', title: 'Liste des SCPI ', key: 'SIDEBAR.SCPI', icon: 'pi pi-home', class: ''},
+  {path: '/invest', title: 'Mes investissements',key : 'SIDEBAR.INVEST', icon: 'pi pi-chart-line', class: ''},
+  {path: '/simulation', title: 'Mes simulations',key : 'SIDEBAR.SIMULATION', icon: 'pi pi-box', class: ''},
+  {path: '/versement', title: 'Versement programmê',key : 'SIDEBAR.VERSEMENT', icon: 'pi pi-euro', class: ''},
+
 ];
 
 
