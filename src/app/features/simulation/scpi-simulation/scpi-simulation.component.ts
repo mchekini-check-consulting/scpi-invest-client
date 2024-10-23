@@ -7,7 +7,7 @@ import {AvatarModule} from "primeng/avatar";
 import {Button} from "primeng/button";
 import {MenuModule} from "primeng/menu";
 import {TableModule} from "primeng/table";
-import {NgIf} from "@angular/common";
+import {DecimalPipe, NgIf} from "@angular/common";
 
 @Component({
   selector: 'app-scpi-simulation',
@@ -20,7 +20,8 @@ import {NgIf} from "@angular/common";
     Button,
     MenuModule,
     TableModule,
-    NgIf
+    NgIf,
+    DecimalPipe
   ],
   templateUrl: './scpi-simulation.component.html',
   styleUrl: './scpi-simulation.component.css'
@@ -48,12 +49,12 @@ export class ScpiSimulationComponent {
     return this.simulatedScpi.reduce((sum, scpi) => sum + scpi.totalInvest, 0);
   }
 
-  getMonthlyIncomes() : string {
+  getMonthlyIncomes() : number | undefined {
     let scpi = this.simulatedScpi.find(scpi => scpi.selectedProperty.type === property_type.PLEINE_PROPRIETE);
     if(scpi) {
-      return scpi.monthlyIncomes + ' €/mois'
+      return scpi.monthlyIncomes;
     } else {
-      return '--';
+      return undefined;
     }
   }
 
@@ -66,4 +67,6 @@ export class ScpiSimulationComponent {
       return '--';
     }
   }
+
+  protected readonly property_type = property_type;
 }

@@ -34,10 +34,6 @@ export class ScpiPerformanceSimulationComponent  implements OnInit, OnChanges {
     if(changes['perfomanceCharts']) {
       this.setPerformanceCharts();
     }
-
-    if(changes['futureIncomesEveryFiveYears']) {
-      console.log('Detected changes futureIncomesEveryFiveYears')
-    }
   }
 
   setPerformanceCharts() {
