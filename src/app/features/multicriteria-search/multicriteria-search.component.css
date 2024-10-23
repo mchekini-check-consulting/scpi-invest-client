@@ -32,7 +32,7 @@
 .frais-sous{
   margin-top:16px;
   display: flex;
-  flex-direction: row;
+  flex-direction: column;
   width: 100%;
   justify-content: space-between;
   align-items: start;
@@ -74,4 +74,8 @@
   border: 1px solid #ccc;
   border-radius: 16px;
   cursor: pointer;
+}
+
+.btn:hover{
+  background-color: #007bff;
 }

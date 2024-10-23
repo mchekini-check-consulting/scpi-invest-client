@@ -1,4 +1,4 @@
-import {Component, EventEmitter, Input, OnInit, Output, QueryList, ViewChild, ViewChildren} from '@angular/core';
+import {Component, EventEmitter, Input, OnInit, Output, QueryList, ViewChildren} from '@angular/core';
 import {SidebarModule} from "primeng/sidebar";
 import {MultiSelectModule} from "primeng/multiselect";
 import {FormsModule} from "@angular/forms";
@@ -14,147 +14,215 @@ import {DividerModule} from "primeng/divider";
 import {ScpiSearch} from "../../core/model/scpi-search.model";
 
 interface Region {
-  name: string,
-  code: string
+    name: string,
+    code: string
 }
+
 interface Sector {
-  name: string,
-  icon:string
+    name: string,
+    icon: string
+}
+
+interface Fees {
+    name: string,
+    type: boolean | null,
 }
 
 @Component({
-  selector: 'app-multicriteria-search',
-  standalone: true,
-  imports: [
-    SidebarModule,
-    MultiSelectModule,
-    FormsModule,
-    NgIf,
-    NgForOf,
-    SelectButtonModule,
-    Button,
-    NgStyle,
-    SelectableButtonComponent,
-    ToggleButtonModule,
-    IconFieldModule,
-    InputIconModule,
-    SliderModule,
-    DividerModule
-  ],
-  templateUrl: './multicriteria-search.component.html',
-  styleUrl: './multicriteria-search.component.css'
+    selector: 'app-multicriteria-search',
+    standalone: true,
+    imports: [
+        SidebarModule,
+        MultiSelectModule,
+        FormsModule,
+        NgIf,
+        NgForOf,
+        SelectButtonModule,
+        Button,
+        NgStyle,
+        SelectableButtonComponent,
+        ToggleButtonModule,
+        IconFieldModule,
+        InputIconModule,
+        SliderModule,
+        DividerModule
+    ],
+    templateUrl: './multicriteria-search.component.html',
+    styleUrl: './multicriteria-search.component.css'
 })
 export class MulticriteriaSearchComponent implements OnInit {
-  @Input() sidebarVisible: boolean = false;
-  regions!: Region[];
-  sector!: Sector[];
-  selectedRegion: string[]=[];
-  selectedSector: string[]=[];
-  amount:number=0;
-  applyFees?:boolean=false;
-  feesChanged:boolean=false;
-  searchRequest:ScpiSearch|undefined;
-  @Input() onSimulation:boolean=false;
-  @ViewChildren('children') childrenComponents!: QueryList<SelectableButtonComponent>;
-  @Output("filter") filter = new EventEmitter<ScpiSearch>();
+    @Input() sidebarVisible: boolean = false;
+    regions!: Region[];
+    sector!: Sector[];
+    selectedRegion: string[] = [];
+    selectedSector: string[] = [];
+    amount: number = 0;
+    searchRequest: ScpiSearch | undefined;
+    @Input() onSimulation: boolean = false;
+    @ViewChildren('children') childrenComponents!: QueryList<SelectableButtonComponent>;
+    @Output("filter") filter = new EventEmitter<ScpiSearch>();
 
-  constructor() {
-  }
+    selectedFees: Fees | undefined;
+    applayedFees: Fees[] | undefined;
+    isResetDesibled: boolean = true;
 
-  ngOnInit(): void {
-    this.multicriteraInitData();
-
-  }
-
-  changeFees():void{
-    this.applyFees=!this.applyFees;
-    this.feesChanged=true;
-  }
-
-  onSectorSelected(value: string) {
-    console.log('Valeur sélectionnée:', value);
-    if (this.selectedSector.includes(value)) {
-      const index = this.selectedSector.indexOf(value);
-      if (index > -1) {
-        this.selectedSector.splice(index, 1);
-      }
-    } else {
-      this.selectedSector.push(value);
+    constructor() {
     }
 
-  }
+    ngOnInit(): void {
+        this.applayedFees = [
+            {
+                name: "Non",
+                type: false
+            },
+            {
+                name: "Tous",
+                type: null
+            },
+            {
+                name: "Oui",
+                type: true
+            }
 
-  onLanguageSelected(value:string){
-    console.log('valeur selectionnee:', value);
-    if(this.selectedRegion.includes(value)){
-      const index = this.selectedRegion.indexOf(value);
-      if (index > -1) {
-        this.selectedRegion.splice(index, 1);
-      }
-    }else{
-      this.selectedRegion.push(value);
+
+        ];
+        this.selectedFees = {
+            name: "Tous",
+            type: null
+        };
+        this.multicriteraInitData();
+
     }
-  }
 
-  clearFilter(){
-    this.searchRequest={};
-    this.selectedRegion=[];
-    this.selectedSector=[];
-    this.amount=0;
-    this.applyFees=false;
-    this.feesChanged=false;
-    this.childrenComponents.forEach(child => {
-      child.clearSelection();
-    });
-    this.filter.emit(this.searchRequest)
-  }
+    onSectorSelected(value: string) {
+        if (this.selectedSector.includes(value)) {
+            const index = this.selectedSector.indexOf(value);
+            if (index > -1) {
+                this.selectedSector.splice(index, 1);
+            }
+        } else {
+            this.selectedSector.push(value);
+        }
+        if (this.selectedSector.length >= 1) {
+            this.isResetDesibled = false;
+        } else {
+            this.isResetDesibled = false;
 
-  initSearchBody():void{
-    if(this.searchRequest===undefined){
-      this.searchRequest={};
+        }
+
     }
-    if(this.amount>0){
-      this.searchRequest.amount=this.amount;
-    }
-    if(this.feesChanged){
-      this.searchRequest.fees=this.applyFees;
-    }
-    if(this.selectedSector.length>0){
-      this.searchRequest.sectors=this.selectedSector;
-    }
-    if(this.selectedRegion.length>0){
-      this.searchRequest.localizations=this.selectedRegion;
-    }
-    this.filter.emit(this.searchRequest);
-  }
+
+    // TODO: ============================================================= BUG =================================================================
+
+    onLocatizationSelected(value: Region) {
+            //TODO: ICI JE VERIFIE SI C'EST ZONE EUROP SANS FRANCE SINON JE FAIT RIEN JE CONTINUE LE PROGRAMME NORMAL
+        if (value.code === 'EU') {
+            this.childrenComponents.forEach(child => {
+
+                if (child.image !== undefined && child.image !== 'EU') {
+                    //TODO: ICI JE DESACTIVE ET JE DESELECTIONNE les btn localization
+                    child.clearSelection();
+                    child.isDesibled = !child.isDesibled;
+
+                    //TODO: ICI JE VERIFIE SI LES BTN SONT DESACTIVER ALOR SA VEUX DIRE QUE ZONE EUROP EST SELECTION DONC J'AJOUTE LA TOTALITE DES PAYS
+                    if(child.isDesibled){
+                        this.selectedRegion = this.regions
+                            .map(region => region.name).filter(region => region !== "France" && region !== "Zone Europe sans France");
+                    }else{
+                        //TODO: ICI C'EST DANS LE CAS OU LES BTN SONT ACTIVE DONC JE REMET LE TABLEAU DES PAYS A 0
+                        this.selectedRegion=[]
+                    }
+                }
+            });
 
 
-  multicriteraInitData():void{
+        }
 
-    this.sector = [
-      { name: "Résidentiel",icon:"pi pi-home"},
-      { name: "Bureaux",icon:"pi pi-building" },
-      { name: "Hôtels",icon:"pi pi-building-columns" },
-      { name: "Commerces", icon:"pi pi-shop" },
-      { name: "Logistique",icon:"pi pi-microchip" },
-      { name: "Santé", icon:"pi pi-asterisk" },
-      { name: "Locaux d’activité",icon:"pi pi-shopping-bag" },
-      { name: "Transport", icon:"pi pi-car" },
-      { name: "Autres",icon:"pi pi-box" }
-    ];
+        console.log('valeur selectionnee:', value);
 
-    this.regions = [
-      { name: 'Grande-Bretagne', code: 'GB' },
-      { name: 'Espagne', code: 'ES' },
-      { name: 'Irlande', code: 'IE' },
-      { name: 'Italie', code: 'IT' },
-      { name: 'Allemagne', code: 'DE' },
-      { name: 'Pays-Bas', code: 'NL' },
-      { name: 'France', code: 'FR' },
-      { name: 'Pologne', code: 'PL' },
-      { name: 'Portugal', code: 'PT' },
-      { name: 'Belgique', code: 'BE' },
-      { name: 'Autres', code: 'EU' }
-    ];
- }
+    //TODO: ICI JE VERIFIE SI UN PAYS EXISTE DEJA ALORS JE LE SUPPRIME DE MON TABELAU SINON JE L'AJOUTE APPAR SI C'EST ZONE EUROP
+            if (this.selectedRegion.includes(value.name)) {
+                const index = this.selectedRegion.indexOf(value.name);
+                if (index > -1) {
+                    this.selectedRegion.splice(index, 1);
+                }
+            } else {
+                if (value.code !== 'EU') {
+                    this.selectedRegion.push(value.name);
+                }
+            }
+
+        // TODO: ICI JE VERIFIE SI UN OU PLUSIEUR PAYS SONT SELECTION ALOR J'ACTIVE LE BOUTON REENITIALISER SINON JE LE DESACTIVE
+        this.isResetDesibled = this.selectedRegion.length < 1;
+    }
+
+    // TODO: ==============================================================================================================================
+
+    clearFilter() {
+        this.searchRequest = {};
+        this.selectedRegion = [];
+        this.selectedSector = [];
+        this.amount = 0;
+        this.selectedFees = {
+            name: "Tout",
+            type: null
+        };
+        this.childrenComponents.forEach(child => {
+            child.clearSelection();
+        });
+        this.filter.emit(this.searchRequest)
+        this.isResetDesibled = true;
+    }
+
+    initSearchBody(): void {
+        if (this.searchRequest === undefined) {
+            this.searchRequest = {};
+        }
+        if (this.amount > 0) {
+            this.searchRequest.amount = this.amount;
+        }
+        if (this.selectedFees?.type !== null) {
+            this.searchRequest.fees = this.selectedFees?.type;
+        } else {
+            this.searchRequest.fees = undefined;
+        }
+        if (this.selectedSector.length > 0) {
+            this.searchRequest.sectors = this.selectedSector;
+        }
+        if (this.selectedRegion.length > 0) {
+            this.searchRequest.localizations = this.selectedRegion;
+        }
+        this.filter.emit(this.searchRequest);
+    }
+
+
+    multicriteraInitData(): void {
+
+        this.sector = [
+            {name: "Résidentiel", icon: "pi pi-home"},
+            {name: "Bureaux", icon: "pi pi-building"},
+            {name: "Hôtels", icon: "pi pi-building-columns"},
+            {name: "Commerces", icon: "pi pi-shop"},
+            {name: "Logistique", icon: "pi pi-microchip"},
+            {name: "Santé", icon: "pi pi-asterisk"},
+            {name: "Locaux d’activité", icon: "pi pi-shopping-bag"},
+            {name: "Transport", icon: "pi pi-car"},
+            {name: "Autres", icon: "pi pi-box"}
+        ];
+
+        this.regions = [
+            {name: "Zone Europe sans France", code: "EU"},
+            {name: 'Grande-Bretagne', code: 'GB'},
+            {name: 'Espagne', code: 'ES'},
+            {name: 'Irlande', code: 'IE'},
+            {name: 'Italie', code: 'IT'},
+            {name: 'Allemagne', code: 'DE'},
+            {name: 'Pays-Bas', code: 'NL'},
+            {name: 'France', code: 'FR'},
+            {name: 'Pologne', code: 'PL'},
+            {name: 'Portugal', code: 'PT'},
+            {name: 'Belgique', code: 'BE'},
+            {name: 'Autres', code: ''}
+        ];
+    }
 }
