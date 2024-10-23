@@ -115,7 +115,7 @@
             </div>
             <div class="btn_confirmation">
               <p-toast position="top-center" [life]="2000"></p-toast>
-                <button style="border:none;border-radius:16px;height: 40px;background-color: #2c86ff;color:white"
+                <button style="cursor:pointer;border:none;border-radius:16px;height: 40px;background-color: #2c86ff;color:white"
                 (click)="showRecap()">
                     Programmer un versement
                 </button>
@@ -131,7 +131,7 @@
             [style]="{width: '600px'}">
     <div>
       <p>Vous avez choisi la SCPI <strong>{{ selectedScpi?.name }}</strong>.</p>
-      <p>Vous allez acheter <strong>{{ nombreShares }}</strong> parts, ce qui correspond à un versement initial de <strong>{{ versementInitAmount }} €</strong>.</p>
+      <p *ngIf="nombreShares!==0">Vous allez acheter <strong>{{ nombreShares }}</strong> parts, ce qui correspond à un versement initial de <strong>{{ versementInitAmount }} €</strong>.</p>
       <p>Vos versements réguliers seront de <strong>{{ amount }} €</strong>, avec une fréquence <strong>{{ selectedPeriod?.name }}</strong>.</p>
       <p>Les versements seront prélevés chaque <strong>{{ selectedDay }}</strong> du mois.</p>
       <p>Merci de vérifier ces informations avant de confirmer la soumission.</p>

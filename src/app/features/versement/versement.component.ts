@@ -9,6 +9,7 @@ import {CalendarModule} from "primeng/calendar";
 import {DialogModule} from "primeng/dialog";
 import {ToastModule} from "primeng/toast";
 import {MessageService} from "primeng/api";
+import {NgIf} from "@angular/common";
 
 interface FrequanceVersement{
   name:String;
@@ -29,11 +30,12 @@ enum FrequanceType{
     CheckboxModule,
     CalendarModule,
     DialogModule,
-    ToastModule
+    ToastModule,
+    NgIf
   ],
-  providers: [MessageService],
   templateUrl: './versement.component.html',
-  styleUrl: './versement.component.css'
+  styleUrl: './versement.component.css',
+  providers:[MessageService]
 })
 export class VersementComponent implements OnInit{
 
@@ -53,6 +55,7 @@ export class VersementComponent implements OnInit{
   listOfDay:string[]=[];
   selectedDay:string="01";
   nombreShares : number = 0;
+  ifFirstInvestment:boolean=true;
 
   constructor(private scpiService:ScpiService,private messageService: MessageService) {
 
@@ -67,6 +70,12 @@ export class VersementComponent implements OnInit{
       this.slidStep=Object.values(data.prices)[Object.values(data.prices).length-1];
       this.amount = Object.values(data.prices)[Object.values(data.prices).length-1];
 
+    })
+    this.scpiService.userScpiService().subscribe(data=>{
+      data.forEach((item)=>{
+        item.scpiId === selected.id?this.versementMinimumAmount=0:null;
+        item.scpiId === selected.id?this.versementInitAmount=0:null;
+      })
     })
   }
 
@@ -87,12 +96,16 @@ export class VersementComponent implements OnInit{
         type:FrequanceType.Mensuelle
       },
     ];
-
+    this.selectedPeriod = {
+      name:"Mensuel",
+      type:FrequanceType.Mensuelle
+    };
     this.listOfDay= Array.from({ length: 31 }, (v, i) => (i + 1).toString().padStart(2, '0'));
   }
-// la partie que j'ai rajouter pour le recap
+
+
   showRecap(){
-    if(this.selectedScpi && this.amount && this.versementInitAmount && this.selectedPeriod && this.selectedDay && this.condition){
+    if(this.selectedScpi && this.amount &&  this.selectedPeriod && this.selectedDay && this.condition){
       this.nombreShares = this.versementInitAmount/this.slidStep;
       this.displayRecap = true;
     }else{
