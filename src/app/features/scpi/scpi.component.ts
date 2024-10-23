@@ -75,6 +75,7 @@ export class ScpiComponent implements OnInit{
       if (user != null)
         this.username = user.firstName + " " + user.lastName ;
         this.email = user?.email;
+        this.initAndLoadScpiData();
     });
 
     let scpiRequest:ScpiSearch={};
@@ -97,11 +98,15 @@ export class ScpiComponent implements OnInit{
 
 
   ngOnInit() {
-    this.scpiService.fetchScpiList().subscribe(data =>{
-      this.scpiListData = data;
-      this.scpiListData.forEach((scpi)=> scpi.image=this.randomImage())
-    });
+    this.initAndLoadScpiData();
 
+  }
+
+  private initAndLoadScpiData() {
+    this.scpiService.fetchScpiList().subscribe(data => {
+      this.scpiListData = data;
+      this.scpiListData.forEach((scpi) => scpi.image = this.randomImage())
+    });
   }
 
   getScpiDetail(scpi_id:number): void{
