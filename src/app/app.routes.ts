@@ -14,9 +14,10 @@ export const routes: Routes = [
       {path: 'scpi', component: ScpiComponent, canActivate: [AuthGuard]},
       {path: 'scpi/:id', component: ScpiDetailComponent, canActivate: [AuthGuard]},
       {path: 'invest', component: InvestComponent, canActivate: [AuthGuard]},
-      {path: 'simulation', component: SimulationComponent, canActivate: [AuthGuard]}
-
+      {path: 'simulation', component: SimulationComponent, canActivate: [AuthGuard]},
+      { path: '**', component: ScpiComponent, canActivate: [AuthGuard] }
     ]
   }
+
 
 ];
