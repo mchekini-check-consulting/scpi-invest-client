@@ -103,9 +103,9 @@ export class InvestComponent implements OnInit{
     if(months > 0)
       result += months + ' mois';
 
-    if(months === 0 && years === 0 && days < 2)
+    if(months === 0 && years === 0 && days === 1)
       result += '1 jour';
-    else if(months === 0 && years === 0 && days > 2)
+    else if(months === 0 && years === 0 && days >= 2)
       result += days + ' jours';
 
     return result;

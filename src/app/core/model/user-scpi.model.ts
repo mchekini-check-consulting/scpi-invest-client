@@ -6,6 +6,6 @@ export interface UserScpiModel {
   requestDate: Date;
   investmentValidationDate: Date;
   totalAmount : Number;
-  totalReconstitutionValue: Number;
+  currentValue: Number;
   distributionRate: string;
 }

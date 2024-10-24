@@ -29,7 +29,7 @@
             <th>Image</th>
             <th pSortableColumn="requestDate"> Période de détention<p-sortIcon field="requestDate"></p-sortIcon></th>
             <th pSortableColumn="totalAmount"> Prix d'achat <p-sortIcon field="totalAmount"></p-sortIcon></th>
-            <th pSortableColumn="totalReconstitutionValue"> Valeur actuelle <p-sortIcon field="totalReconstitutionValue"></p-sortIcon></th>
+            <th pSortableColumn="currentValue"> Valeur actuelle <p-sortIcon field="currentValue"></p-sortIcon></th>
             <th pSortableColumn="distributionRate"> Taux de Distribution <p-sortIcon field="distributionRate"></p-sortIcon></th>
           </tr>
         </ng-template>
@@ -38,12 +38,12 @@
             <td class="name-align">{{scpiInvestment.scpiName}}</td>
             <td><img class="image-scpi" src="{{scpiInvestment.image}}"/></td>
             <td>{{getDetentionPeriod(scpiInvestment.investmentValidationDate)}}</td>
-            <td>{{scpiInvestment.totalAmount | currency:'EUR'}}</td>
-            <td>{{scpiInvestment.totalReconstitutionValue | currency:'EUR'}}
+            <td>{{scpiInvestment.totalAmount}} €</td>
+            <td>{{scpiInvestment.currentValue}} €
             <span>
-                <i *ngIf="scpiInvestment.totalAmount > scpiInvestment.totalReconstitutionValue" class="pi pi-arrow-down-right" style="color: #FF0000; margin-left: 5px; font-weight: 600"></i>
-                <i *ngIf="scpiInvestment.totalAmount < scpiInvestment.totalReconstitutionValue" class="pi pi-arrow-up-right" style="color: #289d28; margin-left: 5px; font-weight: 600"></i>
-                <i *ngIf="scpiInvestment.totalAmount === scpiInvestment.totalReconstitutionValue" class="pi pi-equals" style="color: #2778bb; margin-left: 5px; font-weight: 600"></i>
+                <i *ngIf="scpiInvestment.totalAmount > scpiInvestment.currentValue" class="pi pi-arrow-down-right" style="color: #FF0000; margin-left: 5px; font-weight: 600"></i>
+                <i *ngIf="scpiInvestment.totalAmount < scpiInvestment.currentValue" class="pi pi-arrow-up-right" style="color: #289d28; margin-left: 5px; font-weight: 600"></i>
+                <i *ngIf="scpiInvestment.totalAmount === scpiInvestment.currentValue" class="pi pi-equals" style="color: #2778bb; margin-left: 5px; font-weight: 600"></i>
               </span>
             </td>
             <td>{{scpiInvestment.distributionRate}}%</td>
@@ -118,7 +118,7 @@
             <td class="name-align">{{scpiInvestment.scpiName}}</td>
             <td><img class="image-scpi" src="{{scpiInvestment.image}}"/></td>
             <td>{{scpiInvestment.requestDate | date : 'dd MMM yyyy'}}</td>
-            <td>{{scpiInvestment.totalAmount | currency:'EUR'}}</td>
+            <td>{{scpiInvestment.totalAmount}} €</td>
             <td><p-tag value="{{scpiInvestment.investmentStatus}}" severity="info"></p-tag></td>
             <td>{{scpiInvestment.distributionRate}}%</td>
           </tr>
