@@ -6,12 +6,15 @@
 </div>
 <ng-template
   #img_btn>
-  <button (click)="toggleSelection()" [ngClass]="{'selected': isSelected}">
-    <div class="inline-flex align-items-center gap-2 px-1">
+  <button [disabled]="isDesibled" (click)="toggleSelection()" [ngClass]="{'selected': isSelected}">
+    <div *ngIf="image!=='';else textNoImg" class="inline-flex align-items-center gap-2 px-1">
                  <img
                    src="img/flags/{{image}}.png"
                    style="width: 18px" />
                  <div>{{ text }}</div>
                </div>
+      <ng-template #textNoImg>
+          <div>{{ text }}</div>
+      </ng-template>
   </button>
 </ng-template>

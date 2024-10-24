@@ -176,4 +176,8 @@ export class ScpiComponent implements OnInit{
 
     })
   }
+
+  onDialogHide() {
+    this.filterVisible = false;
+  }
 }
