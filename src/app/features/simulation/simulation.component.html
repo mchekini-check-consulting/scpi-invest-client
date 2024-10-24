@@ -80,7 +80,12 @@
   </div>
 
   <div class="simulation_charts" *ngIf="simulatedScpiList.length > 0"style="width:100%">
-    <app-scpi-detail-simulation></app-scpi-detail-simulation>
+    <app-scpi-detail-simulation [totalValue]="totalValue"
+                                [totalMonthlyIncomes]="totalMonthlyIncomes"
+                                [chartsName]="chartsName"
+                                [chartsCountry]="valuePerCountryPercent"
+                                [chartsSector]="valuePerSectorPercent"
+    ></app-scpi-detail-simulation>
   </div>
 
   <div class="details"  *ngIf="simulatedScpiList.length > 0">

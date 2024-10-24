@@ -97,7 +97,9 @@ export class AddSimulationFormComponent implements OnInit, OnChanges {
       monthlyIncomes : 0,
       lastYearDistributionRate : '',
       withdrawalValue : 0,
-      strip:  {time : 0, percent: 100, stipLabel: ''}
+      strip:  {time : 0, percent: 100, stipLabel: ''},
+      localizations: {},
+      sectors: {}
     };
   }
 
@@ -136,6 +138,8 @@ export class AddSimulationFormComponent implements OnInit, OnChanges {
     this.simulatedScpi.scpi_id = this.scpiDetails.id;
     this.simulatedScpi.name = this.scpi.name;
     this.simulatedScpi.lastYearDistributionRate = this.scpi.lastYearDistributionRate;
+    this.simulatedScpi.localizations = this.scpiDetails.localizations;
+    this.simulatedScpi.sectors = this.scpiDetails.sectors;
 
     if(this.simulatedScpi.selectedProperty.type === property_type.NUE_PROPRIETE) {
       this.simulatedScpi.strip = this.selectedStrip;
@@ -159,7 +163,9 @@ export class AddSimulationFormComponent implements OnInit, OnChanges {
       monthlyIncomes : 0,
       withdrawalValue : 0,
       lastYearDistributionRate : '',
-      strip:  {time : 0, percent: 100, stipLabel: ''}
+      strip:  {time : 0, percent: 100, stipLabel: ''},
+      localizations: {},
+      sectors: {}
     };
   }
   onAddSimulatedScpi() {
