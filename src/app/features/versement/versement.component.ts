@@ -17,8 +17,8 @@ interface FrequanceVersement{
 }
 
 enum FrequanceType{
-  Trimestrielle,
-  Mensuelle,
+  TRIMESTRIELLE,
+  MENSUELLE,
 }
 @Component({
   selector: 'app-versement',
@@ -88,17 +88,17 @@ export class VersementComponent implements OnInit{
 
     this.period=[
       {
-        name:"Trimestre",
-        type:FrequanceType.Trimestrielle
+        name:"Trimestrielle",
+        type:FrequanceType.TRIMESTRIELLE
       },
       {
-        name:"Mensuel",
-        type:FrequanceType.Mensuelle
+        name:"Mensuelle",
+        type:FrequanceType.MENSUELLE
       },
     ];
     this.selectedPeriod = {
-      name:"Mensuel",
-      type:FrequanceType.Mensuelle
+      name:"Mensuelle",
+      type:FrequanceType.MENSUELLE
     };
     this.listOfDay= Array.from({ length: 31 }, (v, i) => (i + 1).toString().padStart(2, '0'));
   }
