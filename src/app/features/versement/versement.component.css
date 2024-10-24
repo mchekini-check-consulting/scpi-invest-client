@@ -176,4 +176,105 @@
     margin-top: 20px;
   }
 }
+.ui-dialog {
+  border-radius: 10px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+}
+
+.ui-dialog-header {
+  background-color: #2c86ff;
+  color: white;
+  font-size: 18px;
+  padding: 12px;
+  border-top-left-radius: 10px;
+  border-top-right-radius: 10px;
+}
+
+.ui-dialog-footer {
+  display: flex;
+  justify-content: flex-end;
+  padding: 16px;
+  background-color: #f9f9f9;
+  border-bottom-left-radius: 10px;
+  border-bottom-right-radius: 10px;
+}
+
+.ui-dialog-footer button {
+  margin-left: 10px;
+  border-radius: 8px;
+}
+
+p {
+  font-size: 14px;
+  color: #333;
+  line-height: 1.6;
+  margin: 10px 0;
+}
+
+p strong {
+  font-weight: bold;
+  color: #2c86ff;
+}
+
+
+button[label="Confirmer"] {
+  background-color: #2c86ff;
+  color: white;
+  border: none;
+  padding: 8px 16px;
+  cursor: pointer;
+  transition: background-color 0.3s;
+}
+
+button[label="Modifier"] {
+  background-color: #2c86ff;
+  color: white;
+  border: none;
+  padding: 8px 16px;
+  cursor: pointer;
+  transition: background-color 0.3s;
+}
+.p-toast {
+  position: fixed;
+  top: 20px;
+  right: 20px;
+  z-index: 1000;
+}
+.p-toast-message {
+  background-color: #2c86ff;
+  color: white;
+  font-weight: bold;
+  border-radius: 8px;
+  padding: 10px 20px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  margin-bottom: 10px;
+}
+.p-toast-summary {
+  font-size: 16px;
+  font-weight: bold;
+}
+
+.p-toast-detail {
+  font-size: 14px;
+}
+.p-toast-message:hover {
+  background-color: #1b5c9e;
+  cursor: pointer;
+}
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(-20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.p-toast-message {
+  animation: fadeIn 0.5s ease-out;
+}
+
+
 

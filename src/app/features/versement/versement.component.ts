@@ -6,6 +6,9 @@ import {ScpiModel} from "../../core/model/scpi.model";
 import {SliderModule} from "primeng/slider";
 import {CheckboxModule} from "primeng/checkbox";
 import {CalendarModule} from "primeng/calendar";
+import {DialogModule} from "primeng/dialog";
+import {ToastModule} from "primeng/toast";
+import {MessageService} from "primeng/api";
 
 interface FrequanceVersement{
   name:String;
@@ -24,8 +27,11 @@ enum FrequanceType{
     FormsModule,
     SliderModule,
     CheckboxModule,
-    CalendarModule
+    CalendarModule,
+    DialogModule,
+    ToastModule
   ],
+  providers: [MessageService],
   templateUrl: './versement.component.html',
   styleUrl: './versement.component.css'
 })
@@ -43,11 +49,12 @@ export class VersementComponent implements OnInit{
   period:FrequanceVersement[]|undefined;
   selectedPeriod:FrequanceVersement|undefined;
   condition:boolean=false;
-
+  displayRecap : boolean = false;
   listOfDay:string[]=[];
   selectedDay:string="01";
+  nombreShares : number = 0;
 
-  constructor(private scpiService:ScpiService ) {
+  constructor(private scpiService:ScpiService,private messageService: MessageService) {
 
 
   }
@@ -82,6 +89,24 @@ export class VersementComponent implements OnInit{
     ];
 
     this.listOfDay= Array.from({ length: 31 }, (v, i) => (i + 1).toString().padStart(2, '0'));
+  }
+// la partie que j'ai rajouter pour le recap
+  showRecap(){
+    if(this.selectedScpi && this.amount && this.versementInitAmount && this.selectedPeriod && this.selectedDay && this.condition){
+      this.nombreShares = this.versementInitAmount/this.slidStep;
+      this.displayRecap = true;
+    }else{
+      this.messageService.add({severity:'sucess',summary:'Attention',detail:'Veuillez remplir tous les champs obligatoirs.'})
+    }
+  }
+
+  confirmSubmission(){
+    this.displayRecap = false;
+    this.messageService.add({severity:'sucess',summary:'Confirmation',detail:'Confirmation de votre demande de versement programmé'})
+  }
+
+  cancelSubmission(){
+    this.displayRecap = false;
   }
 
 }

@@ -114,12 +114,32 @@
                 </p>
             </div>
             <div class="btn_confirmation">
-                <button style="border:none;border-radius:16px;height: 40px;background-color: #2c86ff;color:white">
+              <p-toast position="top-center" [life]="2000"></p-toast>
+                <button style="border:none;border-radius:16px;height: 40px;background-color: #2c86ff;color:white"
+                (click)="showRecap()">
                     Programmer un versement
                 </button>
             </div>
         </div>
     </div>
 
+  <p-toast position="top-center" [life]="2000"></p-toast>
+  <p-dialog header="Récapitulatif de votre demande de versement programmé"
+            [(visible)]="displayRecap"
+            [modal]="true"
+            [closable]="false"
+            [style]="{width: '600px'}">
+    <div>
+      <p>Vous avez choisi la SCPI <strong>{{ selectedScpi?.name }}</strong>.</p>
+      <p>Vous allez acheter <strong>{{ nombreShares }}</strong> parts, ce qui correspond à un versement initial de <strong>{{ versementInitAmount }} €</strong>.</p>
+      <p>Vos versements réguliers seront de <strong>{{ amount }} €</strong>, avec une fréquence <strong>{{ selectedPeriod?.name }}</strong>.</p>
+      <p>Les versements seront prélevés chaque <strong>{{ selectedDay }}</strong> du mois.</p>
+      <p>Merci de vérifier ces informations avant de confirmer la soumission.</p>
+    </div>
 
+    <div class="ui-dialog-footer">
+      <button pButton type="button" label="Annuler" (click)="cancelSubmission()"></button>
+      <button pButton type="button" label="Confirmer" (click)="confirmSubmission()"></button>
+    </div>
+  </p-dialog>
 </div>
