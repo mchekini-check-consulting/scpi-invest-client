@@ -19,6 +19,7 @@
       [sidebarVisible]="filterVisible"
       (filter)="search($event)"
       [onSimulation]="fromWhere==='simulation'"
+      (onDialogHide)="onDialogHide()"
     ></app-multicriteria-search>
 
   </div>

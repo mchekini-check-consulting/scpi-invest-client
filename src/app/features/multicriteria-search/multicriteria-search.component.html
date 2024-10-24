@@ -1,5 +1,9 @@
 <div class="card flex justify-content-center">
-  <p-sidebar  [modal]="!onSimulation" [showCloseIcon]="onSimulation" [(visible)]="sidebarVisible" position="right">
+  <p-sidebar  [modal]="!onSimulation"
+              [showCloseIcon]="onSimulation"
+              [(visible)]="sidebarVisible"
+              (onHide)="hideDialog()"
+              position="right">
     <div class="amount-container">
       <p class="filter_titel">
         Investissement minimum
@@ -12,20 +16,28 @@
     </div>
     <div class="frais-sous">
       <p class="filter_titel">
-        Frais de souscriptions
+        Frais de souscriptions:
       </p>
-      <p-toggleButton
-        (onChange)="changeFees()"
-        [style]="{height:'30px',width:'80px','padding-left':'24px','background-color': applyFees ? 'rgba(23,200,23,0.75)' : 'white'}"
-        offLabel="Non"
-        onLabel="Oui"/>
+        <p-selectButton
+                [options]="applayedFees"
+                [(ngModel)]="selectedFees"
+                optionLabel="type">
+            <ng-template let-item pTemplate>
+                {{item.name}}
+            </ng-template>
+        </p-selectButton>
+<!--      <p-toggleButton-->
+<!--        (onChange)="changeFees()"-->
+<!--        [style]="{height:'30px',width:'80px','padding-left':'24px','background-color': applyFees ? 'rgba(23,200,23,0.75)' : 'white'}"-->
+<!--        offLabel="Non"-->
+<!--        onLabel="Oui"/>-->
     </div>
     <p class="filter_titel">Regions</p>
     <div class="region">
       <div *ngFor="let item of regions" id="region" style="padding: 8px">
         <app-selectable-button
           #children
-          (selected)="onLanguageSelected($event)"
+          (selected)="onLocatizationSelected($event)"
           [image]="item.code"
           [text]="item.name">
         </app-selectable-button>
@@ -46,7 +58,7 @@
     </div>
     <p-divider/>
     <div class="bottom_btn">
-      <button (click)="clearFilter()" class="btn">
+      <button [disabled]="isResetDesibled" (click)="clearFilter()" class="btn">
         <i class="pi pi-refresh" style="margin-right: 8px;"></i>
         Réinitialiser
       </button>
