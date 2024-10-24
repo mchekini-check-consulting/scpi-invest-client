@@ -23,8 +23,7 @@ export class ScpiService {
   }
 
   userScpiService() : Observable<UserScpiModel[]> {
-
-    return this.http.get<UserScpiModel[]>("mock/user_data.json");
+    return this.http.get<UserScpiModel[]>("api/v1/investement");
   }
 
   searchScpi(search?:ScpiSearch): Observable<ScpiModel[]> {
