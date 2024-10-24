@@ -104,7 +104,7 @@
         <div class="btn_condition">
             <div class="condition_content">
                 <p-checkbox
-                        [(ngModel)]="condition"
+                        (onChange)="checkboxChange($event.checked)"
                         [binary]="true"
                         inputId="binary">
                 </p-checkbox>
@@ -115,7 +115,10 @@
             </div>
             <div class="btn_confirmation">
               <p-toast position="top-center" [life]="2000"></p-toast>
-                <button style="cursor:pointer;border:none;border-radius:16px;height: 40px;background-color: #2c86ff;color:white"
+                <button
+                  [disabled]="isCfrmBtnDesibled"
+                  [ngStyle]="{'background-color': isCfrmBtnDesibled ? '#97baea' : '#2c86ff'}"
+                  style="cursor: pointer; border: none;padding: 0 16px ;border-radius: 16px; height: 40px; color: white"
                 (click)="showRecap()">
                     Programmer un versement
                 </button>
