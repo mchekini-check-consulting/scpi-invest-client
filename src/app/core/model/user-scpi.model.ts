@@ -1,9 +1,11 @@
 export interface UserScpiModel {
+  scpiId: number;
   scpiName : String;
-  detentionPeriod :String;
-  amount : Number;
-  status : String;
-  price: Number;
-  distributionRate: Number;
-  transactionDate: Date;
+  image: string;
+  investmentStatus : String;
+  requestDate: Date;
+  investmentValidationDate: Date;
+  totalAmount : Number;
+  totalReconstitutionValue: Number;
+  distributionRate: string;
 }
