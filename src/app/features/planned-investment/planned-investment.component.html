@@ -1,0 +1,148 @@
+<div class="global_container">
+    <div class="global_top">
+        <div class="select_scpi">
+            <h3>Je souhaite investir dans la SCPI</h3>
+            <p-dropdown
+                    (onChange)="selecteScpi($event.value)"
+                    [filter]="true"
+                    [options]="scpi"
+                    [showClear]="true"
+                    filterBy="name"
+                    optionLabel="name"
+                    placeholder="Sélectionnez une SCPI">
+                <ng-template let-selectedOption pTemplate="selectedItem">
+                    <div class="flex align-items-center gap-2">
+
+                        <div>{{ selectedOption.name }}</div>
+                    </div>
+                </ng-template>
+                <ng-template let-scpi1 pTemplate="item">
+                    <div class="flex align-items-center gap-2">
+                        <div>{{ scpi1.name }}</div>
+                    </div>
+                </ng-template>
+            </p-dropdown>
+        </div>
+
+        <div class="select_scpi">
+            <div class="versement_time">
+                <div class="versement_line">
+                    Je verse tous les mois
+                    <div
+                            class="versement_amount_text">
+                        {{ amount }}
+                    </div>
+                </div>
+                <div style="display:flex;align-items: center; width:100%;height:40px;">
+                    <p-slider [(ngModel)]="amount" [min]="slidStep" [step]="slidStep" max="3000" styleClass="w-18rem"/>
+                </div>
+
+                <div class="versement_line">
+                    Fréquance des versements
+                    <p-dropdown
+                            [(ngModel)]="selectedPeriod"
+                            [options]="period"
+                            filterBy="name"
+                            optionLabel="name"
+                            placeholder="Frequance">
+                        <ng-template let-selectedOption pTemplate="selectedItem">
+                            <div class="flex align-items-center gap-2">
+
+                                <div>{{ selectedOption.name }}</div>
+                            </div>
+                        </ng-template>
+                        <ng-template let-vers pTemplate="item">
+                            <div class="flex align-items-center gap-2">
+                                <div>{{ vers.name }}</div>
+                            </div>
+                        </ng-template>
+                    </p-dropdown>
+                </div>
+
+            </div>
+
+            <div class="versement_time">
+                <div class="versement_line">
+                    Versement initial
+                    <div
+                            class="versement_amount_text">
+                        {{ versementInitAmount }}
+                    </div>
+                </div>
+                <div style="display:flex;align-items: center; width:100%;height:40px;">
+                    <p-slider [(ngModel)]="versementInitAmount" [min]="versementMinimumAmount" [step]="slidStep"
+                              max="10000" styleClass="w-18rem"/>
+                </div>
+
+                <div class="versement_line">
+                    Jour du prélèvement mensuel
+
+                    <p-dropdown
+                            [(ngModel)]="selectedDay"
+                            [options]="listOfDay"
+                            filterBy="name"
+                            optionLabel="name"
+                            placeholder="Frequance">
+                        <ng-template let-selectedOption pTemplate="selectedItem">
+                            <div class="flex align-items-center gap-2">
+
+                                <div>{{ selectedOption }}</div>
+                            </div>
+                        </ng-template>
+                        <ng-template let-vers pTemplate="item">
+                            <div class="flex align-items-center gap-2">
+                                <div>{{ vers }}</div>
+                            </div>
+                        </ng-template>
+                    </p-dropdown>
+                </div>
+
+
+            </div>
+
+        </div>
+        <div class="btn_condition">
+            <div class="condition_content">
+                <p-checkbox
+                        (onChange)="checkboxChange($event.checked)"
+                        [binary]="true"
+                        inputId="binary">
+                </p-checkbox>
+                <p style="padding-left:16px;font-size:12px"> En cochant cette case, j'atteste avoir lu et accepté les
+                    conditions de confidentialité concernant la collecte et l'utilisation de mes informations
+                    personnelles dans le cadre du traitement de cette demande
+                </p>
+            </div>
+            <div class="btn_confirmation">
+              <p-toast position="top-center" [life]="2000"></p-toast>
+                <button
+                  [disabled]="isCfrmBtnDesibled"
+                  [ngStyle]="{'background-color': isCfrmBtnDesibled ? '#97baea' : '#2c86ff'}"
+                  style="cursor: pointer; border: none;padding: 0 16px ;border-radius: 16px; height: 40px; color: white"
+                (click)="showRecap()">
+                    Programmer un versement
+                </button>
+            </div>
+        </div>
+    </div>
+
+  <p-toast position="top-center" [life]="2000"></p-toast>
+  <p-dialog header="Récapitulatif de votre demande de versement programmé"
+            [(visible)]="displayRecap"
+            [modal]="true"
+            [closable]="false"
+            [style]="{width: '600px'}">
+    <div>
+      <p>Vous avez choisi la SCPI <strong>{{ selectedScpi?.name }}</strong>.</p>
+      <p *ngIf="nombreShares!==0">Vous allez acheter <strong>{{ nombreShares }}</strong> parts, ce qui correspond à un versement initial de <strong>{{ versementInitAmount }} €</strong>.</p>
+      <p>Vos versements réguliers seront de <strong>{{ amount }} €</strong>, avec une fréquence <strong>{{ selectedPeriod?.name }}</strong>.</p>
+      <p>Les versements seront prélevés chaque <strong>{{ selectedDay }}</strong> du mois.</p>
+      <p>Merci de vérifier ces informations avant de confirmer la soumission.</p>
+    </div>
+
+    <div class="ui-dialog-footer">
+      <button pButton type="button" label="Annuler" (click)="cancelSubmission()"></button>
+      <button pButton type="button" label="Confirmer" (click)="confirmSubmission()"></button>
+    </div>
+  </p-dialog>
+</div>
