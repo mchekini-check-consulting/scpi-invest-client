@@ -10,6 +10,8 @@ import { TagModule } from "primeng/tag";
 import { AutoCompleteModule } from "primeng/autocomplete";
 import { ChartModule } from "primeng/chart";
 import { ComparatorService } from "../../core/service/comparator.service";
+import {ScpiService} from "../../core/service/scpi.service";
+import {DropdownModule} from "primeng/dropdown";
 
 @Component({
   selector: 'app-comparateur',
@@ -24,7 +26,8 @@ import { ComparatorService } from "../../core/service/comparator.service";
     RatingModule,
     TagModule,
     AutoCompleteModule,
-    ChartModule
+    ChartModule,
+    DropdownModule
   ],
   templateUrl: './comparateur.component.html',
   styleUrls: ['./comparateur.component.css']
@@ -47,7 +50,7 @@ export class ComparateurComponent implements OnInit {
   selectedScpi2: any;
   selectedScpi3: any;
 
-  constructor(private comparatorService: ComparatorService) {}
+  constructor(private comparatorService: ComparatorService,private scpiService: ScpiService) {}
 
   ngOnInit() {
     this.loadScpis();
@@ -55,8 +58,10 @@ export class ComparateurComponent implements OnInit {
   }
 
   loadScpis() {
-    this.comparatorService.getAllScpis().subscribe(data => {
-      this.scpis = data;
+    this.scpiService.fetchScpiList().subscribe(data => {
+      this.scpis = data
+        .sort((a, b) => a.name.localeCompare(b.name))
+        .map(item => item.name);
     });
   }
 
@@ -84,7 +89,6 @@ export class ComparateurComponent implements OnInit {
 
   compareScpis() {
     const selectedScpis = [this.selectedScpi1, this.selectedScpi2, this.selectedScpi3].filter(scpi => scpi);
-
     if (this.investValue > 0 && selectedScpis.length > 0) {
       this.comparatorService.getScpiData(this.investValue, selectedScpis)
         .subscribe(response => {
@@ -96,7 +100,6 @@ export class ComparateurComponent implements OnInit {
             if (matchedScpi) {
               this.assignResults(matchedScpi);
               this.addDatasetToChart(matchedScpi, index);
-              console.log(`Matched SCPI ${index}:`, matchedScpi);
             }
           });
           this.chartData = { ...this.chartData };

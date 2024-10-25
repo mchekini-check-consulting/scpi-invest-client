@@ -7,8 +7,6 @@ import { Observable } from 'rxjs';
 })
 export class ComparatorService {
 
-  private apiUrl = 'mock/comparator_mock.json';
-
   constructor(private http: HttpClient) { }
 
   getScpiData(investValue: number, selectedScpis: any[]): Observable<any> {
@@ -16,10 +14,6 @@ export class ComparatorService {
       investValue,
       selectedScpis
     };
-    return this.http.post<any>(this.apiUrl, payload);
+    return this.http.post<any>('mock/comparator_mock.json', payload);
   }
-
-  getAllScpis() {
-      return this.http.get<any>("mock/scpi_name_mock.json");
-    }
 }
