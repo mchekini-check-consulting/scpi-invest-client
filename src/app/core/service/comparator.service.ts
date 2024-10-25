@@ -14,6 +14,6 @@ export class ComparatorService {
       investValue,
       selectedScpis
     };
-    return this.http.post<any>('mock/comparator_mock.json', payload);
+    return this.http.post<any>('/api/v1/scpi/compare', payload);
   }
 }
