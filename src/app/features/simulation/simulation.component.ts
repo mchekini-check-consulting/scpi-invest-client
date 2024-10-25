@@ -1,15 +1,15 @@
-import { Component, OnInit} from '@angular/core';
-import { ToggleButtonModule } from "primeng/togglebutton";
-import { FormsModule } from "@angular/forms";
-import { SelectButtonModule } from "primeng/selectbutton";
-import { Button } from "primeng/button";
-import { DialogModule } from "primeng/dialog";
-import { InputTextModule } from "primeng/inputtext";
-import { CommonModule } from '@angular/common';
+import {Component, OnInit} from '@angular/core';
+import {ToggleButtonModule} from "primeng/togglebutton";
+import {FormsModule} from "@angular/forms";
+import {SelectButtonModule} from "primeng/selectbutton";
+import {Button} from "primeng/button";
+import {DialogModule} from "primeng/dialog";
+import {InputTextModule} from "primeng/inputtext";
+import {CommonModule} from '@angular/common';
 import {ScpiComponent} from "../scpi/scpi.component";
 import {ScpiModel} from "../../core/model/scpi.model";
 import {AddSimulationFormComponent} from "./add-simulation-form/add-simulation-form.component";
-import {ScpiDetailModel} from "../../core/model/scpi-detail.model";
+import {Localizations, ScpiDetailModel, Sectors} from "../../core/model/scpi-detail.model";
 import {ScpiService} from "../../core/service/scpi.service";
 import {property_type, SimulatedScpiModel} from "../../core/model/scpi-simulated.model";
 import {ScpiSimulationComponent} from "./scpi-simulation/scpi-simulation.component";
@@ -55,11 +55,22 @@ export class SimulationComponent implements OnInit{
   futureIncomesEveryYear!:Map<number, {accumulatedInvestment: number ,accumulatedIncomes : number}>;
   futureIncomesEveryFiveYears!: Map<number, {incomes: number, revaluation: number, total : number}>
 
+  totalValue!: number;
+  totalMonthlyIncomes!: number;
+  chartsName!: {name: string, totalInvest: number}[];
+  valuePerCountryPercent!: Localizations;
+  valuePerSectorPercent!: Sectors;
+
   constructor(private scpiService:ScpiService) {
   }
 
   ngOnInit(): void {
     this.simulatedScpiList = [];
+    this.totalValue = 0;
+    this.totalMonthlyIncomes = 0;
+    this.chartsName = [];
+    this.valuePerCountryPercent = {};
+    this.valuePerSectorPercent = {};
   }
 
 
@@ -146,8 +157,7 @@ export class SimulationComponent implements OnInit{
       }
     }
 
-    this.oneYearIncomesInterval();
-    this.fiveYearsIncomesInterval();
+    this.updateAllCharts();
   }
 
   modifyInvestment($event : {oldInvestment: SimulatedScpiModel, newInvestment: SimulatedScpiModel}) {
@@ -183,8 +193,7 @@ export class SimulationComponent implements OnInit{
       this.deleteScpiSimulation({ id: investmentToDelete.scpi_id, type: investmentToDelete.selectedProperty.type});
     }
 
-    this.oneYearIncomesInterval();
-    this.fiveYearsIncomesInterval();
+    this.updateAllCharts();
 
     this.scpiSimulationFormDialogForModification = false;
     this.scpiSimulationFormDialogVisible = false;
@@ -198,8 +207,7 @@ export class SimulationComponent implements OnInit{
       ))
       .filter(scpiList => scpiList.length > 0);
 
-    this.oneYearIncomesInterval();
-    this.fiveYearsIncomesInterval();
+    this.updateAllCharts();
   }
 
   openModifyScpiDialog($event: { id: number; type: property_type }) {
@@ -210,6 +218,15 @@ export class SimulationComponent implements OnInit{
 
     this.scpiSimulationFormDialogVisible =true;
     this.scpiSimulationFormDialogForModification = true;
+  }
+
+  updateAllCharts() {
+    this.oneYearIncomesInterval();
+    this.fiveYearsIncomesInterval();
+    this.setGlobalVue();
+    this.setChartByName();
+    this.setChartsByCountry();
+    this.setChartsBySector();
   }
 
   accumulatedIncomes(time : number): number {
@@ -238,7 +255,6 @@ export class SimulationComponent implements OnInit{
 
     this.futureIncomesEveryYear = new Map<number, {accumulatedInvestment: number ,accumulatedIncomes : number}>();
     let accumulatedInvestment = this.simulatedScpiList.flat().reduce((sum, scpi) => sum + scpi.totalInvest, 0);
-    let beneficesCumule = [];
 
     let revaluationGain = 0;
     for(let annee = 1; annee <= 25; annee++) {
@@ -249,5 +265,109 @@ export class SimulationComponent implements OnInit{
       }
       this.futureIncomesEveryYear.set(annee, {accumulatedInvestment : accumulatedInvestment, accumulatedIncomes : this.accumulatedIncomes(annee)});
     }
+  }
+
+  setGlobalVue() : void {
+
+    let flatList = this.simulatedScpiList.flat();
+
+    let globalSome = flatList.reduce((acc, scpi) => {
+      acc.totalInvest += scpi.totalInvest;
+      if(scpi.selectedProperty.type === property_type.PLEINE_PROPRIETE) {
+        acc.monthlyIncomes += scpi.monthlyIncomes;
+      }
+      return acc;
+    }, {totalInvest: 0, monthlyIncomes: 0});
+
+    //Vue Globale
+    this.totalValue = globalSome.totalInvest;
+    this.totalMonthlyIncomes = globalSome.monthlyIncomes;
+  }
+
+  setChartByName() {
+    //Total value for each scpi (some when there is Nue and Pleine propriété)
+    let totalValueForEachScpi = this.totalValueForEachScpi();
+
+    let someOfAllInvests = totalValueForEachScpi.reduce((acc, inv) => acc += inv.totalInvest, 0);
+
+    this.chartsName = totalValueForEachScpi.map(value => {
+      value.totalInvest = value.totalInvest/someOfAllInvests * 100;
+      return value;
+    });
+  }
+
+  totalValueForEachScpi(){
+    return this.simulatedScpiList.map(scpiSubList => {
+      const name = scpiSubList[0].name;
+      const localizations = scpiSubList[0].localizations;
+      const sectors = scpiSubList[0].sectors;
+      let totalInvest = scpiSubList.reduce((acc, scpi) => acc += scpi.totalInvest, 0);
+      return {name, totalInvest, localizations, sectors};
+    });
+  }
+
+  setChartsByCountry() {
+
+    let res = this.totalValueForEachScpi();
+
+    let valeurScpiParPays = res.map(value => {
+      let newValue = { ...value.localizations };
+      for (const country in newValue) {
+        newValue[country] = value.localizations[country] * value.totalInvest / 100;
+      }
+      return newValue;
+    });
+
+    let localizationSums : Localizations = {};
+
+    valeurScpiParPays.forEach(item => {
+      Object.entries(item).forEach(([country, value]) => {
+        if (localizationSums[country]) {
+          localizationSums[country] += value;
+        } else {
+          localizationSums[country] = value;
+        }
+      });
+    });
+
+    let localisationPercent : Localizations = {};
+    for(let country in localizationSums) {
+      localisationPercent[country] = (localizationSums[country] / this.totalValue) * 100;
+    }
+
+    this.valuePerCountryPercent = localisationPercent;
+  }
+
+
+  setChartsBySector() {
+
+    let res = this.totalValueForEachScpi();
+
+    let valeurScpiParSecteur = res.map(value => {
+      let newValue = { ...value.sectors };
+      for (const sector in newValue) {
+        newValue[sector] = value.sectors[sector] * value.totalInvest / 100;
+      }
+      return newValue;
+    });
+
+    let sectorSums : Sectors = {};
+
+    valeurScpiParSecteur.forEach(item => {
+      Object.entries(item).forEach(([sector, value]) => {
+        if (sectorSums[sector]) {
+          sectorSums[sector] += value;
+        } else {
+          sectorSums[sector] = value;
+        }
+      });
+    });
+
+    let sectorPercent : Sectors = {};
+    for(let country in sectorSums) {
+      sectorPercent[country] = (sectorSums[country] / this.totalValue) * 100;
+    }
+
+    this.valuePerSectorPercent = sectorPercent;
   }
 }
