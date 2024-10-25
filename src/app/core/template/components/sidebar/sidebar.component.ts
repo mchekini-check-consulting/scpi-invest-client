@@ -21,6 +21,8 @@ export const ROUTES: RouteInfo[] = [
   {path: '/invest', title: 'Mes investissements',key : 'SIDEBAR.INVEST', icon: 'pi pi-chart-line', class: ''},
   {path: '/simulation', title: 'Mes simulations',key : 'SIDEBAR.SIMULATION', icon: 'pi pi-box', class: ''},
   {path: '/versement', title: 'Versement programmê',key : 'SIDEBAR.VERSEMENT', icon: 'pi pi-euro', class: ''},
+  {path: '/comparateur', title: 'Comparaison',key : 'SIDEBAR.COMPARATEUR', icon: 'nc-icon nc-layers-3', class: ''},
+
 
 ];
 

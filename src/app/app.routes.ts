@@ -6,6 +6,7 @@ import {ScpiDetailComponent} from "./features/scpi/components/scpi-detail/scpi-d
 import {SimulationComponent} from "./features/simulation/simulation.component";
 import {AuthGuard} from "./core/guard/auth.guard";
 import {PlannedInvestmentComponent} from "./features/planned-investment/planned-investment.component";
+import {ComparateurComponent} from "./features/comparator/comparateur.component";
 
 export const routes: Routes = [
 
@@ -17,7 +18,10 @@ export const routes: Routes = [
       {path: 'invest', component: InvestComponent, canActivate: [AuthGuard]},
       {path: 'simulation', component: SimulationComponent, canActivate: [AuthGuard]},
       {path: 'versement', component: PlannedInvestmentComponent, canActivate: [AuthGuard]},
+      {path: 'comparateur', component: ComparateurComponent, canActivate: [AuthGuard]},
       {path: '**', component: ScpiComponent, canActivate: [AuthGuard] }
+
+
     ]
   }
 

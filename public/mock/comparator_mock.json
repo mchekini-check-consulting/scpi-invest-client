@@ -1,0 +1,36 @@
+[
+  {
+    "id": 1,
+    "name": "Activimmo",
+    "monthlyRevenue": 500.00,
+    "subscriptionFees": 2.00,
+    "cashback": 50.00,
+    "capitalization": 1,
+    "rentFrequency": "Quarterly",
+    "entryDelay": 3,
+    "minInvestment": 1
+  },
+  {
+    "id": 2,
+    "name": "Altixia Commerces",
+    "monthlyRevenue": 600.00,
+    "subscriptionFees": 1.50,
+    "cashback": 60.00,
+    "capitalization": 2,
+    "rentFrequency": "Monthly",
+    "entryDelay": 2,
+    "minInvestment": 2
+  },
+  {
+    "id": 3,
+    "name": "SCPI Gamma",
+    "monthlyRevenue": 450.00,
+    "subscriptionFees": 2.50,
+    "cashback": 40,
+    "capitalization": 1.5,
+    "rentFrequency": "Semi-annual",
+    "entryDelay": 4,
+    "minInvestment": 1000
+  }
+]
+
