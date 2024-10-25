@@ -1,0 +1,116 @@
+.comparateur-container {
+  max-width: 1000px;
+  height: auto;
+  margin: 0 auto;
+  padding: 20px;
+  background-color: #ffffff;
+  border-radius: 8px;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+  display: flex;
+  flex-direction: column;
+}
+.header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.compare-button {
+  margin-left: auto;
+}
+.comparison-content {
+  border: 1px solid #aaa;
+  border-radius: 5px;
+  padding: 10px;
+  background-color: #fff;
+  margin-top: 30px;
+  margin-bottom: 30px;
+}
+
+.investment-section {
+  margin-top: 30px;
+  margin-bottom: 30px;
+  display: flex;
+  align-items: center;
+}
+
+.investment-section label {
+  font-size: 18px;
+  margin-right: 10px;
+}
+
+.investment-input {
+  width: 200px;
+  margin-left: auto;
+}
+
+.slider-container {
+  display: flex;
+  align-items: center;
+}
+
+.slider-container p-slider {
+  width: 300px;
+  margin-bottom: 20px;
+}
+
+.scpi-selection p-autoComplete {
+  width: 30%;
+  margin: 10px 0;
+  display: inline-block;
+}
+
+.scpi-selection {
+  display: grid;
+  grid-template-columns: 1fr repeat(3, 1fr);
+  gap: 10px;
+}
+.scpi-selection p-autoComplete:first-child {
+  grid-column-start: 2;
+}
+
+.scpi-selection p-autoComplete:nth-child(2) {
+  grid-column-start: 3;
+}
+
+.scpi-selection p-autoComplete:nth-child(3) {
+  grid-column-start: 4;
+}
+
+.scpi-selection p-autoComplete {
+  width: 100%;
+
+}
+
+.table-container {
+  flex-grow: 1;
+  margin-top: 20px;
+}
+
+.scpi-table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.scpi-table td, .scpi-table th {
+  padding: 15px 20px;
+  font-size: 16px;
+  border: none;
+}
+
+.scpi-table td:first-child {
+  text-align: left;
+  color: #333;
+  width: 25%;
+}
+
+.scpi-table td {
+  text-align: center;
+}
+
+@media (max-width: 768px) {
+  .investment-input, .scpi-selection p-autoComplete {
+    width: 100%;
+  }
+
+}

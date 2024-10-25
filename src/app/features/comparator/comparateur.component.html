@@ -1,0 +1,120 @@
+<div class="comparateur-container">
+
+  <div class="header">
+    <h3 style="color: #1D62F0"><strong>Comparateur de SCPI</strong></h3>
+    <p-button label="Comparer" icon="pi pi-check" (click)="compareScpis()" class="compare-button"/>
+  </div>
+  <div class="investment-section">
+    <label for="investmentInput">Combien souhaitez-vous investir ?</label>
+    <input type="text"
+           id="investmentInput"
+           pInputText
+           class="investment-input"
+           [(ngModel)]="investValue"/>
+  </div>
+
+  <div class="slider-container">
+    <p-slider [(ngModel)]="investValue" [min]="0" [max]="10000" [step]="1" [range]="false" class="w-full"></p-slider>
+  </div>
+  <div class="comparison-content">
+    <div class="scpi-selection">
+      <p-autoComplete
+        [dropdown]="true"
+        [showClear]="true"
+        [(ngModel)]="selectedScpi1"
+        (ngModelChange)="compareScpis()"
+        [suggestions]="filteredScpis1"
+        (completeMethod)="filterScpis($event, 'filteredScpis1')"
+        placeholder="Sélectionnez SCPI 1">
+      </p-autoComplete>
+      <p-autoComplete
+        [dropdown]="true"
+        [showClear]="true"
+        [(ngModel)]="selectedScpi2"
+        (ngModelChange)="compareScpis()"
+        [suggestions]="filteredScpis2"
+        (completeMethod)="filterScpis($event, 'filteredScpis2')"
+        placeholder="Sélectionnez SCPI 2">
+      </p-autoComplete>
+      <p-autoComplete
+        [dropdown]="true"
+        [showClear]="true"
+        [(ngModel)]="selectedScpi3"
+        (ngModelChange)="compareScpis()"
+        [suggestions]="filteredScpis3"
+        (completeMethod)="filterScpis($event, 'filteredScpis3')"
+        placeholder="Sélectionnez SCPI 3">
+
+      </p-autoComplete>
+    </div>
+    <div class="table-container">
+      <table class="scpi-table">
+        <tbody>
+        <tr>
+          <td><strong>Revenus mensuels</strong></td>
+          <td>{{ results?.scpi1?.monthlyRevenue ? results.scpi1.monthlyRevenue.toFixed(2) + ' €' : '0.00 €' }}
+          </td>
+          <td>{{ results?.scpi2?.monthlyRevenue ? results.scpi2.monthlyRevenue.toFixed(2) + ' €' : '0.00 €' }}
+          </td>
+          <td>{{ results?.scpi3?.monthlyRevenue ? results.scpi3.monthlyRevenue.toFixed(2) + ' €' : '0.00 €' }}
+          </td>
+        </tr>
+        <tr>
+          <td><strong>Frais et cashback</strong></td>
+          <td colspan="3"></td>
+        </tr>
+        <tr>
+          <td>Frais de souscription</td>
+          <td>{{ results?.scpi1?.subscriptionFees ? results.scpi1.subscriptionFees.toFixed(2) + ' €' : '0.00 €' }}</td>
+          <td>{{ results?.scpi2?.subscriptionFees ? results.scpi2.subscriptionFees.toFixed(2) + ' €' : '0.00 €' }}</td>
+          <td>{{ results?.scpi3?.subscriptionFees ? results.scpi3.subscriptionFees.toFixed(2) + ' €' : '0.00 €' }}</td>
+        </tr>
+        <tr>
+          <td>Cashback Scpi Invest+</td>
+          <td>{{ results?.scpi1?.cashback ? results.scpi1.cashback.toFixed(2) + ' €' : '0.00 €' }}</td>
+          <td>{{ results?.scpi2?.cashback ? results.scpi2.cashback.toFixed(2) + ' €' : '0.00 €' }}</td>
+          <td>{{ results?.scpi3?.cashback ? results.scpi3.cashback.toFixed(2) + ' €' : '0.00 €' }}</td>
+        </tr>
+        <tr>
+          <td><strong>Critères importants</strong></td>
+          <td colspan="3"></td>
+        </tr>
+        <tr>
+          <td>Capitalisation</td>
+          <td>{{ results?.scpi1?.capitalization ? results.scpi1.capitalization.toFixed(2) + ' €' : '-' }}</td>
+          <td>{{ results?.scpi2?.capitalization ? results.scpi2.capitalization.toFixed(2) + ' €' : '-' }}</td>
+          <td>{{ results?.scpi3?.capitalization ? results.scpi3.capitalization.toFixed(2) + ' €' : '-' }}</td>
+        </tr>
+        <tr>
+          <td>Fréquence des loyers</td>
+          <td>{{ results?.scpi1?.rentFrequency || '-' }}</td>
+          <td>{{ results?.scpi2?.rentFrequency || '-' }}</td>
+          <td>{{ results?.scpi3?.rentFrequency || '-' }}</td>
+        </tr>
+        <tr>
+          <td>Délai de jouissance</td>
+          <td>{{ results?.scpi1?.entryDelay ? results.scpi1.entryDelay + ' mois' : '-' }}</td>
+          <td>{{ results?.scpi2?.entryDelay ? results.scpi2.entryDelay + ' mois' : '-' }}</td>
+          <td>{{ results?.scpi3?.entryDelay ? results.scpi3.entryDelay + ' mois' : '-' }}</td>
+        </tr>
+        <tr>
+          <td>Minimum premier investissement</td>
+          <td>{{ results?.scpi1?.minInvestment || '-' }}</td>
+          <td>{{ results?.scpi2?.minInvestment || '-' }}</td>
+          <td>{{ results?.scpi3?.minInvestment || '-' }}</td>
+        </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+  <h5>Évolution du gain potentiel total par an :</h5>
+  <div class="chart-content">
+    <div class="card">
+      <p-chart type="line" [data]="chartData" [options]="chartOptions"/>
+    </div>
+    <p>Le scénario réaliste est calculé avec une revalorisation annuelle de 1,3 % (moyenne entre 2013 et 2020) et le
+      taux de distribution annoncé par la SCPI (ou 5 % à défaut de celui-ci). Attention, les revenus réels peuvent
+      fluctuer à la hausse comme à la baisse. Les performances passées ne préjugent pas des performances futures.</p>
+  </div>
+
+</div>
