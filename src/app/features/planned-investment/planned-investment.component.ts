@@ -94,7 +94,8 @@ export class PlannedInvestmentComponent implements OnInit {
   ngOnInit() {
     this.scpiService.fetchScpiList().subscribe(data => {
       this.scpi = data.sort((a, b) => a.name.localeCompare(b.name));
-      this.selectedScpi = this.scpi[0];
+      this.selecteScpi(this.scpi[0]);
+
     });
 
     this.period = [
