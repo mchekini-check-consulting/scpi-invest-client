@@ -6,5 +6,6 @@ export interface ScpiModel {
   minimumSubscription: number;
   lastYearDistributionRate: string;
   image:String;
+  isPlanedInvestment: boolean;
 }
 

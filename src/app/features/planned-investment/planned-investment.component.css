@@ -84,5 +84,89 @@
   border-radius:16px;
 }
 
+.p-dialog {
+  font-family: Arial, sans-serif;
+}
+
+
+.p-dialog .ui-dialog-title {
+  font-weight: bold;
+  font-size: 18px;
+  color: #2c86ff;
+  text-align: center;
+}
+
+
+.p-dialog .ui-dialog-content {
+  padding: 20px;
+  font-size: 16px;
+  color: #333;
+}
+
+
+.p-dialog .ui-dialog-content p {
+  margin: 8px 0;
+  line-height: 1.5;
+}
+
+
+.p-dialog .ui-dialog-content p strong {
+  color: #283da7;
+  font-weight: bold;
+}
+
+
+.p-dialog .ui-dialog-content p .highlight-amount {
+  color: #283da7;
+  font-weight: bold;
+}
+
+.p-dialog .ui-dialog-content p .highlight-frequency {
+  color: #283da7;
+  font-weight: bold;
+}
+
+
+.ui-dialog-footer {
+  display: flex;
+  justify-content: flex-end;
+  gap: 10px;
+  padding-top: 10px;
+}
+
+.ui-dialog-footer button {
+  padding: 8px 16px;
+  border-radius: 4px;
+  border: none;
+  font-size: 14px;
+  font-weight: bold;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.ui-dialog-footer button:last-child {
+  background-color: #2c86ff;
+  color: white;
+}
+
+
+
+.p-toast {
+  text-align: center;
+}
+
+.p-toast-message {
+  font-size: 18px;
+  color: white;
+  padding: 8px;
+  border-radius: 4px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.p-toast-message .p-toast-icon-close {
+  color: white;
+}
+
+
 
 
