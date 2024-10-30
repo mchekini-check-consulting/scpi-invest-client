@@ -54,6 +54,7 @@ export class PlannedInvestmentComponent implements OnInit {
 
   versementInitAmount: number = 0;
   versementMinimumAmount: number = 0;
+  versementMaxAmount: number = 0;
   period: FrequanceVersement[] | undefined;
   selectedPeriod: FrequanceVersement | undefined;
   condition: boolean = false;
@@ -61,6 +62,7 @@ export class PlannedInvestmentComponent implements OnInit {
   listOfDay: string[] = [];
   selectedDay: string = "01";
   nombreShares: number = 0;
+
 
 
   plannedInvest: PlannedInvestmentModel | undefined;
@@ -77,6 +79,7 @@ export class PlannedInvestmentComponent implements OnInit {
     this.selectedScpi = selected;
     this.versementInitAmount = selected.minimumSubscription
     this.versementMinimumAmount = selected.minimumSubscription;
+    this.versementMaxAmount = this.versementInitAmount * 10;
     this.scpiService.getScpiById(this.selectedScpi.id).subscribe(data => {
       this.slidStep = Object.values(data.prices)[Object.values(data.prices).length - 1];
       this.amount = Object.values(data.prices)[Object.values(data.prices).length - 1];
@@ -93,9 +96,10 @@ export class PlannedInvestmentComponent implements OnInit {
 
   ngOnInit() {
     this.scpiService.fetchScpiList().subscribe(data => {
-      this.scpi = data.sort((a, b) => a.name.localeCompare(b.name));
+      this.scpi = data
+        .filter(scpi => scpi.isPlanedInvestment)
+        .sort((a, b) => a.name.localeCompare(b.name));
       this.selecteScpi(this.scpi[0]);
-
     });
 
     this.period = [
