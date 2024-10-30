@@ -25,6 +25,7 @@ export interface ScpiDetailModel {
   capitalization: number;
   manager: string;
   subscriptionFees: number;
+  advertising: string;
   managementFees: number;
   delayBenefit: number;
   rentFrequency: string;
