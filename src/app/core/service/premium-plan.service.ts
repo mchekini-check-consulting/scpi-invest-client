@@ -17,7 +17,7 @@ export class PremiumPlanService {
 
   sendPlan(plan: String): Observable<any> {
     return this.http.put<any>(
-      `api/v1/plan?newRole=${encodeURIComponent(plan.toString())}`,
+      `api/v1/user?newRole=${encodeURIComponent(plan.toString())}`,
       {}
     );
   }

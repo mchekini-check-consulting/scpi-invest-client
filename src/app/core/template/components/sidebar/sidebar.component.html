@@ -14,7 +14,7 @@
 </div>
     <ul class="nav">
       <li *ngFor="let menuItem of menuItems" class="nav-item">
-        <a class="nav-link" [routerLink]="menuItem.path">
+        <a *ngIf="DisplayFeatureForConnectedUser(menuItem.feature)" class="nav-link" [routerLink]="menuItem.path">
           <i class="{{menuItem.icon}}"></i>
           <p>{{menuItem.key | translate }}</p>
         </a>
