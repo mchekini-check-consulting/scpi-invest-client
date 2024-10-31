@@ -48,7 +48,7 @@ export const ROUTES: RouteInfo[] = [
     path: '/comparateur',
     title: 'Comparateur',
     key: 'SIDEBAR.COMPARATEUR',
-    icon: 'nc-icon nc-layers-3',
+    icon: 'pi pi-arrow-right-arrow-left',
     feature: 'comparator',
     class: ''
   },

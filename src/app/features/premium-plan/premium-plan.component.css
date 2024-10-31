@@ -16,7 +16,7 @@
   background: white;
   border-radius: 8px;
   padding: 20px;
-  width: 300px;
+  width: 45%;
   text-align: center;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
 }
@@ -58,7 +58,7 @@ h3 {
 }
 
 .subscribe-button {
-  background-color: #2db772;
+  background-color: #2C93FF;
   color: white;
   padding: 10px 20px;
   border: none;
@@ -68,8 +68,14 @@ h3 {
   transition: background-color 0.3s ease;
 }
 
+.subscribe-button.disabled-button {
+  background-color: #d3d3d3;
+  color: #a9a9a9;
+  cursor: not-allowed;
+}
+
 .subscribe-button:hover {
-  background-color: #249960;
+  background-color: #0c46d5;
 }
 
 
@@ -123,12 +129,12 @@ h3 {
 }
 
 .comparison-table .check {
-  color: #2db772; /* vert */
-  font-size: 20px;
+  color: #2db772;
+  font-size: 28px;
 }
 
 .comparison-table .cross {
-  color: #e74c3c; /* rouge */
-  font-size: 20px;
+  color: #e74c3c;
+  font-size: 28px;
 }
 
