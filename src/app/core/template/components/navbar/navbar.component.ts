@@ -4,6 +4,7 @@ import {CommonModule} from "@angular/common";
 import {OAuthService} from "angular-oauth2-oidc";
 import {UserService} from "../../../service/user.service";
 import {filter} from "rxjs";
+import {Router} from "@angular/router";
 
 interface Lang {
   name: string;
@@ -31,7 +32,7 @@ export class NavbarComponent implements OnInit{
 
   username:string | undefined='';
 
-  constructor(private translate: TranslateService, private oauthService: OAuthService, private userService: UserService) {
+  constructor(private router:Router,private translate: TranslateService, private oauthService: OAuthService, private userService: UserService) {
     translate.setDefaultLang('fr');
 
     this.userService.user$.subscribe(user => {
@@ -77,5 +78,9 @@ export class NavbarComponent implements OnInit{
 
   deleteCookie(name: string) {
     document.cookie = name + '=;expires=Thu, 01 Jan 1970 00:00:01 GMT;path=/;';
+  }
+
+  planBtnClic() {
+    this.router.navigate(['/plans']).then(r => console.log("navigate clicked"));
   }
 }

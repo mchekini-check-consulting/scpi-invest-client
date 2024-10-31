@@ -1,0 +1,39 @@
+<div class="pricing-table">
+  <div class="pricing-header">
+    <div class="plan">Fonctionnalites</div>
+    <div class="plan">Essentiel</div>
+    <div class="plan">Investisseur</div>
+  </div>
+  <div class="pricing-body">
+    <div *ngFor="let feature of fonctionality" class="feature-row">
+      <div class="feature-name">{{ feature.description }}</div>
+      <div class="feature-value">
+        <i *ngIf="feature.standard" class="pi pi-check-circle" style="color:green;scale:1.2">️</i>
+        <i *ngIf="!feature.standard" class="pi pi-times-circle" style="color:red;scale:1.2">️</i>
+      </div>
+      <div class="feature-value">
+        <i *ngIf="feature.premium" class="pi pi-check-circle" style="color:green;scale:1.2">️</i>
+        <i *ngIf="!feature.premium" class="pi pi-times-circle" style="color:red;scale:1.2">️</i>
+      </div>
+    </div>
+    <div
+      class="btm-bar">
+      <div style="width: 29%">
+      </div>
+      <div style="width: 30.5%; ">
+        <button class="btn-1" (click)="onChangePlan('ROLE_ESSENTIAL')">
+          Choisir le plan Essentiel
+        </button>
+      </div>
+      <div style="width: 30.5%">
+        <button class="btn-2" (click)="onChangePlan('ROLE_PREMIUM')" >
+          Choisir le plan Investisseur
+        </button>
+
+      </div>
+    </div>
+  </div>
+
+
+</div>
+
