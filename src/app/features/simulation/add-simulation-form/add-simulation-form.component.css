@@ -71,6 +71,7 @@ width: 100%;
 }
 
 .card_footer{
+  margin-top:24px;
   display: flex;
   flex-direction: row;
   align-content: space-between;

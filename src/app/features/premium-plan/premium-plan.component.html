@@ -11,7 +11,10 @@
     </p>
     <p class="price">5,50€ HT/SEMAINE</p>
     <p class="annual-price">288€ HT / AN</p>
-    <button class="subscribe-button">Je m'abonne</button>
+    <button
+      [disabled]="!isPremium"
+      [ngClass]="{ 'disabled-button': !isPremium }"
+      (click)="onChangePlan('ROLE_ESSENTIAL')" class="subscribe-button">Je m'abonne</button>
   </div>
 
   <div class="pricing-card">
@@ -25,7 +28,10 @@
     </p>
     <p class="price">12,70€ HT/SEMAINE</p>
     <p class="annual-price">660€ HT / AN</p>
-    <button class="subscribe-button">Je m'abonne</button>
+    <button
+      [disabled]="isPremium"
+      [ngClass]="{ 'disabled-button': isPremium }"
+      (click)="onChangePlan('ROLE_PREMIUM')" class="subscribe-button">Je m'abonne</button>
   </div>
 </div>
 
@@ -42,14 +48,14 @@
     </thead>
     <tbody>
     <tr *ngFor="let feature of fonctionality">
-      <td>{{feature.description}}</td>
+      <td style="text-align: left;">{{feature.description}}</td>
       <td>
-        <span *ngIf="feature.standard" class="check">✔️</span>
-        <span *ngIf="!feature.standard"class="cross">✖️</span>
+        <span *ngIf="feature.standard" class="check">&#10003;</span>
+        <span *ngIf="!feature.standard" class="cross">&#10007;</span>
       </td>
       <td>
-        <span *ngIf="feature.premium" class="check">✔️</span>
-        <span *ngIf="!feature.premium"class="cross">✖️</span>
+        <span *ngIf="feature.premium" class="check">&#10003;️</span>
+        <span *ngIf="!feature.premium" class="cross">&#10007;</span>
       </td>
     </tr>
     </tbody>
