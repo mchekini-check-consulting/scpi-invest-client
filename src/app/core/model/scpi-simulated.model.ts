@@ -20,4 +20,5 @@ export interface SimulatedScpiModel {
   lastYearDistributionRate : string;
   localizations: Localizations;
   sectors: Sectors;
+  cashback : number;
 }

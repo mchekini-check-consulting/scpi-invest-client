@@ -1,16 +1,28 @@
-
 <div class="vue_general">
   <div class="chart_1">
     <div class="data">
-      <div class="data_info">
-        <p style="font-weight: 700">Valeur total</p>
-        <p style="font-weight: 900;color:#3b90ff">{{totalValue}} €</p>
+      <div class="data_row">
+        <div class="data_info">
+          <p style="font-weight: 700">Valeur total</p>
+          <p style="font-weight: 900;color:#3b90ff">{{totalValue}} €</p>
+        </div>
+        <div class="data_info">
+          <p style="font-weight: 700">Cashback</p>
+          <p style="font-weight: 900;color:#3b90ff">{{totalCashback}} €</p>
+        </div>
       </div>
-      <div class="data_info">
-        <p style="font-weight: 700">Revenus</p>
-        <p style="font-weight: 900;color:#3b90ff">{{totalMonthlyIncomes | number : '1.2-2'}} €/mois</p>
+
+      <div class="data_row">
+        <div class="data_info">
+          <p style="font-weight: 700">Revenus</p>
+          <p style="font-weight: 900;color:#3b90ff">{{totalMonthlyIncomes | number : '1.2-2'}} €/mois</p>
+        </div>
+        <div class="data_info">
+          <p style="font-weight: 700">Revenus après impôt</p>
+        </div>
       </div>
     </div>
+
     <div class="chart_scpi_name">
       <p-chart  type="doughnut" [width]="'300'" [data]="data_chart_name" [options]="options_chart_name" />
     </div>

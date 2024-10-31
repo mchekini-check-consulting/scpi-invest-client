@@ -75,6 +75,21 @@
                         spinnerMode="horizontal"/>
             </div>
 
+          <div class="montant pr-4">
+            <label class="block font-bold mb-2" for="currency-europe">
+              Cashback
+            </label>
+            <p-inputNumber
+              [(ngModel)]="simulatedScpi.cashback"
+              (ngModelChange)="calculateRevenus()"
+              currency="EUR"
+              id="currency-europe"
+              inputId="currency-germany"
+              locale="de-DE"
+              mode="currency"
+              readonly/>
+          </div>
+
         </div>
 
         <div class="rendement">

@@ -60,6 +60,7 @@ export class SimulationComponent implements OnInit{
   chartsName!: {name: string, totalInvest: number}[];
   valuePerCountryPercent!: Localizations;
   valuePerSectorPercent!: Sectors;
+  totalCashback! : number;
 
   constructor(private scpiService:ScpiService) {
   }
@@ -276,12 +277,14 @@ export class SimulationComponent implements OnInit{
       if(scpi.selectedProperty.type === property_type.PLEINE_PROPRIETE) {
         acc.monthlyIncomes += scpi.monthlyIncomes;
       }
+      acc.totalCashback += scpi.cashback * scpi.totalInvest / 100;
       return acc;
-    }, {totalInvest: 0, monthlyIncomes: 0});
+    }, {totalInvest: 0, monthlyIncomes: 0,totalCashback: 0});
 
     //Vue Globale
     this.totalValue = globalSome.totalInvest;
     this.totalMonthlyIncomes = globalSome.monthlyIncomes;
+    this.totalCashback = globalSome.totalCashback;
   }
 
   setChartByName() {

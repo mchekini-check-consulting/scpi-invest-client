@@ -23,29 +23,35 @@
 
 }
 
-.data {
-  display: flex;
-  flex-direction: column;
-  width: 50%;
-  align-items: center;
-  justify-content: center;
-}
-
-
 .chart_scpi_name {
   display: flex;
   width: 50%;
   justify-content: center;
 }
 
-.data_info {
-  border-radius: 4px;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
-  margin: 8px auto;
-  width: 80%;
-  text-align: center;
-  padding: 16px 0;
+.data {
+   display: flex;
+   flex-direction: column;
+   width: 50%;
+   justify-content: center;
+ }
+
+.data_row {
+  display: flex;
+  gap: 20px;
+  justify-content: space-between;
+  margin-bottom: 10px;
 }
+
+.data_info {
+  background-color: #fff;
+  padding: 20px;
+  border-radius: 8px;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+  text-align: center;
+  flex: 1;
+}
+
 .chart_2 {
   display: flex;
   width: 80%;

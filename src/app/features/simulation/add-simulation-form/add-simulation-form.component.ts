@@ -99,7 +99,8 @@ export class AddSimulationFormComponent implements OnInit, OnChanges {
       withdrawalValue : 0,
       strip:  {time : 0, percent: 100, stipLabel: ''},
       localizations: {},
-      sectors: {}
+      sectors: {},
+      cashback: 0
     };
   }
 
@@ -129,7 +130,7 @@ export class AddSimulationFormComponent implements OnInit, OnChanges {
   this.simulatedScpi.monthlyIncomes = partPrice * this.simulatedScpi.partNb * lastDistributionRateInPercent / 12;
   this.simulatedScpi.totalInvest = partPrice * this.simulatedScpi.partNb * percentagePart;
   this.simulatedScpi.withdrawalValue = this.simulatedScpi.totalInvest * ((100 - this.scpiDetails.subscriptionFees)/ 100);
-
+  this.simulatedScpi.cashback = partPrice * this.simulatedScpi.partNb * this.scpiDetails.cashback / 100 ;
   return this.simulatedScpi.monthlyIncomes;
 
   }
@@ -140,6 +141,7 @@ export class AddSimulationFormComponent implements OnInit, OnChanges {
     this.simulatedScpi.lastYearDistributionRate = this.scpi.lastYearDistributionRate;
     this.simulatedScpi.localizations = this.scpiDetails.localizations;
     this.simulatedScpi.sectors = this.scpiDetails.sectors;
+    this.simulatedScpi.cashback = this.scpiDetails.cashback;
 
     if(this.simulatedScpi.selectedProperty.type === property_type.NUE_PROPRIETE) {
       this.simulatedScpi.strip = this.selectedStrip;
@@ -165,7 +167,8 @@ export class AddSimulationFormComponent implements OnInit, OnChanges {
       lastYearDistributionRate : '',
       strip:  {time : 0, percent: 100, stipLabel: ''},
       localizations: {},
-      sectors: {}
+      sectors: {},
+      cashback: 0
     };
   }
   onAddSimulatedScpi() {
@@ -196,6 +199,4 @@ export class AddSimulationFormComponent implements OnInit, OnChanges {
   }
 
   protected readonly property_type = property_type;
-
-
 }

@@ -81,6 +81,7 @@
 
   <div class="simulation_charts" *ngIf="simulatedScpiList.length > 0"style="width:100%">
     <app-scpi-detail-simulation [totalValue]="totalValue"
+                                [totalCashback] ="totalCashback"
                                 [totalMonthlyIncomes]="totalMonthlyIncomes"
                                 [chartsName]="chartsName"
                                 [chartsCountry]="valuePerCountryPercent"
