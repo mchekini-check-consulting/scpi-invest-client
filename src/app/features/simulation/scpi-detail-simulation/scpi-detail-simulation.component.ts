@@ -16,6 +16,7 @@ import {DecimalPipe} from "@angular/common";
 export class ScpiDetailSimulationComponent implements OnInit, OnChanges{
 
   @Input("totalValue") totalValue!: number;
+  @Input("totalCashback") totalCashback!: number;
   @Input("totalMonthlyIncomes") totalMonthlyIncomes!: number;
 
   @Input("chartsName") chartsName!: {name: string, totalInvest: number} [];

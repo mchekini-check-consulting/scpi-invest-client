@@ -7,5 +7,7 @@ export interface ScpiModel {
   lastYearDistributionRate: string;
   image:String;
   isPlanedInvestment: boolean;
+  cashback : number;
+  advertising: string;
 }
 

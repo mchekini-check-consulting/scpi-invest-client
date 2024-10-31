@@ -34,4 +34,5 @@ export interface ScpiDetailModel {
   prices: Prices;
   localizations: Localizations;
   sectors: Sectors;
+  cashback: number
 }
