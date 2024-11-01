@@ -4,7 +4,7 @@ export interface UserScpiModel {
   image: string;
   investmentStatus : String;
   requestDate: Date;
-  investmentValidationDate: Date;
+  detentionDays: number;
   totalAmount : Number;
   currentValue: Number;
   distributionRate: string;

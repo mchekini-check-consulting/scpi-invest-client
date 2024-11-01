@@ -20,7 +20,7 @@ export const routes: Routes = [
       {path: 'simulation', component: SimulationComponent, canActivate: [AuthGuard]},
       {path: 'versement', component: PlannedInvestmentComponent, canActivate: [AuthGuard]},
       {path: 'comparateur', component: ComparateurComponent, canActivate: [AuthGuard]},
-      {path:'plans',component: PremiumPlanComponent, canActivate: [AuthGuard]},
+      {path: 'plans',component: PremiumPlanComponent, canActivate: [AuthGuard]},
       {path: '**', component: ScpiComponent, canActivate: [AuthGuard] }
 
 

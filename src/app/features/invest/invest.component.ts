@@ -79,12 +79,9 @@ export class InvestComponent implements OnInit{
     this.router.navigate(['/scpi']);
   }
 
-  getDetentionPeriod(requestDate: Date) {
-    const now = new Date();
+  getDetentionPeriod(diffInDays: number) {
 
-    const diffInMs = now.getTime() - new Date(requestDate).getTime();
-
-    const diffInDays = Math.floor(diffInMs / (1000 * 60 * 60 * 24));
+    if (diffInDays == 0) return "0 Jour";
 
     const years = Math.floor(diffInDays / 365);
     const months = Math.floor((diffInDays % 365) / 30);
@@ -93,20 +90,20 @@ export class InvestComponent implements OnInit{
     let result = '';
 
     if(years > 0 && years < 2)
-      result += years + ' an';
+      result += years + ' An';
     if(years >= 2)
-      result += years + ' ans';
+      result += years + ' Ans';
 
     if(years > 0 && months > 0)
       result += ' et '
 
     if(months > 0)
-      result += months + ' mois';
+      result += months + ' Mois';
 
     if(months === 0 && years === 0 && days === 1)
-      result += '1 jour';
+      result += '1 Jour';
     else if(months === 0 && years === 0 && days >= 2)
-      result += days + ' jours';
+      result += days + ' Jours';
 
     return result;
   }
