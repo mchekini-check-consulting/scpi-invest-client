@@ -117,8 +117,8 @@ export class ScpiComponent implements OnInit{
 
 
   showScpiDetail(id: number) {
-    this.router.navigateByUrl("scpi/" + id);
-
+    const url = this.router.createUrlTree(['scpi/'+id]).toString();
+    window.open(url, '_blank');
   }
   closeScpiFormDialog(isOpen:boolean,prevCallback?:{ emit: () => void }){
     this.showFormDialog = isOpen;
