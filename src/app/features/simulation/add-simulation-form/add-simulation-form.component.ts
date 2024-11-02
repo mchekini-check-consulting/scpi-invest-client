@@ -89,7 +89,7 @@ export class AddSimulationFormComponent implements OnInit, OnChanges {
     this.selectedStrip = this.stripping[0];
 
     this.simulatedScpi = {
-      scpi_id : -1,
+      scpiId : -1,
       name : '',
       selectedProperty: this.properties[0],
       totalInvest : 0,
@@ -100,7 +100,8 @@ export class AddSimulationFormComponent implements OnInit, OnChanges {
       strip:  {time : 0, percent: 100, stipLabel: ''},
       localizations: {},
       sectors: {},
-      cashback: 0
+      cashback: 0,
+      simulated: true
     };
   }
 
@@ -136,12 +137,13 @@ export class AddSimulationFormComponent implements OnInit, OnChanges {
   }
 
   onClickAddInvestment() {
-    this.simulatedScpi.scpi_id = this.scpiDetails.id;
+    this.simulatedScpi.scpiId = this.scpiDetails.id;
     this.simulatedScpi.name = this.scpi.name;
     this.simulatedScpi.lastYearDistributionRate = this.scpi.lastYearDistributionRate;
     this.simulatedScpi.localizations = this.scpiDetails.localizations;
     this.simulatedScpi.sectors = this.scpiDetails.sectors;
     this.simulatedScpi.cashback = this.scpiDetails.cashback;
+    this.simulatedScpi.simulated = true;
 
     if(this.simulatedScpi.selectedProperty.type === property_type.NUE_PROPRIETE) {
       this.simulatedScpi.strip = this.selectedStrip;
@@ -157,7 +159,7 @@ export class AddSimulationFormComponent implements OnInit, OnChanges {
     }
 
     this.simulatedScpi = {
-      scpi_id : -1,
+      scpiId : -1,
       name : '',
       selectedProperty: this.properties[0],
       totalInvest : 0,
@@ -168,12 +170,13 @@ export class AddSimulationFormComponent implements OnInit, OnChanges {
       strip:  {time : 0, percent: 100, stipLabel: ''},
       localizations: {},
       sectors: {},
-      cashback: 0
+      cashback: 0,
+      simulated: true
     };
   }
   onAddSimulatedScpi() {
     if(!this.fromInvest){
-      this.simulatedScpi.scpi_id = this.scpiDetails.id;
+      this.simulatedScpi.scpiId = this.scpiDetails.id;
       this.simulatedScpi.name = this.scpi.name;
       this.simulatedScpi.withdrawalValue = Object.values(this.scpiDetails.reconstitutionValue)[Object.values(
         this.scpiDetails.reconstitutionValue
