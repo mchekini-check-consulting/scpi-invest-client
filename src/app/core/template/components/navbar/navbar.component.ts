@@ -3,8 +3,8 @@ import {TranslateModule, TranslateService} from "@ngx-translate/core";
 import {CommonModule} from "@angular/common";
 import {OAuthService} from "angular-oauth2-oidc";
 import {UserService} from "../../../service/user.service";
-import {filter} from "rxjs";
 import {Router} from "@angular/router";
+import {AuthService} from "../../../service/auth.service";
 
 interface Lang {
   name: string;
@@ -21,31 +21,32 @@ interface Lang {
   ],
   templateUrl: './navbar.component.html',
   styleUrls: ['./navbar.component.scss'],
-  providers : [OAuthService]
+  providers: [OAuthService]
 })
-export class NavbarComponent implements OnInit{
+export class NavbarComponent implements OnInit {
 
   lang: Lang[] | undefined;
 
-  selectedLang: String ="Français";
+  selectedLang: String = "Français";
   selectedFlag: string = 'img/Flag_fr.png';
 
-  username:string | undefined='';
+  username: string | undefined = '';
 
-  constructor(private router:Router,private translate: TranslateService, private oauthService: OAuthService, private userService: UserService) {
+  constructor(private router: Router, private translate: TranslateService, private authService: AuthService,
+              private oauthService: OAuthService, private userService: UserService) {
     translate.setDefaultLang('fr');
 
     this.userService.user$.subscribe(user => {
       if (user != null)
-      this.username = user.firstName + " " + user.lastName ;
+        this.username = user.firstName + " " + user.lastName;
     });
 
   }
 
   ngOnInit() {
     this.lang = ([
-      {name:"Français", code: "fr",flag:'img/Flag_fr.png'},
-      {name:"English",code: "en",flag:'img/Flag_gb.png'},
+      {name: "Français", code: "fr", flag: 'img/Flag_fr.png'},
+      {name: "English", code: "en", flag: 'img/Flag_gb.png'},
     ]);
 
     let claims = this.oauthService.getIdentityClaims();
@@ -65,20 +66,9 @@ export class NavbarComponent implements OnInit{
   }
 
   logout() {
-    this.deleteCookie('AUTH_SESSION_ID');
-    this.deleteCookie('AUTH_SESSION_ID_LEGACY');
-    this.deleteCookie('KEYCLOAK_IDENTITY');
-    this.deleteCookie('KEYCLOAK_IDENTITY_LEGACY');
-    this.deleteCookie('KEYCLOAK_SESSION');
-    this.deleteCookie('KEYCLOAK_SESSION_LEGACY');
-    setTimeout(() => {
-      this.logout();
-    }, 2000)
+    this.authService.logout();
   }
 
-  deleteCookie(name: string) {
-    document.cookie = name + '=;expires=Thu, 01 Jan 1970 00:00:01 GMT;path=/;';
-  }
 
   planBtnClic() {
     this.router.navigate(['/plans']).then(r => console.log("navigate clicked"));

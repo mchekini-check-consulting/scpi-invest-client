@@ -5,8 +5,11 @@ export const authConfig: AuthConfig = {
   redirectUri: window.location.origin,
   clientId: 'scpi-invest',
   responseType: 'code',
-  logoutUrl : 'https://keycloak.check-consulting.net/auth/realms/master/protocol/openid-connect/logout',
+  scope: 'openid profile email',
+  logoutUrl : 'https://keycloak.check-consulting.net/realms/master/protocol/openid-connect/logout',
   postLogoutRedirectUri: window.location.origin,
+  strictDiscoveryDocumentValidation: false,
   showDebugInformation: true,
+  useSilentRefresh: false,
   requireHttps: false
 }

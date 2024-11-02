@@ -36,19 +36,7 @@
           </li>
         </ul>
 
-        <li class="dropdown nav-item">
-          <a href="#" class="dropdown-toggle nav-link" data-toggle="dropdown">
-            <i class="nc-icon nc-planet"></i>
-          </a>
-          <ul class="dropdown-menu">
-            <a class="dropdown-item" href="#">Create New Post</a>
-            <a class="dropdown-item" href="#">Manage Something</a>
-            <a class="dropdown-item" href="#">Do Nothing</a>
-            <a class="dropdown-item" href="#">Submit to live</a>
-            <li class="divider"></li>
-            <a class="dropdown-item" href="#">Another action</a>
-          </ul>
-        </li>
+
         <li class="dropdown nav-item">
           <a href="#" class="dropdown-toggle nav-link" data-toggle="dropdown">
             <i class="nc-icon nc-bell-55"></i>
@@ -83,9 +71,6 @@
             <a class="dropdown-item" href="#">
               <i class="nc-icon nc-lock-circle-open"></i> Lock Screen
             </a>
-            <a (click)="logout()" href="#" class="dropdown-item text-danger">
-              <i  class="nc-icon nc-button-power"></i> Log out
-            </a>
           </div>
         </li>
         <li class="dropdown nav-item">
@@ -100,9 +85,11 @@
             </div>
           </a>
           <ul class="dropdown-menu">
-            <a class="dropdown-item" href="#"><span class="sidebar-normal">My Profile</span></a>
-            <a class="dropdown-item" href="#"><span class="sidebar-normal">Edit Profile</span></a>
-            <a class="dropdown-item" href="#"><span class="sidebar-normal">Settings</span></a>
+            <a class="dropdown-item" href="#"><span class="sidebar-normal">Mon Profil</span></a>
+            <a class="dropdown-item" href="#"><span class="sidebar-normal">Modifier mon Profil</span></a>
+            <a (click)="logout()" href="#" class="dropdown-item text-danger">
+              <i  class="nc-icon nc-button-power"></i> Log out
+            </a>
           </ul>
         </li>
       </ul>
