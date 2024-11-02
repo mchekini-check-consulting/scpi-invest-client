@@ -4,21 +4,23 @@ metadata:
   name: scpi-invest-client
   annotations:
     nginx.ingress.kubernetes.io/ssl-redirect: "true"
+    nginx.ingress.kubernetes.io/use-regex: "true"        # Utilise les expressions régulières pour les paths
+    nginx.ingress.kubernetes.io/rewrite-target: /        # Redirige vers la racine pour les routes capturées
 spec:
   ingressClassName: nginx
   rules:
     - host: {{ if .Values.ingressPrefix }}{{ .Values.ingressPrefix }}.{{ end }}scpi-invest.check-consulting.net
       http:
         paths:
-          - path: /api
-            pathType: Prefix
+          - path: "/api(/|$)(.*)"                        # Capture toutes les routes commençant par /api
+            pathType: ImplementationSpecific
             backend:
               service:
                 name: scpi-invest-api
                 port:
                   number: 8080
-          - path: /
-            pathType: Prefix
+          - path: "/(.*)"                                # Capture toutes les autres routes
+            pathType: ImplementationSpecific
             backend:
               service:
                 name: scpi-invest-front
