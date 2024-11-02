@@ -15,6 +15,10 @@ import {ScpiInvestModel} from "../../core/model/scpi-invest.model";
 import {InvestService} from "../../core/service/invest.service";
 import {property_type} from "../../core/enum/property-type.enum";
 import {PlannedInvestmentModel} from "../../core/model/planned-investment.model";
+import {AddSimulationFormComponent} from "../simulation/add-simulation-form/add-simulation-form.component";
+import {StepperModule} from "primeng/stepper";
+import {PaymentInfoModel} from "../../core/model/payment_info.model";
+import {UserService} from "../../core/service/user.service";
 interface FrequanceVersement {
   name: String;
   type: FrequanceType
@@ -28,17 +32,19 @@ enum FrequanceType {
 @Component({
   selector: 'app-versement',
   standalone: true,
-  imports: [
-    DropdownModule,
-    FormsModule,
-    SliderModule,
-    CheckboxModule,
-    CalendarModule,
-    DialogModule,
-    ToastModule,
-    NgIf,
-    NgStyle
-  ],
+    imports: [
+        DropdownModule,
+        FormsModule,
+        SliderModule,
+        CheckboxModule,
+        CalendarModule,
+        DialogModule,
+        ToastModule,
+        NgIf,
+        NgStyle,
+        AddSimulationFormComponent,
+        StepperModule
+    ],
   templateUrl: './planned-investment.component.html',
   styleUrl: './planned-investment.component.css',
   providers: [MessageService]
@@ -69,9 +75,15 @@ export class PlannedInvestmentComponent implements OnInit {
   initialInvest: ScpiInvestModel | undefined;
 
   isCfrmBtnDesibled: boolean = true;
+  showFormDialog: boolean = false;
+  bankInformation: PaymentInfoModel | undefined;
+  email?:String;
 
-  constructor(private initialInvestement: InvestService, private plannedInvestementService: PlannedInvestementService, private scpiService: ScpiService, private messageService: MessageService) {
-
+  constructor(private initialInvestement: InvestService, private plannedInvestementService: PlannedInvestementService, private scpiService: ScpiService, private messageService: MessageService, private userService: UserService) {
+    this.userService.user$.subscribe(user => {
+      if (user != null)
+      this.email = user?.email;
+    });
 
   }
 
@@ -166,6 +178,8 @@ export class PlannedInvestmentComponent implements OnInit {
 
   createInitialInvestement() {
     this.initialInvestement.investInScpi(this.initialInvest!).subscribe(data => {
+      this.bankInformation = data;
+      this.showFormDialog = true;
     })
   }
 
@@ -181,5 +195,13 @@ export class PlannedInvestmentComponent implements OnInit {
   checkboxChange(value:boolean){
     this.condition=value;
     this.isCfrmBtnDesibled=!value;
+  }
+
+  closeScpiFormDialog(isOpen:boolean,prevCallback?:{ emit: () => void }){
+    this.showFormDialog = isOpen;
+    this.bankInformation =undefined;
+    if(prevCallback!=null){
+      prevCallback.emit();
+    }
   }
 }
