@@ -26,15 +26,15 @@ import {DecimalPipe, NgIf} from "@angular/common";
   templateUrl: './scpi-simulation.component.html',
   styleUrl: './scpi-simulation.component.css'
 })
-export class ScpiSimulationComponent {
+export class ScpiSimulationComponent{
 
   @Input("simulatedScpi") simulatedScpi!: SimulatedScpiModel[];
 
-  @Output("onClickOnDeleteEvent") onClickOnDeleteEvent = new EventEmitter<{id: number, type: property_type}>();
+  @Output("onClickOnDeleteEvent") onClickOnDeleteEvent = new EventEmitter<{id: number, type: property_type, simulated: boolean}>();
   @Output("onClickOnModifyEvent") onClickOnModifyEvent = new EventEmitter<{id: number, type: property_type}>();
 
-  onClickDeleteScpi(id : number, type: property_type) {
-    this.onClickOnDeleteEvent.emit({id, type});
+  onClickDeleteScpi(id : number, type: property_type, simulated : boolean) {
+    this.onClickOnDeleteEvent.emit({id, type, simulated});
   }
 
   onClickModifyScpi(id : number, type: property_type) {

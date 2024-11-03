@@ -1,6 +1,6 @@
 import {property_type} from "../enum/property-type.enum";
 import {Stripping} from "./scpi-invest.model";
-import {Localizations, Sectors} from "./scpi-detail.model";
+import {Localizations, Sectors, StippingMap} from "./scpi-detail.model";
 export { property_type } from "../enum/property-type.enum";
 
 export interface Property {
@@ -9,7 +9,7 @@ export interface Property {
 }
 
 export interface SimulatedScpiModel {
-  scpi_id : number;
+  scpiId : number;
   name: string;
   selectedProperty: Property;
   totalInvest: number;
@@ -17,6 +17,24 @@ export interface SimulatedScpiModel {
   monthlyIncomes: number;
   withdrawalValue : number;
   strip: Stripping;
+  lastYearDistributionRate : string;
+  localizations: Localizations;
+  sectors: Sectors;
+  cashback : number;
+  simulated: boolean;
+}
+
+
+export interface userInvestmentInDto {
+  scpiId : number;
+  name: string;
+  selectedProperty: string;
+  totalInvest: number;
+  partNb: number;
+  monthlyIncomes: number;
+  withdrawalValue : number;
+  discountStripping : StippingMap;
+  strip: number;
   lastYearDistributionRate : string;
   localizations: Localizations;
   sectors: Sectors;

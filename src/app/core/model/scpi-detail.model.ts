@@ -18,6 +18,10 @@ export interface Sectors {
   [sector: string]: number;
 }
 
+export interface StippingMap {
+  [year: number]: number;
+}
+
 export interface ScpiDetailModel {
   id: number;
   name: string;
@@ -34,5 +38,5 @@ export interface ScpiDetailModel {
   prices: Prices;
   localizations: Localizations;
   sectors: Sectors;
-  cashback: number
+  cashback: number;
 }

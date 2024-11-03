@@ -11,12 +11,14 @@ import {ScpiModel} from "../../core/model/scpi.model";
 import {AddSimulationFormComponent} from "./add-simulation-form/add-simulation-form.component";
 import {Localizations, ScpiDetailModel, Sectors} from "../../core/model/scpi-detail.model";
 import {ScpiService} from "../../core/service/scpi.service";
-import {property_type, SimulatedScpiModel} from "../../core/model/scpi-simulated.model";
+import {Property, property_type, SimulatedScpiModel, userInvestmentInDto} from "../../core/model/scpi-simulated.model";
 import {ScpiSimulationComponent} from "./scpi-simulation/scpi-simulation.component";
 import {ChartModule} from "primeng/chart";
 import {ScpiDetailComponent} from "../scpi/components/scpi-detail/scpi-detail.component";
 import {ScpiDetailSimulationComponent} from "./scpi-detail-simulation/scpi-detail-simulation.component";
 import {ScpiPerformanceSimulationComponent} from "./scpi-performance-simulation/scpi-performance-simulation.component";
+import {Stripping} from "../../core/model/scpi-invest.model";
+import {InvestService} from "../../core/service/invest.service";
 
 @Component({
   selector: 'app-simulation',
@@ -62,7 +64,7 @@ export class SimulationComponent implements OnInit{
   valuePerSectorPercent!: Sectors;
   totalCashback! : number;
 
-  constructor(private scpiService:ScpiService) {
+  constructor(private scpiService:ScpiService, private investService: InvestService) {
   }
 
   ngOnInit(): void {
@@ -72,8 +74,8 @@ export class SimulationComponent implements OnInit{
     this.chartsName = [];
     this.valuePerCountryPercent = {};
     this.valuePerSectorPercent = {};
-  }
 
+  }
 
   showEditDialog() {
     this.EditDialogvisible = true;
@@ -131,7 +133,7 @@ export class SimulationComponent implements OnInit{
     this.selectScpiDialogVisible = false;
 
     const index = this.simulatedScpiList.findIndex(scpiList =>
-      scpiList.some(scpi => scpi.scpi_id === simulatedScpi.scpi_id)
+      scpiList.some(scpi => scpi.scpiId === simulatedScpi.scpiId)
     );
 
     if (index === -1) {
@@ -139,7 +141,8 @@ export class SimulationComponent implements OnInit{
 
     } else {
       const existingScpiIndex = this.simulatedScpiList[index].findIndex(scpi =>
-        scpi.selectedProperty.propertyLabel === simulatedScpi.selectedProperty.propertyLabel
+        scpi.selectedProperty.propertyLabel === simulatedScpi.selectedProperty.propertyLabel &&
+        scpi.simulated === simulatedScpi.simulated
       );
 
 
@@ -159,6 +162,7 @@ export class SimulationComponent implements OnInit{
     }
 
     this.updateAllCharts();
+
   }
 
   modifyInvestment($event : {oldInvestment: SimulatedScpiModel, newInvestment: SimulatedScpiModel}) {
@@ -166,13 +170,13 @@ export class SimulationComponent implements OnInit{
     // On doit récupéré l'ancienne version de simulatedScpi et la nouvelle
     // si le type est le même => alors on ecrase l'ancienne version
     if($event.oldInvestment.selectedProperty.type === $event.newInvestment.selectedProperty.type) {
-      const rowIndex = this.simulatedScpiList.findIndex(row => row.some(scpi => scpi.scpi_id === $event.newInvestment.scpi_id));
-      const colIndex = this.simulatedScpiList[rowIndex].findIndex(scpi => scpi.selectedProperty.type === $event.newInvestment.selectedProperty.type);
+      const rowIndex = this.simulatedScpiList.findIndex(row => row.some(scpi => scpi.scpiId === $event.newInvestment.scpiId));
+      const colIndex = this.simulatedScpiList[rowIndex].findIndex(scpi => scpi.selectedProperty.type === $event.newInvestment.selectedProperty.type && scpi.simulated);
       this.simulatedScpiList[rowIndex][colIndex] = {...$event.newInvestment };
     } else {
       // s'il existe il faudra additionner la nouvelle valeur avec l'ancienne
-      const rowIndex1 = this.simulatedScpiList.findIndex(row => row.some(scpi => scpi.scpi_id === $event.newInvestment.scpi_id));
-      const colIndex1 = this.simulatedScpiList[rowIndex1].findIndex(scpi => scpi.selectedProperty.type === $event.newInvestment.selectedProperty.type);
+      const rowIndex1 = this.simulatedScpiList.findIndex(row => row.some(scpi => scpi.scpiId === $event.newInvestment.scpiId));
+      const colIndex1 = this.simulatedScpiList[rowIndex1].findIndex(scpi => scpi.selectedProperty.type === $event.newInvestment.selectedProperty.type && scpi.simulated);
       if(colIndex1 !== -1) {
         const existingScpi = this.simulatedScpiList[rowIndex1][colIndex1];
         this.simulatedScpiList[rowIndex1][colIndex1] = {
@@ -188,10 +192,10 @@ export class SimulationComponent implements OnInit{
       }
 
       // si le type est différent => on supprime l'ancienne et on regarde si le nouveau type existe
-      const rowIndex = this.simulatedScpiList.findIndex(row => row.some(scpi => scpi.scpi_id === $event.oldInvestment.scpi_id));
-      const colIndex = this.simulatedScpiList[rowIndex].findIndex(scpi => scpi.selectedProperty.type === $event.oldInvestment.selectedProperty.type);
+      const rowIndex = this.simulatedScpiList.findIndex(row => row.some(scpi => scpi.scpiId === $event.oldInvestment.scpiId));
+      const colIndex = this.simulatedScpiList[rowIndex].findIndex(scpi => scpi.selectedProperty.type === $event.oldInvestment.selectedProperty.type && scpi.simulated);
       let investmentToDelete = this.simulatedScpiList[rowIndex][colIndex];
-      this.deleteScpiSimulation({ id: investmentToDelete.scpi_id, type: investmentToDelete.selectedProperty.type});
+      this.deleteScpiSimulation({ id: investmentToDelete.scpiId, type: investmentToDelete.selectedProperty.type, simulated: investmentToDelete.simulated});
     }
 
     this.updateAllCharts();
@@ -201,10 +205,12 @@ export class SimulationComponent implements OnInit{
     this.selectScpiDialogVisible = false;
   }
 
-  deleteScpiSimulation(scpiSimulated: {id: number, type: property_type}) {
+  deleteScpiSimulation(scpiSimulated: {id: number, type: property_type, simulated : boolean}) {
     this.simulatedScpiList = this.simulatedScpiList.map(scpiList =>
       scpiList.filter(scpi =>
-        scpi.scpi_id !== scpiSimulated.id || scpi.selectedProperty.type !== scpiSimulated.type
+        scpi.scpiId !== scpiSimulated.id ||
+        scpi.selectedProperty.type !== scpiSimulated.type ||
+        scpi.simulated !== scpiSimulated.simulated
       ))
       .filter(scpiList => scpiList.length > 0);
 
@@ -215,7 +221,7 @@ export class SimulationComponent implements OnInit{
     this.getSpicDetail($event.id);
     this.getScpi($event.id);
 
-    this.investmentToModify = this.simulatedScpiList.flat().find(scpi => scpi.scpi_id === $event.id && scpi.selectedProperty.type === $event.type);
+    this.investmentToModify = this.simulatedScpiList.flat().find(scpi => scpi.scpiId === $event.id && scpi.selectedProperty.type === $event.type);
 
     this.scpiSimulationFormDialogVisible =true;
     this.scpiSimulationFormDialogForModification = true;
@@ -228,6 +234,8 @@ export class SimulationComponent implements OnInit{
     this.setChartByName();
     this.setChartsByCountry();
     this.setChartsBySector();
+
+    console.log(this.simulatedScpiList);
   }
 
   accumulatedIncomes(time : number): number {
@@ -372,5 +380,102 @@ export class SimulationComponent implements OnInit{
     }
 
     this.valuePerSectorPercent = sectorPercent;
+  }
+
+  includeUserInvestment(includeActualPort: boolean) {
+    if(includeActualPort)
+    {
+      this.investService.getInvestments().subscribe(data => {
+        console.log("data.length", data.length);
+        for(let scpi of data) {
+          this.addSimulatedScpi(this.mapToSimulatedScpiModel(scpi));
+        };
+      });
+    } else {
+      this.investService.getInvestments().subscribe(data => {
+        console.log("data.length", data.length);
+        for(let scpi of data) {
+          this.deleteScpiSimulation({id : scpi.scpiId, type: property_type.PLEINE_PROPRIETE, simulated: false})
+          this.deleteScpiSimulation({id : scpi.scpiId, type: property_type.NUE_PROPRIETE, simulated: false})
+          this.deleteScpiSimulation({id : scpi.scpiId, type: property_type.USUFRUIT, simulated: false})
+        };
+      });
+    }
+  }
+
+
+  mapToSimulatedScpiModel(investmentInDto: userInvestmentInDto) {
+
+    let stripping = [
+      {time : 0, percent: 100, stipLabel: ''},
+      {time : 3, percent: 90, stipLabel: '3 ans - 90%'},
+      {time : 4, percent: 85, stipLabel: '4 ans - 85%'},
+      {time : 5, percent: 80, stipLabel: '5 ans - 80%'},
+      {time : 7, percent: 75, stipLabel: '7 ans - 75%'},
+      {time : 10, percent: 70, stipLabel: '10 ans - 70%'},
+      {time : 12, percent: 65, stipLabel: '12 ans - 65%'},
+      {time : 15, percent: 60, stipLabel: '15 ans - 60%'},
+      {time : 20, percent: 55, stipLabel: '20 ans - 55%'},
+    ];
+
+    let newProperty: Property;
+    let newStrip: Stripping;
+
+    if(investmentInDto.selectedProperty === "PLEINE_PROPRIETE") newProperty = {propertyLabel: "Pleine propriété (Standard)", type: property_type.PLEINE_PROPRIETE};
+    else if(investmentInDto.selectedProperty === "NUE_PROPRIETE") newProperty = {propertyLabel: "Nue-propriété (avancée)", type: property_type.NUE_PROPRIETE};
+    else newProperty = {propertyLabel:"Usufruit",type:property_type.USUFRUIT};
+
+
+    if(investmentInDto.discountStripping) {
+      let year = Object.keys(investmentInDto.discountStripping)[0];
+      switch (Number(year)) {
+        case 3:
+          newStrip = stripping[1];
+          break;
+        case 4:
+          newStrip = stripping[2];
+          break;
+        case 5:
+          newStrip = stripping[3];
+          break;
+        case 7:
+          newStrip = stripping[4];
+          break;
+        case 10:
+          newStrip = stripping[5];
+          break;
+        case 12:
+          newStrip = stripping[6];
+          break;
+        case 15:
+          newStrip = stripping[7];
+          break;
+        case 20:
+        default:
+          newStrip = stripping[8];
+          break;
+      }
+    }
+    else {
+      newStrip = stripping[0];
+    }
+
+    let simulatedInvestment: SimulatedScpiModel = {
+      scpiId : investmentInDto.scpiId,
+      name : investmentInDto.name,
+      selectedProperty : newProperty,
+      totalInvest : investmentInDto.totalInvest,
+      partNb : investmentInDto.partNb,
+      monthlyIncomes: investmentInDto.monthlyIncomes,
+      withdrawalValue: investmentInDto.withdrawalValue,
+      strip: newStrip,
+      lastYearDistributionRate: investmentInDto.lastYearDistributionRate,
+      localizations: investmentInDto.localizations,
+      sectors: investmentInDto.sectors,
+      cashback: investmentInDto.cashback,
+      simulated: false
+    };
+
+    return simulatedInvestment;
   }
 }

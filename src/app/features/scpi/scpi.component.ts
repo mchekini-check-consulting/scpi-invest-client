@@ -109,8 +109,8 @@ export class ScpiComponent implements OnInit{
     });
   }
 
-  getScpiDetail(scpi_id:number): void{
-    this.scpiService.getScpiById(scpi_id).subscribe(data=>{
+  getScpiDetail(scpiId:number): void{
+    this.scpiService.getScpiById(scpiId).subscribe(data=>{
       this.scpiDetails = data;
     })
   }

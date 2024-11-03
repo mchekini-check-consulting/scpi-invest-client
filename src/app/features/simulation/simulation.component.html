@@ -20,6 +20,7 @@
       <div class="p-selection">
           <p-toggleButton
                   [(ngModel)]="includeActualPort"
+                  (onChange)="includeUserInvestment(includeActualPort)"
                   [style]="{height:'30px','background-color': includeActualPort ? 'rgba(23,200,23,0.75)' : 'white'}"
                   onLabel="Oui"
                   offLabel="Non" />
