@@ -54,7 +54,7 @@ export class ProfileInformationComponent implements OnInit{
       this.profile.profileType = resp.profileType;
       this.profile.income = resp.income;
       this.profile.childrenCount = resp.childrenCount;
-      this.profile.birthDate = resp.birthDate;
+      this.profile.birthDate = new Date(resp.birthDate);
       this.profile.familyStatus = resp.familyStatus;
       this.profile.profession = resp.profession;
     })

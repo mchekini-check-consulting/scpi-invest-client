@@ -98,4 +98,5 @@ p-card {
   display: flex;
   gap: 20px;
   justify-content: space-around;
+  margin-bottom: 10px;
 }
