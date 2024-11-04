@@ -4,6 +4,7 @@ import {ScpiInvestModel} from "../model/scpi-invest.model";
 import {Observable} from "rxjs";
 import {PaymentInfoModel} from "../model/payment_info.model";
 import {userInvestmentInDto} from "../model/scpi-simulated.model";
+import {InvestmentSummaryModel} from "../model/investment-summary.model";
 
 @Injectable({
   providedIn: 'root'
@@ -19,5 +20,10 @@ export class InvestService {
 
   getInvestments() : Observable<userInvestmentInDto[]> {
     return this.http.get<userInvestmentInDto[]>("/api/v1/investement/investment-simulation");
+  }
+
+  getInvetementSummary(): Observable<InvestmentSummaryModel> {
+    return this.http.get<InvestmentSummaryModel>("/api/v1/investement/summary");
+
   }
 }

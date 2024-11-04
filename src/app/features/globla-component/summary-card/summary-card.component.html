@@ -1,0 +1,14 @@
+<div class="card-l">
+  <div class="card-header">
+    <span>{{ data.title }}</span>
+  </div>
+  <div class="card-body">
+    <div class="card-value" *ngIf="!isPercent;else percent" [ngClass]="data.colorClass">{{ data.value}} €</div>
+    <ng-template #percent>
+      <div class="card-value" [ngClass]="data.colorClass">{{ data.value | number: '1.2-2'}} %</div>
+
+    </ng-template>
+  </div>
+
+</div>
+

@@ -1,7 +1,5 @@
 export interface SummaryCardData {
   title: string;
-  value: number;
-  label: string;
-  subLabel: string;
+  value: number|string;
   colorClass: string;
 }

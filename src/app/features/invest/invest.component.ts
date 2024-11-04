@@ -15,8 +15,9 @@ import {StatChartComponent} from "./stat-chart/stat-chart.component";
 import {CardModule} from "primeng/card";
 import {PanelModule} from "primeng/panel";
 import {Router} from "@angular/router";
-import {SummaryCardComponent} from "./summary-card/summary-card.component";
+import {SummaryCardComponent} from "../globla-component/summary-card/summary-card.component";
 import {SummaryCardData} from "../../core/model/summary-card.model";
+import {InvestService} from "../../core/service/invest.service";
 
 @Component({
   selector: 'app-invest',
@@ -50,7 +51,7 @@ export class InvestComponent implements OnInit{
   scpiInPendingList!: UserScpiModel[];
   data :SummaryCardData[]|undefined;
 
-  constructor(private router: Router, private scpiService: ScpiService, private primengConfig: PrimeNGConfig) {
+  constructor(private router: Router, private scpiService: ScpiService, private primengConfig: PrimeNGConfig,private investService:InvestService) {
   }
   ngOnInit(): void {
 
@@ -77,12 +78,16 @@ export class InvestComponent implements OnInit{
         }
       })
     })
-    this.data= [
-      { title: 'Summary', value: 21, label: 'Due Tasks', subLabel: 'Completed: 13', colorClass: 'blue' },
-      { title: 'Overdue', value: 17, label: 'Tasks', subLabel: 'From yesterday: 9', colorClass: 'red' },
-      { title: 'Issues', value: 24, label: 'Open', subLabel: 'Closed today: 19', colorClass: 'orange' },
-      { title: 'Features', value: 38, label: 'Proposals', subLabel: 'Implemented: 16', colorClass: 'green' }
-    ];
+
+    this.investService.getInvetementSummary().subscribe(data => {
+      this.data= [
+        { title: 'Valeur reel investi', value: data.reelValueInvested, colorClass: 'blue' },
+        { title: 'Cashback', value: data.cashbackTotal,  colorClass: 'red' },
+        { title: 'Total investi', value: data.totalInvest, colorClass: 'orange' },
+        { title: 'Rendement moyen', value: data.averageIncomePercent,  colorClass: 'green' }
+      ];
+    })
+
   }
 
   navigateToScpiList(): void {

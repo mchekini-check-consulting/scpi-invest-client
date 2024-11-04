@@ -1,5 +1,5 @@
 import {Component, Input, OnInit} from '@angular/core';
-import {NgClass, NgIf} from "@angular/common";
+import {DecimalPipe, NgClass, NgIf} from "@angular/common";
 import {SummaryCardData} from "../../../core/model/summary-card.model";
 
 @Component({
@@ -7,13 +7,15 @@ import {SummaryCardData} from "../../../core/model/summary-card.model";
   standalone: true,
   imports: [
     NgClass,
-    NgIf
+    NgIf,
+    DecimalPipe
   ],
   templateUrl: './summary-card.component.html',
   styleUrl: './summary-card.component.css'
 })
 export class SummaryCardComponent implements OnInit {
   @Input() data!: SummaryCardData;
+  @Input() isPercent:boolean=false;
 
 
   ngOnInit(): void {
