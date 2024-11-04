@@ -1,0 +1,46 @@
+.card {
+  background: #fff;
+  padding: 8px;
+  border-radius: 8px;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  width: 250px;
+}
+
+.card-header {
+  display: flex;
+  justify-content: space-between;
+  font-weight: bold;
+}
+
+.more-icon {
+  font-size: 12px;
+  cursor: pointer;
+}
+
+.card-body {
+  margin: 10px 0;
+}
+
+.card-value {
+  font-size: 68px;
+  font-weight: bold;
+}
+
+.card-label {
+  font-size: 14px;
+  color: #555;
+}
+
+.card-footer {
+  font-size: 14px;
+  color: #777;
+}
+
+.blue { color: #1E90FF; }
+.red { color: #FF6347; }
+.orange { color: #FFA500; }
+.green { color: #32CD32; }
