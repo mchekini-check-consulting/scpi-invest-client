@@ -58,7 +58,7 @@ export class SimulationComponent implements OnInit {
   simulatedScpiList!: SimulatedScpiModel[][];
   investmentToModify!: SimulatedScpiModel | undefined;
   futureIncomesEveryYear!: Map<number, { accumulatedInvestment: number, accumulatedIncomes: number }>;
-  futureIncomesEveryFiveYears!: Map<number, { incomes: number, revaluation: number, total: number }>
+  futureIncomesEveryFiveYears!: Map<number, { incomes: number, revaluation: number, amountReinvested: number, total: number }>
 
   totalValue!: number;
   totalMonthlyIncomes!: number;
@@ -71,7 +71,8 @@ export class SimulationComponent implements OnInit {
   monthlyIncomeAfterTax!: number;
 
   compoundInterestEnabled: boolean = false;
-  revalorisationRate: number = 1.3;
+  revalorisationRate: number = 1;
+  globalDistributionRate: number = 0;
 
   constructor(private scpiService: ScpiService, private investService: InvestService,
               private taxService: TaxService) {
@@ -241,10 +242,11 @@ export class SimulationComponent implements OnInit {
   }
 
   updateAllCharts() {
-    this.oneYearIncomesInterval();
-    this.fiveYearsIncomesInterval();
-    this.setChartByName();
+
     this.setGlobalVue();
+    this.oneYearIncomesInterval();
+    // this.fiveYearsIncomesInterval();
+    this.setChartByName();
     // this.setChartsByCountry();
     this.setChartsBySector();
 
@@ -252,6 +254,7 @@ export class SimulationComponent implements OnInit {
   }
 
   accumulatedIncomes(time: number): number {
+
     return this.simulatedScpiList.flat()
       .filter(scpi => (time - scpi.strip.time) > 0)
       .reduce((sum, scpi) => sum + ((time - scpi.strip.time) * 12 * scpi.monthlyIncomes), 0);
@@ -263,40 +266,62 @@ export class SimulationComponent implements OnInit {
       .reduce((sum, scpi) => sum + ((scpi.totalInvest * 100 / scpi.strip.percent) - scpi.totalInvest), 0);
   }
 
-  fiveYearsIncomesInterval() {
-    this.futureIncomesEveryFiveYears = new Map<number, { incomes: number, revaluation: number, total: number }>();
+  oneYearIncomesInterval() {
 
-    for (let annee = 5; annee <= 25; annee += 5) {
-      let incomes = this.accumulatedIncomes(annee);
-      let revaluation = this.revaluationGain(annee);
-      this.futureIncomesEveryFiveYears.set(annee, {
-        incomes: incomes,
-        revaluation: revaluation,
-        total: incomes + revaluation
-      })
+
+    this.futureIncomesEveryYear = new Map<number, { accumulatedInvestment: number, accumulatedIncomes: number }>();
+    this.futureIncomesEveryFiveYears = new Map<number, { incomes: number, revaluation: number, amountReinvested: number, total: number }>();
+    let accumulatedInvestment = this.simulatedScpiList.flat().reduce((sum, scpi) => sum + scpi.totalInvest, 0);
+
+    let accumulatedIncomes = 0;
+    let revaluationGain = 0;
+
+    let gainSurLaRevalorisation = 0;
+    let montantReinvesti = 0;
+
+    for (let annee = 1; annee <= 25; annee++) {
+      let scpi = this.simulatedScpiList.flat().find(s => s.strip.time + 1 === annee);
+      if (scpi) {
+        revaluationGain = (scpi.totalInvest * 100 / scpi.strip.percent) - scpi.totalInvest;
+        accumulatedInvestment += revaluationGain;
+      }
+
+      accumulatedIncomes += this.incomesWithActualRevaluation(accumulatedInvestment);
+      this.futureIncomesEveryYear.set(annee, {
+        accumulatedInvestment: accumulatedInvestment,
+        accumulatedIncomes: accumulatedIncomes
+      });
+
+      // 5 years
+      if(annee % 5 == 0)
+      {
+        this.futureIncomesEveryFiveYears.set(annee, {
+          incomes: accumulatedIncomes,
+          revaluation: gainSurLaRevalorisation,
+          amountReinvested: montantReinvesti,
+          total: accumulatedIncomes + montantReinvesti + gainSurLaRevalorisation
+        });
+      }
+
+      console.log('Année', annee)
+      console.log('accumulatedInvestment', accumulatedInvestment)
+      console.log('accumulatedIncomes', accumulatedIncomes)
+
+      gainSurLaRevalorisation = accumulatedInvestment * this.revalorisationRate / 100;
+      console.log('Gain sur la revalorisation', gainSurLaRevalorisation);
+
+
+      accumulatedInvestment += gainSurLaRevalorisation;
+      if (this.compoundInterestEnabled) {
+        montantReinvesti = this.incomesWithActualRevaluation(accumulatedInvestment)
+        console.log('Montant reinvesti', montantReinvesti)
+        accumulatedInvestment += montantReinvesti;
+      }
     }
   }
 
-  oneYearIncomesInterval() {
-
-    if (!this.compoundInterestEnabled) {
-
-      this.futureIncomesEveryYear = new Map<number, { accumulatedInvestment: number, accumulatedIncomes: number }>();
-      let accumulatedInvestment = this.simulatedScpiList.flat().reduce((sum, scpi) => sum + scpi.totalInvest, 0);
-
-      let revaluationGain = 0;
-      for (let annee = 1; annee <= 25; annee++) {
-        let scpi = this.simulatedScpiList.flat().find(s => s.strip.time + 1 === annee);
-        if (scpi) {
-          revaluationGain = (scpi.totalInvest * 100 / scpi.strip.percent) - scpi.totalInvest;
-          accumulatedInvestment += revaluationGain;
-        }
-        this.futureIncomesEveryYear.set(annee, {
-          accumulatedInvestment: accumulatedInvestment,
-          accumulatedIncomes: this.accumulatedIncomes(annee)
-        });
-      }
-    }
+  incomesWithActualRevaluation(totalScpisValueAfterRevaluation : number): number {
+    return  totalScpisValueAfterRevaluation * this.globalDistributionRate / 100;
   }
 
   setGlobalVue(): void {
@@ -315,6 +340,7 @@ export class SimulationComponent implements OnInit {
     //Vue Globale
     this.totalValue = globalSome.totalInvest;
     this.totalMonthlyIncomes = globalSome.monthlyIncomes;
+    this.globalDistributionRate = this.totalMonthlyIncomes * 12 / this.totalValue * 100;
     this.totalCashback = globalSome.totalCashback;
     this.totalInvested = this.totalValue - this.totalCashback;
     this.setChartsByCountry();
@@ -337,6 +363,8 @@ export class SimulationComponent implements OnInit {
 
   toggleCompoundInterest(enabled: boolean) {
     this.compoundInterestEnabled = enabled;
+
+    this.oneYearIncomesInterval();
   }
 
   setChartByName() {
@@ -528,6 +556,7 @@ export class SimulationComponent implements OnInit {
 
     return simulatedInvestment;
   }
+
 
 
 }

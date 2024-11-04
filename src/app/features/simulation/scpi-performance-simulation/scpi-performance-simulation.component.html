@@ -23,6 +23,12 @@
             </p>
           </div>
           <div class="performance-line">
+            <p class="label">Montants reinvestis</p>
+            <p class="value" [ngStyle]="{'color': futureIncomesEveryFiveYears.get(year)?.revaluation || 0 > 0 ? '#27ae60' : '#646464'}">
+              {{futureIncomesEveryFiveYears.get(year)?.amountReinvested | number: '1.2-2'}}€
+            </p>
+          </div>
+          <div class="performance-line">
             <p class="label"> Gain total sur la durée </p>
             <p class="value" [ngStyle]="{'color': futureIncomesEveryFiveYears.get(year)?.total || 0 > 0 ? '#27ae60' : '#646464'}">
               {{futureIncomesEveryFiveYears.get(year)?.total | number: '1.2-2'}}€

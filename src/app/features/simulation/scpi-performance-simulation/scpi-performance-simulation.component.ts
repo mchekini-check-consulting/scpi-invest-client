@@ -20,7 +20,7 @@ import {ChartModule} from "primeng/chart";
 export class ScpiPerformanceSimulationComponent  implements OnInit, OnChanges {
 
   @Input("perfomanceCharts") perfomanceCharts!: Map<number,{accumulatedInvestment: number ,accumulatedIncomes : number}>;
-  @Input("futureIncomesEveryFiveYears") futureIncomesEveryFiveYears!: Map<number,{incomes: number ,revaluation : number, total: number}>;
+  @Input("futureIncomesEveryFiveYears") futureIncomesEveryFiveYears!: Map<number,{ incomes: number, revaluation: number, amountReinvested: number, total: number }>;
 
   data: any;
   options: any;
