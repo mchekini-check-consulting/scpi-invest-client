@@ -10,6 +10,13 @@
                 </span>
       </div>
     </ng-template>
+
+    <div class="summary">
+      <app-summary-card *ngFor="let item of data"
+        [data]="item"
+      ></app-summary-card>
+    </div>
+
     <div class="card">
       <p-table class="fixed-table"
                [value]="scpiOwnedList"

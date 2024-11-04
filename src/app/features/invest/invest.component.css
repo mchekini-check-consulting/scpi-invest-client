@@ -93,3 +93,9 @@ p-card {
 .invest-btn:hover {
   background-color: #5a5a5a;
 }
+
+.summary{
+  display: flex;
+  gap: 20px;
+  justify-content: space-around;
+}
