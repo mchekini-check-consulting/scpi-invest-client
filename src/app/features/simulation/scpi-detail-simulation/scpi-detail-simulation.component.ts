@@ -1,14 +1,17 @@
 import {Component, Input, OnChanges, OnInit, SimpleChanges} from '@angular/core';
 import {ChartModule} from "primeng/chart";
 import {Localizations, Sectors} from "../../../core/model/scpi-detail.model";
-import {DecimalPipe} from "@angular/common";
+import {DecimalPipe, NgStyle} from "@angular/common";
+import {SummaryCardComponent} from "../../globla-component/summary-card/summary-card.component";
 
 @Component({
   selector: 'app-scpi-detail-simulation',
   standalone: true,
   imports: [
     ChartModule,
-    DecimalPipe
+    DecimalPipe,
+    SummaryCardComponent,
+    NgStyle
   ],
   templateUrl: './scpi-detail-simulation.component.html',
   styleUrl: './scpi-detail-simulation.component.css'

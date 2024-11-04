@@ -4,45 +4,45 @@
       <div class="data_row">
         <div class="data_info">
           <p style="font-weight: 700">Valeur total</p>
-          <p style="font-weight: 900;color:#3b90ff">{{totalValue}} €</p>
+          <p style="font-weight: 900;color:#1E90FF">{{totalValue}} €</p>
         </div>
         <div class="data_info">
           <p style="font-weight: 700">Cashback</p>
-          <p style="font-weight: 900;color:#3b90ff">{{totalCashback}} €</p>
+          <p style="font-weight: 900;color:#FF6347">{{totalCashback}} €</p>
         </div>
         <div class="data_info">
           <p style="font-weight: 700">Montant Investi</p>
-          <p style="font-weight: 900;color:#3b90ff">{{totalInvested}} €</p>
+          <p style="font-weight: 900;color:#FFA500">{{ totalInvested }} €</p>
         </div>
       </div>
 
       <div class="data_row">
         <div class="data_info">
           <p style="font-weight: 700">Revenus</p>
-          <p style="font-weight: 900;color:#3b90ff">{{totalMonthlyIncomes | number : '1.2-2'}} €/mois</p>
+          <p style="font-weight: 900;color:#32CD32">{{ totalMonthlyIncomes | number : '1.2-2' }} €/mois</p>
         </div>
         <div class="data_info">
           <p style="font-weight: 700">Impôts</p>
-          <p style="font-weight: 900;color:#3b90ff">{{tax | number : '1.2-2'}} €</p>
+          <p style="font-weight: 900;color:#33cd8d">{{ tax | number : '1.2-2' }} €/mois</p>
         </div>
         <div class="data_info">
           <p style="font-weight: 700">Revenus après IR</p>
-          <p style="font-weight: 900;color:#3b90ff">{{monthlyIncomeAfterTax | number : '1.2-2'}} €</p>
+          <p style="font-weight: 900;color:black">{{ monthlyIncomeAfterTax | number : '1.2-2' }} €/mois</p>
         </div>
       </div>
     </div>
 
     <div class="chart_scpi_name">
-      <p-chart  type="doughnut" [width]="'300'" [data]="data_chart_name" [options]="options_chart_name" />
+      <p-chart [data]="data_chart_name" [options]="options_chart_name" [width]="'300'" type="doughnut"/>
     </div>
   </div>
   <div class="chart_2" style="align-content: space-between">
     <div class="chart_scpi_pays">
-      <p-chart  type="doughnut" [width]="'300'" [data]="data_chart_country" [options]="options_chart_country" />
+      <p-chart [data]="data_chart_country" [options]="options_chart_country" [width]="'300'" type="doughnut"/>
 
     </div>
     <div class="chart_scpi_secteur">
-      <p-chart  type="doughnut" [width]="'300'" [data]="data_chart_sector" [options]="options_chart_sector" />
+      <p-chart [data]="data_chart_sector" [options]="options_chart_sector" [width]="'300'" type="doughnut"/>
     </div>
   </div>
 </div>

@@ -14,6 +14,7 @@
     <div class="summary">
       <app-summary-card *ngFor="let item of data"
         [data]="item"
+        [isPercent]="item.title==='Rendement Moyen'"
       ></app-summary-card>
     </div>
 
