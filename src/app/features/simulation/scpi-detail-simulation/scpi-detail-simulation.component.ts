@@ -17,7 +17,10 @@ export class ScpiDetailSimulationComponent implements OnInit, OnChanges{
 
   @Input("totalValue") totalValue!: number;
   @Input("totalCashback") totalCashback!: number;
+  @Input("totalInvested") totalInvested!: number;
   @Input("totalMonthlyIncomes") totalMonthlyIncomes!: number;
+  @Input("tax") tax!: number;
+  @Input("monthlyIncomeAfterTax") monthlyIncomeAfterTax!: number;
 
   @Input("chartsName") chartsName!: {name: string, totalInvest: number} [];
 

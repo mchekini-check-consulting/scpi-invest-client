@@ -8,6 +8,7 @@ import {AuthGuard} from "./core/guard/auth.guard";
 import {PlannedInvestmentComponent} from "./features/planned-investment/planned-investment.component";
 import {ComparateurComponent} from "./features/comparator/comparateur.component";
 import {PremiumPlanComponent} from "./features/premium-plan/premium-plan.component";
+import {ProfileInformationComponent} from "./features/profile-information/profile-information.component";
 
 export const routes: Routes = [
 
@@ -21,6 +22,7 @@ export const routes: Routes = [
       {path: 'versement', component: PlannedInvestmentComponent, canActivate: [AuthGuard]},
       {path: 'comparateur', component: ComparateurComponent, canActivate: [AuthGuard]},
       {path: 'plans',component: PremiumPlanComponent, canActivate: [AuthGuard]},
+      {path: 'profile-information',component: ProfileInformationComponent, canActivate: [AuthGuard]},
       {path: '**', component: ScpiComponent, canActivate: [AuthGuard] }
 
 

@@ -52,6 +52,14 @@ export const ROUTES: RouteInfo[] = [
     feature: 'comparator',
     class: ''
   },
+  {
+    path: '/profile-information',
+    title: 'Mes Informations',
+    key: 'SIDEBAR.MY-PROFILE',
+    icon: 'pi pi-user-edit',
+    feature: 'profile-informations',
+    class: ''
+  },
 
 
 ];

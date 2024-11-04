@@ -83,6 +83,9 @@
   <div class="simulation_charts" *ngIf="simulatedScpiList.length > 0"style="width:100%">
     <app-scpi-detail-simulation [totalValue]="totalValue"
                                 [totalCashback] ="totalCashback"
+                                [totalInvested]="totalInvested"
+                                [tax]="tax"
+                                [monthlyIncomeAfterTax]="monthlyIncomeAfterTax"
                                 [totalMonthlyIncomes]="totalMonthlyIncomes"
                                 [chartsName]="chartsName"
                                 [chartsCountry]="valuePerCountryPercent"
@@ -97,6 +100,21 @@
                          (onClickOnDeleteEvent)="deleteScpiSimulation($event)"
                          (onClickOnModifyEvent)="openModifyScpiDialog($event)"
     ></app-scpi-simulation>
+  </div>
+
+  <div class="compound-interest-toggle" *ngIf="simulatedScpiList.length > 0">
+    <span>Activer les intérêts composés</span>
+    <p-toggleButton
+      [(ngModel)]="compoundInterestEnabled"
+      onLabel="Oui"
+      offLabel="Non"
+      (onChange)="toggleCompoundInterest(compoundInterestEnabled)"
+      [style]="{
+        width: '100px',
+        'background-color': compoundInterestEnabled ? 'rgba(23, 200, 23, 0.75)' : 'white',
+        color: compoundInterestEnabled ? 'white' : 'black'
+      }"
+    ></p-toggleButton>
   </div>
 
   <div class="performance" *ngIf="simulatedScpiList.length > 0">

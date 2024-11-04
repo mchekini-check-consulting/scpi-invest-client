@@ -73,4 +73,8 @@ export class NavbarComponent implements OnInit {
   planBtnClic() {
     this.router.navigate(['/plans']).then(r => console.log("navigate clicked"));
   }
+
+  goToMyProfile() {
+    this.router.navigate(["/profile-information"]);
+  }
 }

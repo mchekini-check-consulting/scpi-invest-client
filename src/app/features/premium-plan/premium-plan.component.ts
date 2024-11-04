@@ -50,7 +50,6 @@ export class PremiumPlanComponent implements OnInit {
   ngOnInit(): void {
     this.premiumPlanService.getPlans().subscribe(data => {
       this.fonctionality = data;
-      console.log(data)
     })
 
    this.isPremium=  this.user.getUser()?.role === "ROLE_PREMIUM";

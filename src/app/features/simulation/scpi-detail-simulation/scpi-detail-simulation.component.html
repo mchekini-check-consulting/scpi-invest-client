@@ -10,6 +10,10 @@
           <p style="font-weight: 700">Cashback</p>
           <p style="font-weight: 900;color:#3b90ff">{{totalCashback}} €</p>
         </div>
+        <div class="data_info">
+          <p style="font-weight: 700">Montant Investi</p>
+          <p style="font-weight: 900;color:#3b90ff">{{totalInvested}} €</p>
+        </div>
       </div>
 
       <div class="data_row">
@@ -18,7 +22,12 @@
           <p style="font-weight: 900;color:#3b90ff">{{totalMonthlyIncomes | number : '1.2-2'}} €/mois</p>
         </div>
         <div class="data_info">
-          <p style="font-weight: 700">Revenus après impôt</p>
+          <p style="font-weight: 700">Impôts</p>
+          <p style="font-weight: 900;color:#3b90ff">{{tax | number : '1.2-2'}} €</p>
+        </div>
+        <div class="data_info">
+          <p style="font-weight: 700">Revenus après IR</p>
+          <p style="font-weight: 900;color:#3b90ff">{{monthlyIncomeAfterTax | number : '1.2-2'}} €</p>
         </div>
       </div>
     </div>

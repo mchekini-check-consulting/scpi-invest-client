@@ -1,7 +1,9 @@
 import { Injectable } from '@angular/core';
-import { BehaviorSubject } from 'rxjs';
+import {BehaviorSubject, Observable} from 'rxjs';
 import { OAuthService } from 'angular-oauth2-oidc';
 import { UserModel } from "../model/user.model";
+import {UserPreferenceModel} from "../model/user-preference.model";
+import {HttpClient} from "@angular/common/http";
 
 @Injectable({
   providedIn: 'root'
@@ -11,7 +13,7 @@ export class UserService {
   private userSubject = new BehaviorSubject<UserModel | null>(null);
   public user$ = this.userSubject.asObservable();
 
-  constructor(private oauthService: OAuthService) {
+  constructor(private oauthService: OAuthService, private http: HttpClient) {
     this.loadUser();
   }
 
@@ -29,6 +31,14 @@ export class UserService {
         role: connectedUserRole
       });
     }
+  }
+
+  createOrUpdateUserPreferences(userPreferenceModel: UserPreferenceModel): Observable<void> {
+    return this.http.post<void>("api/v1/user/preference",userPreferenceModel);
+  }
+
+  getUserPreferences(): Observable<UserPreferenceModel> {
+    return this.http.get<UserPreferenceModel>("api/v1/user/preference");
   }
 
 
@@ -60,4 +70,7 @@ export class UserService {
       return null;
     }
   }
+
+
+
 }

@@ -123,3 +123,14 @@
   margin: 60px;
 }
 
+.compound-interest-toggle {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin: 20px 0;
+  font-weight: 700;
+  font-size: 18px;
+  gap: 10px;
+}
+
+
