@@ -20,6 +20,7 @@ import {ScpiPerformanceSimulationComponent} from "./scpi-performance-simulation/
 import {Stripping} from "../../core/model/scpi-invest.model";
 import {InvestService} from "../../core/service/invest.service";
 import {TaxService} from "../../core/service/tax.service";
+import {InputNumberModule} from "primeng/inputnumber";
 
 @Component({
   selector: 'app-simulation',
@@ -38,7 +39,8 @@ import {TaxService} from "../../core/service/tax.service";
     ChartModule,
     ScpiDetailComponent,
     ScpiDetailSimulationComponent,
-    ScpiPerformanceSimulationComponent
+    ScpiPerformanceSimulationComponent,
+    InputNumberModule
   ],
   templateUrl: './simulation.component.html',
   styleUrl: './simulation.component.css'
@@ -69,6 +71,7 @@ export class SimulationComponent implements OnInit {
   monthlyIncomeAfterTax!: number;
 
   compoundInterestEnabled: boolean = false;
+  revalorisationRate: number = 1.3;
 
   constructor(private scpiService: ScpiService, private investService: InvestService,
               private taxService: TaxService) {

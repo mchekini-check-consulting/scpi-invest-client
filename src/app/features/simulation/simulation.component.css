@@ -133,4 +133,26 @@
   gap: 10px;
 }
 
+.revalorisation-input {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-top: 5px; /* Ajustez l’espacement vers le bas */
+  font-weight: 700;
+  font-size: 18px;
+  gap: 10px;
+}
+
+p-toggleButton {
+  font-size: 14px; /* Réduit la taille du texte pour le toggle */
+  padding: 3px 6px; /* Ajuste le padding interne du bouton */
+}
+
+::ng-deep #revalorisation > span > input {
+  position: relative;
+  bottom: 5px;
+}
+
+
+
 

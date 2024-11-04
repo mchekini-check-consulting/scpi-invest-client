@@ -102,20 +102,39 @@
     ></app-scpi-simulation>
   </div>
 
-  <div class="compound-interest-toggle" *ngIf="simulatedScpiList.length > 0">
-    <span>Activer les intérêts composés</span>
-    <p-toggleButton
-      [(ngModel)]="compoundInterestEnabled"
-      onLabel="Oui"
-      offLabel="Non"
-      (onChange)="toggleCompoundInterest(compoundInterestEnabled)"
-      [style]="{
-        width: '100px',
+  <div class="global_container">
+
+    <!-- Toggle Button pour les intérêts composés -->
+    <div class="compound-interest-toggle" *ngIf="simulatedScpiList.length > 0">
+      <span>Activer les intérêts composés</span>
+      <p-toggleButton
+        [(ngModel)]="compoundInterestEnabled"
+        onLabel="Oui"
+        offLabel="Non"
+        (onChange)="toggleCompoundInterest(compoundInterestEnabled)"
+        [style]="{
+        width: '70px',
+        height: '25px',
         'background-color': compoundInterestEnabled ? 'rgba(23, 200, 23, 0.75)' : 'white',
         color: compoundInterestEnabled ? 'white' : 'black'
       }"
-    ></p-toggleButton>
+      ></p-toggleButton>
+    </div>
+
+    <div class="revalorisation-input" *ngIf="simulatedScpiList.length > 0">
+      <label for="revalorisation">Revalorisation annuel du montant du prix de part (%)</label>
+      <p-inputNumber
+        id="revalorisation"
+        [(ngModel)]="revalorisationRate"
+        [minFractionDigits]="1"
+        [maxFractionDigits]="1"
+        mode="decimal"
+        [style]="{ width: '100px' }"
+      ></p-inputNumber>
+    </div>
+
   </div>
+
 
   <div class="performance" *ngIf="simulatedScpiList.length > 0">
     <p style="font-weight: 700; font-size: 28px; margin: 24px 24px">Performances Futures</p>
