@@ -7,7 +7,6 @@ import {AppDetailsService} from "../../../service/app.details.service";
 import {AppDetailModel} from "../../../model/app.detail.model";
 import {PremiumPlanService} from "../../../service/premium-plan.service";
 import {PremiumPlanModel} from "../../../model/premium-plan-model";
-import {OAuthService} from "angular-oauth2-oidc";
 
 declare interface RouteInfo {
   path: string;
@@ -58,6 +57,14 @@ export const ROUTES: RouteInfo[] = [
     key: 'SIDEBAR.MY-PROFILE',
     icon: 'pi pi-user-edit',
     feature: 'profile-informations',
+    class: ''
+  },
+  {
+    path: '/credit',
+    title: 'Crédit',
+    key: 'SIDEBAR.CREDIT',
+    icon: 'pi pi-user-edit',
+    feature: 'credit',
     class: ''
   },
 
