@@ -126,6 +126,7 @@
       <p-inputNumber
         id="revalorisation"
         [(ngModel)]="revalorisationRate"
+        (onInput)="oneYearIncomesInterval()"
         [minFractionDigits]="1"
         [maxFractionDigits]="1"
         mode="decimal"

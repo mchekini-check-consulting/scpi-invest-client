@@ -11,19 +11,25 @@
 
         <div class="performance-content">
           <div class="performance-line">
+            <p class="label">Investissement Initial</p>
+            <p class="value">
+              {{futureIncomesEveryFiveYears.get(year)?.initialInvestment | number: '1.2-2'}}€
+            </p>
+          </div>
+          <div class="performance-line">
             <p class="label">Revenus bruts cumulés sur la durée</p>
             <p class="value">
               {{futureIncomesEveryFiveYears.get(year)?.incomes | number: '1.2-2'}}€
             </p>
           </div>
           <div class="performance-line">
-            <p class="label">Gain sur la revalorisation</p>
+            <p class="label">Plus Value générée hors Loyers</p>
             <p class="value" [ngStyle]="{'color': futureIncomesEveryFiveYears.get(year)?.revaluation || 0 > 0 ? '#27ae60' : '#646464'}">
               {{futureIncomesEveryFiveYears.get(year)?.revaluation | number: '1.2-2'}}€
             </p>
           </div>
           <div class="performance-line">
-            <p class="label"> Gain total sur la durée </p>
+            <p class="label"> Valeure totale (Inv. Initial + Loyers + Revalorisation ) </p>
             <p class="value" [ngStyle]="{'color': futureIncomesEveryFiveYears.get(year)?.total || 0 > 0 ? '#27ae60' : '#646464'}">
               {{futureIncomesEveryFiveYears.get(year)?.total | number: '1.2-2'}}€
             </p>
