@@ -58,7 +58,7 @@ export class SimulationComponent implements OnInit {
   simulatedScpiList!: SimulatedScpiModel[][];
   investmentToModify!: SimulatedScpiModel | undefined;
   futureIncomesEveryYear!: Map<number, { accumulatedInvestment: number, accumulatedIncomes: number }>;
-  futureIncomesEveryFiveYears!: Map<number, { incomes: number, revaluation: number, initialInvestment: number, total: number }>
+  futureIncomesEveryFiveYears!: Map<number, { incomes: number, revaluation: number, initialInvestment: number, total: number, averageRate: number }>
 
   totalValue!: number;
   totalMonthlyIncomes!: number;
@@ -71,7 +71,7 @@ export class SimulationComponent implements OnInit {
   monthlyIncomeAfterTax!: number;
 
   compoundInterestEnabled: boolean = false;
-  revalorisationRate: number = 1;
+  revalorisationRate: number = 1.3;
   globalDistributionRate: number = 0;
 
   constructor(private scpiService: ScpiService, private investService: InvestService,
@@ -270,7 +270,7 @@ export class SimulationComponent implements OnInit {
 
 
     this.futureIncomesEveryYear = new Map<number, { accumulatedInvestment: number, accumulatedIncomes: number }>();
-    this.futureIncomesEveryFiveYears = new Map<number, { incomes: number, revaluation: number, initialInvestment: number, total: number }>();
+    this.futureIncomesEveryFiveYears = new Map<number, { incomes: number, revaluation: number, initialInvestment: number, total: number, averageRate: number }>();
     let accumulatedInvestment = this.simulatedScpiList.flat().reduce((sum, scpi) => sum + scpi.totalInvest, 0);
 
     let initialInvestment = accumulatedInvestment;
@@ -300,7 +300,8 @@ export class SimulationComponent implements OnInit {
           incomes: accumulatedIncomes,
           revaluation:  (accumulatedIncomes + accumulatedInvestment) - initialInvestment - accumulatedIncomes ,
           initialInvestment: initialInvestment,
-          total: accumulatedIncomes + accumulatedInvestment
+          total: accumulatedIncomes + accumulatedInvestment,
+          averageRate: ((accumulatedIncomes + accumulatedInvestment) - initialInvestment  ) / initialInvestment / annee * 100
         });
       }
 

@@ -34,6 +34,12 @@
               {{futureIncomesEveryFiveYears.get(year)?.total | number: '1.2-2'}}€
             </p>
           </div>
+          <div class="performance-line">
+            <p class="label"> Rendement Annuel Moyen </p>
+            <p class="value" [ngStyle]="{'color': futureIncomesEveryFiveYears.get(year)?.averageRate || 0 > 0 ? '#27ae60' : '#646464'}">
+              {{futureIncomesEveryFiveYears.get(year)?.averageRate | number: '1.2-2'}}%
+            </p>
+          </div>
         </div>
       </p-tabPanel>
     </p-tabView>
