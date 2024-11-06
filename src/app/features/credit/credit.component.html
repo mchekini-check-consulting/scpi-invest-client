@@ -1,91 +1,170 @@
 <div class="credit-simulator">
-  <div class="left-panel">
-    <h3 class="title">Évolution des annuités du crédit</h3>
-    <br>
-    <p-table [value]="annuityData" class="custom-table">
-      <ng-template pTemplate="header">
-        <tr>
-          <th>Année</th>
-          <th>Revenu</th>
-          <th>Mensualité</th>
-          <th>Capital</th>
-          <th>Intérêts d'emprunt</th>
-          <th>Imposition</th>
-          <th>Effort d'épargne</th>
-        </tr>
-      </ng-template>
-      <ng-template pTemplate="body" let-rowData>
-        <tr>
-          <td>{{ rowData.year }}</td>
-          <td class="amount negative-effort">{{ rowData.annualIncome | currency: 'EUR' }}</td>
-          <td class="amount">{{ rowData.monthlyPayment | currency: 'EUR' }}</td>
-          <td class="amount">{{ rowData.capitalAmortization | currency: 'EUR' }}</td>
-          <td class="amount">{{ rowData.loanInterest | currency: 'EUR' }}</td>
-          <td class="amount">{{ rowData.tax | currency: 'EUR' }}</td>
-          <td [ngClass]="{'positive-effort': rowData.savingEffort > 0, 'negative-effort': rowData.savingEffort <= 0}">
-            {{ rowData.savingEffort | currency: 'EUR' }}
-          </td>
-        </tr>
-      </ng-template>
-    </p-table>
-  </div>
+  <p-tabView class="centered-tabview" styleClass="custom-tabview">
+    <p-tabPanel header="Tableau" leftIcon="pi pi-table">
+      <div class="tab-content">
+        <div class="left-panel">
+          <h3 class="title">Évolution des annuités du crédit</h3>
+          <br>
+          <p-table [value]="annuityData" class="custom-table">
+            <ng-template pTemplate="header">
+              <tr>
+                <th>Année</th>
+                <th>Revenu</th>
+                <th>Mensualité</th>
+                <th>Capital</th>
+                <th>Intérêts d'emprunt</th>
+                <th>Imposition</th>
+                <th>Effort d'épargne</th>
+              </tr>
+            </ng-template>
 
-  <div class="right-panel">
-    <div class="centered-card">
-      <p-card header="Votre financement" class="financing-card">
+            <ng-template pTemplate="body" let-rowData>
+              <tr>
+                <td>{{ rowData.year }}</td>
+                <td class="amount">{{ rowData.annualIncome | currency: 'EUR' }}</td>
+                <td class="amount">{{ rowData.monthlyPayment | currency: 'EUR' }}</td>
+                <td class="amount">{{ rowData.capitalAmortization | currency: 'EUR' }}</td>
+                <td class="amount">{{ rowData.loanInterest | currency: 'EUR' }}</td>
+                <td class="amount">{{ rowData.tax | currency: 'EUR' }}</td>
+                <td [ngClass]="{'positive-effort': rowData.savingEffort > 0, 'negative-effort': rowData.savingEffort <= 0}">
+                  {{ rowData.savingEffort | currency: 'EUR' }}
+                </td>
+              </tr>
+            </ng-template>
 
-        <div class="form-group">
-          <label>Montant emprunté</label>
-          <div class="slider-value">{{ loanAmount | currency: 'EUR' }}</div>
-          <p-slider [(ngModel)]="loanAmount" (ngModelChange)="calculateAnnuities()" [min]="0" [max]="500000" class="custom-slider"></p-slider>
+            <!-- Ligne de totaux uniquement -->
+            <ng-template pTemplate="footer">
+              <tr class="totals-row">
+                <td><strong>Total</strong></td>
+                <td class="amount">{{ totals.annualIncome | currency: 'EUR' }}</td>
+                <td class="amount">{{ totals.monthlyPayment | currency: 'EUR' }}</td>
+                <td class="amount">{{ totals.capitalAmortization | currency: 'EUR' }}</td>
+                <td class="amount">{{ totals.loanInterest | currency: 'EUR' }}</td>
+                <td class="amount">{{ totals.tax | currency: 'EUR' }}</td>
+                <td [ngClass]="{'positive-effort': totals.savingEffort > 0, 'negative-effort': totals.savingEffort <= 0}">
+                  {{ totals.savingEffort | currency: 'EUR' }}
+                </td>
+              </tr>
+            </ng-template>
+          </p-table>
         </div>
 
+        <!-- Informations de financement à droite -->
+        <div class="right-panel">
+          <div class="centered-card">
+            <p-card header="Votre financement" class="financing-card">
+              <div class="form-group">
+                <label>Montant emprunté</label>
+                <div class="slider-value">{{ loanAmount | currency: 'EUR' }}</div>
+                <p-slider [(ngModel)]="loanAmount" (ngModelChange)="calculateAnnuities()" [min]="0" [max]="500000" class="custom-slider"></p-slider>
+              </div>
 
-        <div class="form-group">
-          <label>Apport personnel</label>
-          <div class="slider-value">{{ personalContribution | currency: 'EUR' }}</div>
-          <p-slider [(ngModel)]="personalContribution" (ngModelChange)="calculateAnnuities()" [min]="0" [max]="50000" class="custom-slider"></p-slider>
+              <div class="form-group">
+                <label>Apport personnel</label>
+                <div class="slider-value">{{ personalContribution | currency: 'EUR' }}</div>
+                <p-slider [(ngModel)]="personalContribution" (ngModelChange)="calculateAnnuities()" [min]="0" [max]="50000" class="custom-slider"></p-slider>
+              </div>
+
+              <div class="form-group">
+                <label>Durée</label>
+                <div class="slider-value">{{ loanDuration }} ans</div>
+                <p-slider [(ngModel)]="loanDuration" (ngModelChange)="calculateAnnuities()" [min]="5" [max]="30" class="custom-slider"></p-slider>
+              </div>
+
+              <div class="form-group">
+                <label>Taux d'emprunt</label>
+                <div class="slider-value">{{ interestRate }}%</div>
+                <p-slider [(ngModel)]="interestRate" (ngModelChange)="calculateAnnuities()" [min]="0" [max]="10" step="0.1" class="custom-slider"></p-slider>
+              </div>
+
+              <div class="form-group">
+                <label>Rendement brut SCPI</label>
+                <div class="slider-value">{{ scpiYield }}%</div>
+                <p-slider [(ngModel)]="scpiYield" (ngModelChange)="calculateAnnuities()" [min]="0" [max]="10" step="0.1" class="custom-slider"></p-slider>
+              </div>
+
+              <div class="form-group vertical-dropdown">
+                <label>Type de SCPI</label>
+                <p-dropdown [options]="scpiTypes" [(ngModel)]="selectedScpiType" (onChange)="calculateAnnuities()" placeholder="Sélectionner un type"></p-dropdown>
+              </div>
+
+              <div class="form-group vertical-dropdown">
+                <label>TMI</label>
+                <p-dropdown [options]="tmiOptions" [(ngModel)]="selectedTmi" (onChange)="calculateAnnuities()" placeholder="Sélectionner un TMI"></p-dropdown>
+              </div>
+
+              <div class="form-group">
+                <label>Taux Moyen</label>
+                <p-inputNumber [(ngModel)]="customAverageRate" placeholder="Saisir un taux moyen" (onInput)="calculateAnnuities()"></p-inputNumber>
+              </div>
+            </p-card>
+          </div>
+        </div>
+      </div>
+    </p-tabPanel>
+
+    <!-- Onglet pour le graphique -->
+    <p-tabPanel header="Graphique" leftIcon="pi pi-chart-line">
+      <div class="tab-content">
+        <div class="left-panel">
+          <div style="height: 400px;">
+            <p-chart type="line" [data]="chartData" [options]="chartOptions"></p-chart>
+          </div>
         </div>
 
+        <!-- Informations de financement à droite -->
+        <div class="right-panel">
+          <div class="centered-card">
+            <p-card header="Votre financement" class="financing-card">
+              <!-- Les mêmes informations de financement -->
+              <div class="form-group">
+                <label>Montant emprunté</label>
+                <div class="slider-value">{{ loanAmount | currency: 'EUR' }}</div>
+                <p-slider [(ngModel)]="loanAmount" (ngModelChange)="calculateAnnuities()" [min]="0" [max]="500000" class="custom-slider"></p-slider>
+              </div>
 
-        <div class="form-group">
-          <label>Durée</label>
-          <div class="slider-value">{{ loanDuration }} ans</div>
-          <p-slider [(ngModel)]="loanDuration" (ngModelChange)="calculateAnnuities()" [min]="5" [max]="30" class="custom-slider"></p-slider>
+              <div class="form-group">
+                <label>Apport personnel</label>
+                <div class="slider-value">{{ personalContribution | currency: 'EUR' }}</div>
+                <p-slider [(ngModel)]="personalContribution" (ngModelChange)="calculateAnnuities()" [min]="0" [max]="50000" class="custom-slider"></p-slider>
+              </div>
+
+              <div class="form-group">
+                <label>Durée</label>
+                <div class="slider-value">{{ loanDuration }} ans</div>
+                <p-slider [(ngModel)]="loanDuration" (ngModelChange)="calculateAnnuities()" [min]="5" [max]="30" class="custom-slider"></p-slider>
+              </div>
+
+              <div class="form-group">
+                <label>Taux d'emprunt</label>
+                <div class="slider-value">{{ interestRate }}%</div>
+                <p-slider [(ngModel)]="interestRate" (ngModelChange)="calculateAnnuities()" [min]="0" [max]="10" step="0.1" class="custom-slider"></p-slider>
+              </div>
+
+              <div class="form-group">
+                <label>Rendement brut SCPI</label>
+                <div class="slider-value">{{ scpiYield }}%</div>
+                <p-slider [(ngModel)]="scpiYield" (ngModelChange)="calculateAnnuities()" [min]="0" [max]="10" step="0.1" class="custom-slider"></p-slider>
+              </div>
+
+              <div class="form-group vertical-dropdown">
+                <label>Type de SCPI</label>
+                <p-dropdown [options]="scpiTypes" [(ngModel)]="selectedScpiType" (onChange)="calculateAnnuities()" placeholder="Sélectionner un type"></p-dropdown>
+              </div>
+
+              <div class="form-group vertical-dropdown">
+                <label>TMI</label>
+                <p-dropdown [options]="tmiOptions" [(ngModel)]="selectedTmi" (onChange)="calculateAnnuities()" placeholder="Sélectionner un TMI"></p-dropdown>
+              </div>
+
+              <div class="form-group">
+                <label>Taux Moyen</label>
+                <p-inputNumber [(ngModel)]="customAverageRate" placeholder="Saisir un taux moyen" (onInput)="calculateAnnuities()"></p-inputNumber>
+              </div>
+            </p-card>
+          </div>
         </div>
-
-
-        <div class="form-group">
-          <label>Taux d'emprunt</label>
-          <div class="slider-value">{{ interestRate }}%</div>
-          <p-slider [(ngModel)]="interestRate" (ngModelChange)="calculateAnnuities()" [min]="0" [max]="10" step="0.1" class="custom-slider"></p-slider>
-        </div>
-
-
-        <div class="form-group">
-          <label>Rendement brut SCPI</label>
-          <div class="slider-value">{{ scpiYield }}%</div>
-          <p-slider [(ngModel)]="scpiYield" (ngModelChange)="calculateAnnuities()" [min]="0" [max]="10" step="0.1" class="custom-slider"></p-slider>
-        </div>
-
-
-        <div class="form-group">
-          <label>Type de SCPI</label>
-          <p-dropdown [options]="scpiTypes" [(ngModel)]="selectedScpiType" (onChange)="calculateAnnuities()" placeholder="Sélectionner un type"></p-dropdown>
-        </div>
-
-
-        <div class="form-group">
-          <label>TMI</label>
-          <p-dropdown [options]="tmiOptions" [(ngModel)]="selectedTmi" (onChange)="calculateAnnuities()" placeholder="Sélectionner un TMI"></p-dropdown>
-        </div>
-
-
-        <div class="form-group">
-          <label>Taux Moyen</label>
-          <p-inputNumber [(ngModel)]="customAverageRate" placeholder="Saisir un taux moyen" (onInput)="calculateAnnuities()"></p-inputNumber>
-        </div>
-      </p-card>
-    </div>
-  </div>
+      </div>
+    </p-tabPanel>
+  </p-tabView>
 </div>
